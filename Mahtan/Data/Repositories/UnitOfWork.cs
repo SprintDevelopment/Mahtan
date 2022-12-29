@@ -9,7 +9,6 @@ namespace Mahtan.Data.Repositories
         ApplicationDbContext GetContext();
 
         IFaqRepository Faqs { get; }
-        IPersonRepository People { get; }
 
         Task<int> CompleteAsync();
     }
@@ -22,11 +21,9 @@ namespace Mahtan.Data.Repositories
             _context = context;
 
             Faqs = new FaqRepository(_context);
-            People = new PersonRepository(_context);
         }
 
         public IFaqRepository Faqs { get; private set; }
-        public IPersonRepository People { get; private set; }
 
         public async Task<int> CompleteAsync()
         {

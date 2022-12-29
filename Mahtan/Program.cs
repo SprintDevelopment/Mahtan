@@ -41,6 +41,12 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 
 var app = builder.Build();
 
+using (var Scope = app.Services.CreateScope())
+{
+    var context = Scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
