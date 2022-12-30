@@ -53,7 +53,7 @@
     --cz-black-rgb: 0, 0, 0;
     --cz-body-color-rgb: 75, 86, 107;
     --cz-body-bg-rgb: 255, 255, 255;
-    --cz-font-sans-serif: "Rubik", sans-serif;
+    --cz-font-sans-serif: "Yekan", sans-serif;
     --cz-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --cz-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     --cz-body-font-family: var(--cz-font-sans-serif);
@@ -3205,14 +3205,11 @@ textarea.form-control-lg {
     border-radius: .25rem
 }
 
-.was-validated :valid ~ .valid-feedback,
-.was-validated :valid ~ .valid-tooltip,
 .is-valid ~ .valid-feedback,
 .is-valid ~ .valid-tooltip {
     display: block
 }
 
-.was-validated .form-control:valid,
 .form-control.is-valid {
     border-color: #42d697;
     padding-left: calc(1.5em + 1.25rem);
@@ -3222,25 +3219,20 @@ textarea.form-control-lg {
     background-size: calc(0.75em + 0.625rem) calc(0.75em + 0.625rem)
 }
 
-    .was-validated .form-control:valid:focus,
     .form-control.is-valid:focus {
         border-color: #42d697;
         box-shadow: 0 0 0 0 rgba(66, 214, 151, .25)
     }
 
-.was-validated textarea.form-control:valid,
 textarea.form-control.is-valid {
     padding-left: calc(1.5em + 1.25rem);
     background-position: top calc(0.375em + 0.3125rem) left calc(0.375em + 0.3125rem)
 }
 
-.was-validated .form-select:valid,
 .form-select.is-valid {
     border-color: #42d697
 }
 
-    .was-validated .form-select:valid:not([multiple]):not([size]),
-    .was-validated .form-select:valid:not([multiple])[size="1"],
     .form-select.is-valid:not([multiple]):not([size]),
     .form-select.is-valid:not([multiple])[size="1"] {
         padding-left: 5.5rem;
@@ -3249,33 +3241,27 @@ textarea.form-control.is-valid {
         background-size: 16px 12px, calc(0.75em + 0.625rem) calc(0.75em + 0.625rem)
     }
 
-    .was-validated .form-select:valid:focus,
     .form-select.is-valid:focus {
         border-color: #42d697;
         box-shadow: 0 0 0 0 rgba(66, 214, 151, .25)
     }
 
-.was-validated .form-control-color:valid,
 .form-control-color.is-valid {
     width: calc(3rem + calc(1.5em + 1.25rem))
 }
 
-.was-validated .form-check-input:valid,
 .form-check-input.is-valid {
     border-color: #42d697
 }
 
-    .was-validated .form-check-input:valid:checked,
     .form-check-input.is-valid:checked {
         background-color: #42d697
     }
 
-    .was-validated .form-check-input:valid:focus,
     .form-check-input.is-valid:focus {
         box-shadow: 0 0 0 0 rgba(66, 214, 151, .25)
     }
 
-    .was-validated .form-check-input:valid ~ .form-check-label,
     .form-check-input.is-valid ~ .form-check-label {
         color: #42d697
     }
@@ -3284,11 +3270,8 @@ textarea.form-control.is-valid {
     margin-right: .5em
 }
 
-.was-validated .input-group > .form-control:not(:focus):valid,
 .input-group > .form-control:not(:focus).is-valid,
-.was-validated .input-group > .form-select:not(:focus):valid,
 .input-group > .form-select:not(:focus).is-valid,
-.was-validated .input-group > .form-floating:not(:focus-within):valid,
 .input-group > .form-floating:not(:focus-within).is-valid {
     z-index: 3
 }
@@ -3299,6 +3282,10 @@ textarea.form-control.is-valid {
     margin-top: .375rem;
     font-size: 0.75rem;
     color: #f34770
+}
+
+.field-validation-error{
+    display: block;
 }
 
 .invalid-tooltip {
@@ -3315,14 +3302,11 @@ textarea.form-control.is-valid {
     border-radius: .25rem
 }
 
-.was-validated :invalid ~ .invalid-feedback,
-.was-validated :invalid ~ .invalid-tooltip,
 .is-invalid ~ .invalid-feedback,
 .is-invalid ~ .invalid-tooltip {
     display: block
 }
 
-.was-validated .form-control:invalid,
 .form-control.is-invalid {
     border-color: #f34770;
     padding-left: calc(1.5em + 1.25rem);
@@ -3332,25 +3316,20 @@ textarea.form-control.is-valid {
     background-size: calc(0.75em + 0.625rem) calc(0.75em + 0.625rem)
 }
 
-    .was-validated .form-control:invalid:focus,
     .form-control.is-invalid:focus {
         border-color: #f34770;
         box-shadow: 0 0 0 0 rgba(243, 71, 112, .25)
     }
 
-.was-validated textarea.form-control:invalid,
 textarea.form-control.is-invalid {
     padding-left: calc(1.5em + 1.25rem);
     background-position: top calc(0.375em + 0.3125rem) left calc(0.375em + 0.3125rem)
 }
 
-.was-validated .form-select:invalid,
 .form-select.is-invalid {
     border-color: #f34770
 }
 
-    .was-validated .form-select:invalid:not([multiple]):not([size]),
-    .was-validated .form-select:invalid:not([multiple])[size="1"],
     .form-select.is-invalid:not([multiple]):not([size]),
     .form-select.is-invalid:not([multiple])[size="1"] {
         padding-left: 5.5rem;
@@ -3359,33 +3338,27 @@ textarea.form-control.is-invalid {
         background-size: 16px 12px, calc(0.75em + 0.625rem) calc(0.75em + 0.625rem)
     }
 
-    .was-validated .form-select:invalid:focus,
     .form-select.is-invalid:focus {
         border-color: #f34770;
         box-shadow: 0 0 0 0 rgba(243, 71, 112, .25)
     }
 
-.was-validated .form-control-color:invalid,
 .form-control-color.is-invalid {
     width: calc(3rem + calc(1.5em + 1.25rem))
 }
 
-.was-validated .form-check-input:invalid,
 .form-check-input.is-invalid {
     border-color: #f34770
 }
 
-    .was-validated .form-check-input:invalid:checked,
     .form-check-input.is-invalid:checked {
         background-color: #f34770
     }
 
-    .was-validated .form-check-input:invalid:focus,
     .form-check-input.is-invalid:focus {
         box-shadow: 0 0 0 0 rgba(243, 71, 112, .25)
     }
 
-    .was-validated .form-check-input:invalid ~ .form-check-label,
     .form-check-input.is-invalid ~ .form-check-label {
         color: #f34770
     }
@@ -3394,11 +3367,8 @@ textarea.form-control.is-invalid {
     margin-right: .5em
 }
 
-.was-validated .input-group > .form-control:not(:focus):invalid,
 .input-group > .form-control:not(:focus).is-invalid,
-.was-validated .input-group > .form-select:not(:focus):invalid,
 .input-group > .form-select:not(:focus).is-invalid,
-.was-validated .input-group > .form-floating:not(:focus-within):invalid,
 .input-group > .form-floating:not(:focus-within).is-invalid {
     z-index: 4
 }
@@ -15465,6 +15435,20 @@ dd {
 }
 
 @font-face {
+    font-family: Yekan;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/iranyekanwebregular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: Yekan;
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/iranyekanwebbold.woff2') format('woff2');
+}
+
+@font-face {
     font-family: "cartzilla-icons";
     src: url("../fonts/cartzilla-icons.ttf?ufvuz0") format("truetype"), url("../fonts/cartzilla-icons.woff?ufvuz0") format("woff"), url("../fonts/cartzilla-icons.svg?ufvuz0#cartzilla-icons") format("svg");
     font-weight: normal;
@@ -16588,20 +16572,6 @@ input[type=search]::-webkit-search-results-decoration {
             content: ""
         }
 
-.was-validated .password-toggle .form-control:invalid,
-.was-validated .password-toggle .form-control.is-invalid,
-.was-validated .password-toggle .form-control:valid,
-.was-validated .password-toggle .form-control.is-valid {
-    padding-left: 4rem
-}
-
-    .was-validated .password-toggle .form-control:invalid + .password-toggle-btn,
-    .was-validated .password-toggle .form-control.is-invalid + .password-toggle-btn,
-    .was-validated .password-toggle .form-control:valid + .password-toggle-btn,
-    .was-validated .password-toggle .form-control.is-valid + .password-toggle-btn {
-        left: 2.1rem
-    }
-
 .form-check-label {
     font-size: .875rem
 }
@@ -16650,38 +16620,6 @@ input[type=search]::-webkit-search-results-decoration {
 
 .invalid-tooltip {
     color: #f34770
-}
-
-.was-validated .form-control:invalid ~ .invalid-tooltip,
-.was-validated .form-control.is-invalid ~ .invalid-tooltip,
-.was-validated .form-check-input:invalid ~ .invalid-tooltip,
-.was-validated .form-check-input.is-invalid ~ .invalid-tooltip {
-    display: table
-}
-
-.was-validated .form-control:valid ~ .valid-tooltip,
-.was-validated .form-control.is-valid ~ .valid-tooltip,
-.was-validated .form-check-input:valid ~ .valid-tooltip,
-.was-validated .form-check-input.is-valid ~ .valid-tooltip {
-    display: table
-}
-
-.was-validated .form-control:valid,
-.was-validated .form-control.is-valid,
-.was-validated .form-select:valid,
-.was-validated .form-select.is-valid {
-    border-color: #dae1e7 !important
-}
-
-.was-validated .form-check-input:valid ~ .form-check-label,
-.was-validated .form-check-input.is-valid ~ .form-check-label {
-    color: inherit
-}
-
-.was-validated .form-check-input:valid:checked,
-.was-validated .form-check-input.is-valid:checked {
-    border-color: #fe696a;
-    background-color: #fe696a
 }
 
 .form-control:disabled {

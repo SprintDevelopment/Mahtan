@@ -1,0 +1,66 @@
+﻿@model AccountViewModel
+
+<div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-secondary">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                    <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>ورود</a></li>
+                    <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>ثبت نام</a></li>
+                </ul>
+            </div>
+            <div class="modal-body tab-content py-4">
+                @using (Html.BeginForm("Login", "Account", new { area = "Identity" }, FormMethod.Post, true, new { @id = "signin-tab", @class = "needs-validation tab-pane fade show active", autocomplete = "off" }))
+                {
+                    <div class="mb-3">
+                        <label asp-for="LoginViewModel.PhoneNumber" class="form-label"></label>
+                        <input asp-for="LoginViewModel.PhoneNumber" class="form-control" autofocus />
+                        <span asp-validation-for="LoginViewModel.PhoneNumber" class="invalid-feedback"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="login-password">کلمه عبور</label>
+                        <input asp-for="LoginViewModel.Password" type="password" class="form-control" id="login-password" />
+                        <span asp-validation-for="LoginViewModel.Password" class="invalid-feedback"></span>
+                    </div>
+                    <div class="mb-3 d-flex flex-wrap justify-content-between">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="si-remember">
+                            <label class="form-check-label" for="si-remember">مرا به خاطر بسپار</label>
+                        </div>
+                        <a class="fs-sm" asp-area="Identity" asp-controller="Account" asp-action="ForgotPassword">کلمه عبور را فراموش کرده اید ؟</a>
+                    </div>
+                    <button class="btn btn-primary btn-shadow d-block w-100" type="submit">ورود</button>
+                }
+                @using (Html.BeginForm("Register", "Account", new { area = "Identity" }, FormMethod.Post, true, new { @id = "signup-tab", @class = "needs-validation tab-pane fade", autocomplete = "off" }))
+                {
+                    <div class="mb-3">
+                        <label asp-for="RegisterViewModel.Name" class="form-label"></label>
+                        <input asp-for="RegisterViewModel.Name" class="form-control" autofocus />
+                        <span asp-validation-for="RegisterViewModel.Name" class="invalid-feedback"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">شماره همراه</label>
+                        <input asp-for="RegisterViewModel.PhoneNumber" class="form-control" autofocus />
+                        <span asp-validation-for="RegisterViewModel.PhoneNumber" class="invalid-feedback"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="register-password">کلمه عبور</label>
+                        <input asp-for="RegisterViewModel.Password" type="password" class="form-control" id="register-password" />
+                        <span asp-validation-for="RegisterViewModel.Password" class="invalid-feedback"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="register-password-confirm">تکرار کلمه عبور</label>
+                        <input asp-for="RegisterViewModel.ConfirmPassword" type="password" class="form-control" id="register-password-confirm" />
+                        <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="invalid-feedback"></span>
+                    </div>
+                    <button class="btn btn-primary btn-shadow d-block w-100" type="submit">ثبت نام</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
