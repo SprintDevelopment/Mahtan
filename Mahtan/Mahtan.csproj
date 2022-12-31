@@ -37,8 +37,4 @@
 		<PackageReference Include="System.ServiceModel.Security" Version="4.10.*" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Areas\Identity\Views\Shared\" />
-	</ItemGroup>
-
 </Project>
