@@ -1,0 +1,30 @@
+﻿@model District
+@{
+    Layout = null;
+}
+<div class="modal-header bg-secondary py-1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    <p class="fw-bold my-2">@Model.CrudTitle()</p>
+</div>
+
+<div class="modal-body tab-content py-4">
+    @using (Html.BeginForm("CreateOrUpdate", "District", new { area = "Admin" }, FormMethod.Post, true, new { onsubmit = "return jQueryAjaxPost(this)", autocomplete = "off" }))
+    {
+        <input type="hidden" asp-for="DistrictId" />
+        <div class="mb-3">
+            <label asp-for="DistrictName" class="form-label"></label>
+            <input asp-for="DistrictName" class="form-control" autofocus />
+            <span asp-validation-for="DistrictName" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DisplayOrder" class="form-label"></label>
+            <input asp-for="DisplayOrder" class="form-control" autofocus />
+            <span asp-validation-for="DisplayOrder" class="invalid-feedback"></span>
+        </div>
+        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">تایید</button>
+    }
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

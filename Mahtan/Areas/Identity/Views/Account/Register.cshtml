@@ -1,0 +1,51 @@
+﻿@model AccountViewModel
+
+<div class="modal d-block">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+            <div class="modal-header bg-secondary pb-0">
+                <div class="d-flex justify-content-between w-100">
+                    <p class="fw-bold">ثبت نام</p>
+                    <p class="fs-sm fw-bold">
+                        از قبل حساب دارید ؟ <a asp-area="Identity" asp-controller="Account" asp-action="Login">وارد شوید</a>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-body tab-content py-4">
+                @using (Html.BeginForm("Register", "Account", new { area = "Identity" }, FormMethod.Post, true, new { @class = "needs-validation tab-pane fade show active", autocomplete = "off" }))
+                {
+                    <div class="mb-3">
+                        <label asp-for="RegisterViewModel.Name" class="form-label"></label>
+                        <input asp-for="RegisterViewModel.Name" class="form-control" autofocus />
+                        <span asp-validation-for="RegisterViewModel.Name" class="invalid-feedback"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">شماره همراه</label>
+                        <input asp-for="RegisterViewModel.PhoneNumber" class="form-control" autofocus />
+                        <span asp-validation-for="RegisterViewModel.PhoneNumber" class="invalid-feedback"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="register-password">کلمه عبور</label>
+                        <input asp-for="RegisterViewModel.Password" type="password" class="form-control" id="register-password" />
+                        <span asp-validation-for="RegisterViewModel.Password" class="invalid-feedback"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="register-password-confirm">تکرار کلمه عبور</label>
+                        <input asp-for="RegisterViewModel.ConfirmPassword" type="password" class="form-control" id="register-password-confirm" />
+                        <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="invalid-feedback"></span>
+                    </div>
+                    <button class="btn btn-primary btn-shadow d-block w-100" type="submit">ثبت نام</button>
+                }
+                <div class="d-flex align-items-center py-3">
+                    <hr class="w-100">
+                    <div class="px-3">یا</div>
+                    <hr class="w-100">
+                </div>
+                <button type="button" class="btn w-100 btn-outline-primary mb-2">
+                    ثبت نام با گوگل <i class="ci-google"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

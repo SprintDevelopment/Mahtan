@@ -8,6 +8,10 @@ namespace Mahtan.Models
         [NotMapped]
         public bool IsSelected { get; set; }
 
+        [Display(Name = "ردیف نمایش")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        public int DisplayOrder { get; set; }
+
         public BaseModel()
         {
         }

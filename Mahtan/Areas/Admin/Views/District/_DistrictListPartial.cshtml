@@ -1,0 +1,21 @@
+﻿@model IEnumerable<District>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.DisplayOrder</td>
+        <td>@item.DistrictName</td>
+        <td>20</td>
+        <td class="py-2">
+            <div class="col-auto btn-group btn-group-sm w-100">
+                <a class="btn btn-outline-primary" onclick="showInPopup('@Url.Action("CreateOrUpdate", "District", new { id = item.DistrictId }, Context.Request.Scheme)', 'ویرایش محله')">مشاهده</a>
+                <button class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="visually-hidden">Toggle dropdown</span></button>
+                <div class="dropdown-menu my-1">
+                    <a class="dropdown-item" href="#">آدرس های اینجا</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger delete" data-id="@item.DistrictId" data-title="@item.DistrictName" style="cursor:pointer">حذف</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+}

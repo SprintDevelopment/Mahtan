@@ -17,6 +17,7 @@ namespace Mahtan.Data.Repositories
 
         Task<T> GetAsync(dynamic id);
 
+        int Count(Expression<Func<T, bool>> predicate = null);
         IQueryable<T> Find(Expression<Func<T, bool>> predicate = null);
         Task<bool> AnyAsync(Expression<Func<T, bool>> predicate = null);
 
@@ -76,6 +77,11 @@ namespace Mahtan.Data.Repositories
                     keyProperty.SetValue(newEntity, keyValue);
                 }
             }
+        }
+
+        public int Count(Expression<Func<T, bool>> predicate = null)
+        {
+            return Find(predicate).Count();
         }
 
         public IQueryable<T> Find(Expression<Func<T, bool>> predicate = null)

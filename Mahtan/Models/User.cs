@@ -7,6 +7,6 @@ namespace Mahtan.Models
     public class User : IdentityUser
     {
         [Required]
-        public int MobileConfirmationCode { get; set; }
+        public string MobileConfirmationCode { get; set; }
     }
 }

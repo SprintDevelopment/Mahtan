@@ -86,7 +86,7 @@ namespace Mahtan.Areas.Identity.Controllers
 
         private async Task CreateAndSendNewMobileConfirmCode(Models.User user)
         {
-            user.MobileConfirmationCode = new Random().Next(100000, 999999);
+            user.MobileConfirmationCode = new Random().Next(100000, 999999).ToString();
             await _userManager.UpdateAsync(user);
             await _smsService.SendSmsAsync(user.PhoneNumber, user.MobileConfirmationCode.ToString());
         }

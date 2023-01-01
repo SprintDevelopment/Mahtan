@@ -10,6 +10,6 @@ namespace Mahtan.ViewModels
 
         [Display(Name = "کد فعالسازی")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
-        public int VerificationCode { get; set; }
+        public string VerificationCode { get; set; }
     }
 }

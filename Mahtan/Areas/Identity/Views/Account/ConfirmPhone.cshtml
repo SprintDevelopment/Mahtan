@@ -1,0 +1,31 @@
+﻿@model ConfirmPhoneViewModel
+
+<div class="modal d-block">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+            <div class="modal-header bg-secondary pb-0">
+                <div class="d-flex justify-content-between w-100">
+                    <p class="fw-bold">تایید شماره همراه</p>
+                    <p class="fs-sm fw-bold">
+                        پیامک دریافت نشد ؟ <a asp-area="Identity" asp-controller="Account" asp-action="SendAgain">ارسال مجدد</a>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-body tab-content py-4">
+                <p class="fs-md">پیامک تایید به شماره <b>@Model.PhoneNumber</b> ارسال شد. پس از دریافت پیامک، کد دریافتی را در قسمت پایین وارد کنید.</p>
+                @using (Html.BeginForm("ConfirmPhone", "Account", new { area = "Identity" }, FormMethod.Post, true, new { @class = "needs-validation tab-pane fade show active", autocomplete = "off" }))
+                {
+                    <input type="hidden" asp-for="PhoneNumber" />
+
+                    <div class="mb-3">
+                        <label asp-for="VerificationCode" class="form-label"></label>
+                        <input asp-for="VerificationCode" class="form-control" autofocus />
+                        <span asp-validation-for="VerificationCode" class="invalid-feedback"></span>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit">بررسی و تایید شماره</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

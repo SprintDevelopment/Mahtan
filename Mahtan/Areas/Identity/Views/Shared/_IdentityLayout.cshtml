@@ -32,6 +32,9 @@
     </main>
     <!-- Vendor scrits: js libraries and plugins-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script src="~/js/bootstrap.js"></script>
     <script src="~/js/smooth-scroll.js"></script>
     <!-- Main theme script-->
