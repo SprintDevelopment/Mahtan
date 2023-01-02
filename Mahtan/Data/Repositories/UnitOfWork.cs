@@ -7,8 +7,9 @@ namespace Mahtan.Data.Repositories
     public interface IUnitOfWork : IDisposable
     {
         ApplicationDbContext GetContext();
+        
+        ICategoryRepository Categories { get; }
         IDistrictRepository Districts { get; }
-
         IFaqRepository Faqs { get; }
 
         Task<int> CompleteAsync();
@@ -20,11 +21,13 @@ namespace Mahtan.Data.Repositories
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            Districts = new DistrictRepository(_context);
 
+            Categories = new CategoryRepository(_context);
+            Districts = new DistrictRepository(_context);
             Faqs = new FaqRepository(_context);
         }
 
+        public ICategoryRepository Categories { get; private set; }
         public IDistrictRepository Districts { get; private set; }
         public IFaqRepository Faqs { get; private set; }
 

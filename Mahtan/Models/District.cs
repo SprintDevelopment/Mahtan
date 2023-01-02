@@ -13,7 +13,7 @@ namespace Mahtan.Models
 
         [Display(Name = "نام محله")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
-        [MaxLength(LengthConstants.LARGE_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
+        [MaxLength(LengthConstants.MEDIUM_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         public string DistrictName { get; set; }
 
         public District()

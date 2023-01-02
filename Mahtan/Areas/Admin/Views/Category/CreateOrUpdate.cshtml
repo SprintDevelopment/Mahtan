@@ -1,0 +1,52 @@
+﻿@model CategoryViewModel
+@{
+    Layout = null;
+}
+<div class="modal-header bg-secondary py-1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    <p class="fw-bold my-2">@Model.Category.CrudTitle()</p>
+</div>
+
+<div class="modal-body tab-content py-4">
+    @using (Html.BeginForm("CreateOrUpdate", "Category", new { area = "Admin" }, FormMethod.Post, true, new { onsubmit = "return jQueryAjaxPost(this)", autocomplete = "off" }))
+    {
+        <input type="hidden" asp-for="Category.CategoryId" />
+        <input type="hidden" asp-for="Category.IconGuid" />
+        <div class="mb-3">
+            <label asp-for="Category.ParentCategoryId" class="form-label"></label>
+            <select asp-for="Category.ParentCategoryId" class="form-control" asp-items="Model.ParentCategories.ToSelectListItem(nameof(Category.CategoryId), nameof(Category.Title), Model.Category.ParentCategoryId)" autofocus>
+                <option value="">انتخاب کنید . . .</option>
+            </select>
+            <span asp-validation-for="Category.ParentCategoryId" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Category.Title" class="form-label"></label>
+            <input asp-for="Category.Title" class="form-control" />
+            <span asp-validation-for="Category.Title" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Category.CountUnitTitle" class="form-label"></label>
+            <input asp-for="Category.CountUnitTitle" class="form-control" />
+            <span asp-validation-for="Category.CountUnitTitle" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Category.IconGuid" class="form-label"></label>
+            <input type="file" name="iconGuid" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Category.OptionalComment" class="form-label"></label>
+            @Html.TextAreaFor(m => m.Category.OptionalComment, 3, 0, new { @class = "form-control" })
+            <span asp-validation-for="Category.OptionalComment" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Category.DisplayOrder" class="form-label"></label>
+            <input asp-for="Category.DisplayOrder" class="form-control" />
+            <span asp-validation-for="Category.DisplayOrder" class="invalid-feedback"></span>
+        </div>
+        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">تایید</button>
+    }
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

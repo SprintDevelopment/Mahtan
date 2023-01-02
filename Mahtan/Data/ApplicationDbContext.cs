@@ -25,6 +25,7 @@ namespace Mahtan.Data
             base.OnModelCreating(builder);
         }
 
+        public DbSet<Category> Categories { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Faq> Faqs { get; set; }
         public DbSet<User> SiteUsers { get; set; }

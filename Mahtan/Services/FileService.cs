@@ -9,7 +9,7 @@ namespace Mahtan.Services
 {
     public interface IFileService
     {
-        Task<string> UploadAsync(IFormFile file, string pathToSave, string preFileToRemove = null, string defaultFileNameToPreventRemove = null);
+        Task<string> UploadAsync(IFormFile file, string pathToSave, string preFileToRemove = null);
     }
 
     public class FileService : IFileService
@@ -21,7 +21,7 @@ namespace Mahtan.Services
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<string> UploadAsync(IFormFile file, string pathToSave, string preFileToRemove = null, string defaultFileNameToPreventRemove = null)
+        public async Task<string> UploadAsync(IFormFile file, string pathToSave, string preFileToRemove = null)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace Mahtan.Services
                     await file.CopyToAsync(fileStream);
                 }
 
-                if (!preFileToRemove.IsNullOrWhitespace() && preFileToRemove != defaultFileNameToPreventRemove)
+                if (!preFileToRemove.IsNullOrWhitespace())
                     try
                     {
                         var fileToRemoveFullPath = Path.Combine(_webHostEnvironment.WebRootPath, pathToSave, preFileToRemove);

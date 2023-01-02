@@ -24,7 +24,7 @@ namespace Mahtan.Areas.Admin.Controllers
         public async Task<IActionResult> CreateOrUpdate(int id = 0)
         {
             if (id == 0)
-                return View(new District() {DisplayOrder = _unitOfWork.Districts.Count() + 1 });
+                return View(new District() { DisplayOrder = _unitOfWork.Districts.Count() + 1 });
             else
             {
                 var entity = await _unitOfWork.Districts.GetAsync(id);
@@ -36,7 +36,7 @@ namespace Mahtan.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateOrUpdate(District entity)
         {
             if (ModelState.IsValid)
