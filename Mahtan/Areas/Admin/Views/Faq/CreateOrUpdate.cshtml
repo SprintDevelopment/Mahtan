@@ -1,0 +1,41 @@
+﻿@model Faq
+@{
+    Layout = null;
+}
+<div class="modal-header bg-secondary py-1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    <p class="fw-bold my-2">@Model.CrudTitle()</p>
+</div>
+
+<div class="modal-body tab-content py-4">
+    @using (Html.BeginForm("CreateOrUpdate", "Faq", new { area = "Admin" }, FormMethod.Post, true, new { onsubmit = "return jQueryAjaxPost(this)", autocomplete = "off" }))
+    {
+        <input type="hidden" asp-for="FaqId" />
+        <div class="mb-3">
+            <label asp-for="FaqGroup" class="form-label"></label>
+            <select asp-for="FaqGroup" class="form-control" asp-items="@typeof(FaqGroups).ToCollection().ToSelectListItem(nameof(EnumDto.Value), nameof(EnumDto.Description), (int)Model.FaqGroup)" autofocus>
+            </select>
+            <span asp-validation-for="FaqGroup" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="QuestionText" class="form-label"></label>
+            @Html.TextAreaFor(m => m.QuestionText, 3, 0, new { @class = "form-control" })
+            <span asp-validation-for="QuestionText" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="AnswerText" class="form-label"></label>
+            @Html.TextAreaFor(m => m.AnswerText, 3, 0, new { @class = "form-control" })
+            <span asp-validation-for="AnswerText" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DisplayOrder" class="form-label"></label>
+            <input asp-for="DisplayOrder" class="form-control" />
+            <span asp-validation-for="DisplayOrder" class="invalid-feedback"></span>
+        </div>
+        <button class="btn btn-primary d-block w-100" type="submit">تایید</button>
+    }
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

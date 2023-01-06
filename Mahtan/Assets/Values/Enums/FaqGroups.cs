@@ -10,7 +10,7 @@ namespace Mahtan.Assets.Values.Enums
     {
         [Display(Name = "سفارش و خرید")]
         Order,
-        [Display(Name = "بسته بندی و سفارش")]
+        [Display(Name = "بسته بندی و ارسال")]
         Shipping,
         [Display(Name = "پرداخت")]
         Payment,

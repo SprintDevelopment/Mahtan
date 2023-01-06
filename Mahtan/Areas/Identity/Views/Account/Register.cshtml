@@ -13,13 +13,8 @@
                 </div>
             </div>
             <div class="modal-body tab-content py-4">
-                @using (Html.BeginForm("Register", "Account", new { area = "Identity" }, FormMethod.Post, true, new { @class = "needs-validation tab-pane fade show active", autocomplete = "off" }))
+                @using (Html.BeginForm("Register", "Account", new { area = "Identity", returnUrl = ViewData["returnUrl"] }, FormMethod.Post, true, new { @class = "needs-validation tab-pane fade show active", autocomplete = "off" }))
                 {
-                    <div class="mb-3">
-                        <label asp-for="RegisterViewModel.Name" class="form-label"></label>
-                        <input asp-for="RegisterViewModel.Name" class="form-control" autofocus />
-                        <span asp-validation-for="RegisterViewModel.Name" class="invalid-feedback"></span>
-                    </div>
                     <div class="mb-3">
                         <label class="form-label">شماره همراه</label>
                         <input asp-for="RegisterViewModel.PhoneNumber" class="form-control" autofocus />
@@ -35,7 +30,7 @@
                         <input asp-for="RegisterViewModel.ConfirmPassword" type="password" class="form-control" id="register-password-confirm" />
                         <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="invalid-feedback"></span>
                     </div>
-                    <button class="btn btn-primary btn-shadow d-block w-100" type="submit">ثبت نام</button>
+                    <button class="btn btn-primary d-block w-100" type="submit">ثبت نام</button>
                 }
                 <div class="d-flex align-items-center py-3">
                     <hr class="w-100">

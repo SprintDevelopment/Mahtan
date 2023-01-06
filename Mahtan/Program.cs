@@ -9,6 +9,7 @@ using AutoMapper;
 using Mahtan.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,25 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    options.SlidingExpiration = true;
+});
+
+builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+opt =>
+{
+    //configure your other properties
+    opt.LoginPath = "/Identity/Account/Login";
+    opt.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
 
 builder.Services.AddMvc().AddJsonOptions(options =>
 {

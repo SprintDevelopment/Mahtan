@@ -30,7 +30,7 @@ namespace Mahtan.Areas.Admin.Controllers
         {
             var viewModel = new CategoryViewModel()
             {
-                Category = new Category() { DisplayOrder = _unitOfWork.Categories.Count() + 1 },
+                Category = new Category(),
                 ParentCategories = _unitOfWork.Categories.FindAllExceptItselfAndChildren(id),
             };
 
@@ -95,6 +95,8 @@ namespace Mahtan.Areas.Admin.Controllers
             if (entity != null)
             {
                 _unitOfWork.Categories.Remove(entity);
+                await _unitOfWork.CompleteAsync();
+
                 return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_CategoryListPartial", _unitOfWork.Categories.Find().AsEnumerable()) });
             }
             else

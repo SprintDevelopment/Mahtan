@@ -31,7 +31,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="wwwroot\resources\img\banners\large\" />
 	  <Folder Include="wwwroot\resources\img\category\icons\" />
+	  <Folder Include="wwwroot\resources\img\user\avatar\" />
 	</ItemGroup>
 
 </Project>

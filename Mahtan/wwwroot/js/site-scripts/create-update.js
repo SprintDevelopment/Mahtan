@@ -1,4 +1,4 @@
-﻿showInPopup = (url, title, isLargeModal) => {
+﻿showInPopup = (url, title, isLargeModal, isScrollableModal) => {
     $.ajax({
         async: true,
         type: "GET",
@@ -8,6 +8,11 @@
                 $("#form-modal .modal-dialog").addClass('modal-lg');
             else
                 $("#form-modal .modal-dialog").removeClass('modal-lg');
+
+            if (isScrollableModal)
+                $("#form-modal .modal-dialog").addClass('modal-dialog-scrollable');
+            else
+                $("#form-modal .modal-dialog").removeClass('modal-dialog-scrollable');
 
             $("#form-modal .modal-content").html(res);
             //$("#form-modal #modal-title").html(title);

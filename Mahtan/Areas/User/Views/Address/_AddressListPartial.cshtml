@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Address>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Title</td>
+        <td>@($"{item.District.DistrictName} - {item.EndPart}")</td>
+        <td class="py-2">
+            <div class="col-auto btn-group btn-group-sm w-100">
+                <a class="btn btn-outline-primary" onclick="showInPopup('@Url.Action("CreateOrUpdate", "Address", new { id = item.AddressId }, Context.Request.Scheme)', 'ویرایش آدرس')">مشاهده</a>
+                <button class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="visually-hidden">Toggle dropdown</span></button>
+                <div class="dropdown-menu my-1">
+                    <a class="dropdown-item" href="#">انتخاب به عنوان پیشفرض</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger delete" data-id="@item.AddressId" data-title="@item.Title" style="cursor:pointer">حذف</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+}

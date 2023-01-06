@@ -5,11 +5,11 @@ namespace Mahtan.ViewModels
     public class LoginViewModel
     {
         [Display(Name = "شماره همراه")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "کلمه عبور")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

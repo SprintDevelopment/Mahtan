@@ -19,26 +19,21 @@
                         <span asp-validation-for="LoginViewModel.PhoneNumber" class="invalid-feedback"></span>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="login-password">کلمه عبور</label>
+                        <div class=" d-flex flex-wrap justify-content-between">
+                            <label class="form-label" for="login-password">کلمه عبور</label>
+                            <a class="fs-sm" asp-area="Identity" asp-controller="Account" asp-action="ForgotPassword">کلمه عبور را فراموش کرده اید ؟</a>
+                        </div>
                         <input asp-for="LoginViewModel.Password" type="password" class="form-control" id="login-password" />
                         <span asp-validation-for="LoginViewModel.Password" class="invalid-feedback"></span>
                     </div>
-                    <div class="mb-3 d-flex flex-wrap justify-content-between">
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="si-remember">
-                            <label class="form-check-label" for="si-remember">مرا به خاطر بسپار</label>
-                        </div>
-                        <a class="fs-sm" asp-area="Identity" asp-controller="Account" asp-action="ForgotPassword">کلمه عبور را فراموش کرده اید ؟</a>
+                    <div class="form-check form-check-inline mb-3">
+                        <input asp-for="LoginViewModel.RememberMe" class="form-check-input" />
+                        <label asp-for="LoginViewModel.RememberMe" class="form-check-label"></label>
                     </div>
-                    <button class="btn btn-primary btn-shadow d-block w-100" type="submit">ورود</button>
+                    <button class="btn btn-primary d-block w-100" type="submit">ورود</button>
                 }
                 @using (Html.BeginForm("Register", "Account", new { area = "Identity" }, FormMethod.Post, true, new { @id = "signup-tab", @class = "needs-validation tab-pane fade", autocomplete = "off" }))
                 {
-                    <div class="mb-3">
-                        <label asp-for="RegisterViewModel.Name" class="form-label"></label>
-                        <input asp-for="RegisterViewModel.Name" class="form-control" autofocus />
-                        <span asp-validation-for="RegisterViewModel.Name" class="invalid-feedback"></span>
-                    </div>
                     <div class="mb-3">
                         <label class="form-label">شماره همراه</label>
                         <input asp-for="RegisterViewModel.PhoneNumber" class="form-control" autofocus />
@@ -54,7 +49,7 @@
                         <input asp-for="RegisterViewModel.ConfirmPassword" type="password" class="form-control" id="register-password-confirm" />
                         <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="invalid-feedback"></span>
                     </div>
-                    <button class="btn btn-primary btn-shadow d-block w-100" type="submit">ثبت نام</button>
+                    <button class="btn btn-primary d-block w-100" type="submit">ثبت نام</button>
                 }
             </div>
         </div>

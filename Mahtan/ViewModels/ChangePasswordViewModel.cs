@@ -7,17 +7,17 @@ namespace Mahtan.ViewModels
     public class ChangePasswordViewModel
     {
         [Display(Name = "شماره همراه")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "کلمه عبور جدید")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         [MaxLength(LengthConstants.MEDIUM_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Display(Name = "تکرار کلمه عبور جدید")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         [MaxLength(LengthConstants.MEDIUM_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         [DataType(DataType.Password)]
         [NotMapped]

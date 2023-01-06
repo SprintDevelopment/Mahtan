@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Banner>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <img src="@Url.Content(item.BannerFullPath)" width="128">
+        </td>
+        <td>
+            <p>@item.PreText</p>
+            <p class="fw-bold">@item.MainText</p>
+            <p>@item.DescriptionText</p>
+        </td>
+        <td class="py-2">
+            <div class="col-auto btn-group btn-group-sm w-100">
+                <a class="btn btn-outline-primary" onclick="showInPopup('@Url.Action("CreateOrUpdate", "Banner", new { id = item.BannerId }, Context.Request.Scheme)', 'ویرایش بنر', false, true)">مشاهده</a>
+                <button class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="visually-hidden">Toggle dropdown</span></button>
+                <div class="dropdown-menu my-1">
+                    <a class="dropdown-item text-danger delete" data-id="@item.BannerId" data-title="@item.MainText" style="cursor:pointer">حذف</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+}

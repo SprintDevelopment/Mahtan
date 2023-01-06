@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mahtan.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221231091205_Initial")]
-    partial class Initial
+    [Migration("20230106155243_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,18 +25,158 @@ namespace Mahtan.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Mahtan.Models.Faq", b =>
+            modelBuilder.Entity("Mahtan.Models.Address", b =>
                 {
-                    b.Property<short>("Id")
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
+
+                    b.Property<short>("DistrictId")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("EndPart")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("IsSelectedAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("DistrictId");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.Banner", b =>
+                {
+                    b.Property<short>("BannerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("smallint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("BannerId"));
+
+                    b.Property<string>("BackColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BannerGuid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionText")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LinkAddress")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("LinkContent")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("MainText")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("PreText")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("BannerId");
+
+                    b.ToTable("Banners");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.Category", b =>
+                {
+                    b.Property<short>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("CategoryId"));
+
+                    b.Property<string>("CountUnitTitle")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("IconGuid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OptionalComment")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<short?>("ParentCategoryId")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.District", b =>
+                {
+                    b.Property<short>("DistrictId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("DistrictId"));
+
+                    b.Property<string>("DistrictName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("DistrictId");
+
+                    b.ToTable("Districts");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.Faq", b =>
+                {
+                    b.Property<short>("FaqId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("FaqId"));
 
                     b.Property<string>("AnswerText")
                         .IsRequired()
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
 
                     b.Property<int>("FaqGroup")
                         .HasColumnType("int");
@@ -46,9 +186,45 @@ namespace Mahtan.Migrations
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)");
 
-                    b.HasKey("Id");
+                    b.HasKey("FaqId");
 
                     b.ToTable("Faqs");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.Profile", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("EmailAddress")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("OptionalAvatarGuid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("RecieveOffersByEmail")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RecieveOffersByShortMessage")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UrgentPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Username");
+
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -284,10 +460,22 @@ namespace Mahtan.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int>("MobileConfirmationCode")
-                        .HasColumnType("int");
+                    b.Property<string>("MobileConfirmationCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("User");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.Address", b =>
+                {
+                    b.HasOne("Mahtan.Models.District", "District")
+                        .WithMany()
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("District");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

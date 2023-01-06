@@ -14,7 +14,7 @@
             </div>
             <div class="modal-body tab-content py-4">
                 <p class="fs-md">پیامک تایید به شماره <b>@Model.PhoneNumber</b> ارسال شد. پس از دریافت پیامک، کد دریافتی را در قسمت پایین وارد کنید.</p>
-                @using (Html.BeginForm("ConfirmPhone", "Account", new { area = "Identity" }, FormMethod.Post, true, new { @class = "needs-validation tab-pane fade show active", autocomplete = "off" }))
+                @using (Html.BeginForm("ConfirmPhone", "Account", new { area = "Identity", returnUrl = ViewData["returnUrl"] }, FormMethod.Post, true, new { @class = "needs-validation tab-pane fade show active", autocomplete = "off" }))
                 {
                     <input type="hidden" asp-for="PhoneNumber" />
 

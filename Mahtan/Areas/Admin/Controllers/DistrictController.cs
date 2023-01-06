@@ -21,10 +21,10 @@ namespace Mahtan.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateOrUpdate(int id = 0)
+        public async Task<IActionResult> CreateOrUpdate(short id = 0)
         {
             if (id == 0)
-                return View(new District() { DisplayOrder = _unitOfWork.Districts.Count() + 1 });
+                return View(new District());
             else
             {
                 var entity = await _unitOfWork.Districts.GetAsync(id);
@@ -63,7 +63,7 @@ namespace Mahtan.Areas.Admin.Controllers
             return Json(new { isValid = false, html = HtmlHelper.RenderRazorViewToString(this, "CreateOrUpdate", entity) });
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(short id)
         {
             var entity = await _unitOfWork.Districts.GetAsync(id);
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mahtan.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,7 +33,7 @@ namespace Mahtan.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MobileConfirmationCode = table.Column<int>(type: "int", nullable: true),
+                    MobileConfirmationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -55,18 +55,87 @@ namespace Mahtan.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Faqs",
+                name: "Banners",
                 columns: table => new
                 {
-                    Id = table.Column<short>(type: "smallint", nullable: false)
+                    BannerId = table.Column<short>(type: "smallint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FaqGroup = table.Column<int>(type: "int", nullable: false),
-                    QuestionText = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
-                    AnswerText = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false)
+                    BannerGuid = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PreText = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    MainText = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DescriptionText = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    LinkContent = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    LinkAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    BackColor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Faqs", x => x.Id);
+                    table.PrimaryKey("PK_Banners", x => x.BannerId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    CategoryId = table.Column<short>(type: "smallint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParentCategoryId = table.Column<short>(type: "smallint", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    CountUnitTitle = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    IconGuid = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OptionalComment = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Districts",
+                columns: table => new
+                {
+                    DistrictId = table.Column<short>(type: "smallint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DistrictName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Districts", x => x.DistrictId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Faqs",
+                columns: table => new
+                {
+                    FaqId = table.Column<short>(type: "smallint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FaqGroup = table.Column<int>(type: "int", nullable: false),
+                    QuestionText = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
+                    AnswerText = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Faqs", x => x.FaqId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Profiles",
+                columns: table => new
+                {
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    UrgentPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OptionalAvatarGuid = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RecieveOffersByEmail = table.Column<bool>(type: "bit", nullable: false),
+                    RecieveOffersByShortMessage = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Profiles", x => x.Username);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,6 +244,30 @@ namespace Mahtan.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    AddressId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    DistrictId = table.Column<short>(type: "smallint", nullable: false),
+                    EndPart = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    IsSelectedAddress = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Districts_DistrictId",
+                        column: x => x.DistrictId,
+                        principalTable: "Districts",
+                        principalColumn: "DistrictId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -184,6 +277,11 @@ namespace Mahtan.Migrations
                     { "62d2c350-e6a7-4eff-a5c4-45d92cab03df", "e42d30cb-95e5-49e4-a5b6-68bbc7c162db", "SemiAdmin", "SEMIADMIN" },
                     { "cfccee10-9a30-41f0-9d81-809b83520b5b", "7827abb2-22fc-4d57-a80f-0293376c8487", "User", "USER" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_DistrictId",
+                table: "Addresses",
+                column: "DistrictId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -229,6 +327,9 @@ namespace Mahtan.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Addresses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -244,7 +345,19 @@ namespace Mahtan.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Banners");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
                 name: "Faqs");
+
+            migrationBuilder.DropTable(
+                name: "Profiles");
+
+            migrationBuilder.DropTable(
+                name: "Districts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -1,0 +1,45 @@
+﻿@model AddressViewModel
+@{
+    Layout = null;
+}
+<div class="modal-header bg-secondary py-1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    <p class="fw-bold my-2">@Model.Address.CrudTitle()</p>
+</div>
+
+<div class="modal-body tab-content py-4">
+    @using (Html.BeginForm("CreateOrUpdate", "Address", new { area = "User" }, FormMethod.Post, true, new { onsubmit = "return jQueryAjaxPost(this)", autocomplete = "off" }))
+    {
+        <input type="hidden" asp-for="Address.AddressId" />
+        <div class="mb-3">
+            <label asp-for="Address.Title" class="form-label"></label>
+            <input asp-for="Address.Title" class="form-control" autocomplete="off" autofocus />
+            <span asp-validation-for="Address.Title" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Address.DistrictId" class="form-label"></label>
+            <select asp-for="Address.DistrictId" class="form-control" asp-items="Model.Districts.ToSelectListItem(nameof(District.DistrictId), nameof(District.DistrictName), Model.Address.DistrictId)"></select>
+            <span asp-validation-for="Address.DistrictId" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Address.EndPart" class="form-label"></label>
+            @Html.TextAreaFor(m => m.Address.EndPart, 3, 0, new { @class = "form-control" })
+            <span asp-validation-for="Address.EndPart" class="invalid-feedback"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Address.PostalCode" class="form-label"></label>
+            <input asp-for="Address.PostalCode" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Address.PostalCode" class="invalid-feedback"></span>
+        </div>
+        <div class="form-check form-check-inline mb-3">
+            <input asp-for="Address.IsSelectedAddress" class="form-check-input" />
+            <label asp-for="Address.IsSelectedAddress" class="form-check-label"></label>
+        </div>
+        <button class="btn btn-primary d-block w-100" type="submit">تایید</button>
+    }
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

@@ -1,0 +1,87 @@
+﻿@model Profile
+
+<div class="d-none d-lg-flex pt-lg-3 pb-4 pb-lg-5 mb-lg-3">
+    <h6 class="fs-base text-light mb-0">مشاهده و ویرایش پروفایل</h6>
+</div>
+
+<div id="alert-div"></div>
+
+<!-- Profile form-->
+@using (Html.BeginForm("Index", "Profile", new { area = "User" }, FormMethod.Post, true, new { onsubmit = "return jQueryAjaxPostProfile(this)", autocomplete = "off" }))
+{
+    <div class="bg-secondary rounded-3 p-4 mb-4">
+        <div class="d-flex align-items-center">
+            <input type="file" name="file" id="file" class="hidden-input-file" />
+            <img id="profile-preview" class="rounded" src="@Url.Content(@Model.AvatarFullPath)" width="90" alt="no avatar">
+            <div class="ps-3">
+                <label class="btn btn-light btn-shadow btn-sm mb-2" for="file"><i class="ci-loading me-2"></i>تغییر تصویر</label>
+                <div class="p mb-0 fs-ms text-muted">تصویر مورد نظر خود را بارگزاری کنید؛ با ویرایش پروفایل، تصویر انتخاب شده ذخیره می شود</div>
+            </div>
+        </div>
+    </div>
+    <div class="row gx-4 gy-3">
+        <div class="col-sm-6">
+            <label asp-for="FirstName" class="form-label"></label>
+            <input asp-for="FirstName" class="form-control" autocomplete="off" autofocus />
+            <span asp-validation-for="FirstName" class="invalid-feedback"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="LastName" class="form-label"></label>
+            <input asp-for="LastName" class="form-control" autocomplete="off" />
+            <span asp-validation-for="LastName" class="invalid-feedback"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="EmailAddress" class="form-label"></label>
+            <input asp-for="EmailAddress" class="form-control" autocomplete="off" />
+            <span asp-validation-for="EmailAddress" class="invalid-feedback"></span>
+        </div>
+        <div class="col-sm-6">
+            <label asp-for="UrgentPhoneNumber" class="form-label"></label>
+            <input asp-for="UrgentPhoneNumber" class="form-control" autocomplete="off" />
+            <span asp-validation-for="UrgentPhoneNumber" class="invalid-feedback"></span>
+        </div>
+        <div class="col-12">
+            <div class="form-check form-check-inline">
+                <input asp-for="RecieveOffersByEmail" class="form-check-input" />
+                <label asp-for="RecieveOffersByEmail" class="form-check-label"></label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-check form-check-inline mb-3">
+                <input asp-for="RecieveOffersByShortMessage" class="form-check-input" />
+                <label asp-for="RecieveOffersByShortMessage" class="form-check-label"></label>
+            </div>
+        </div>
+        <div class="col-12">
+            <hr class="mt-2 mb-3">
+            <div class="text-end">
+                <button class="btn btn-primary mt-3 mt-sm-0" id="submit-button" type="submit">ویرایش پروفایل</button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/site-scripts/image-uploader.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#file").change(function () {
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                if (regex.test($(this).val().toLowerCase())) {
+                    if (typeof (FileReader) != "undefined") {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#profile-preview").attr("src", e.target.result);
+                        }
+                        reader.readAsDataURL($(this)[0].files[0]);
+                    } else {
+                        alert("خطا در عملیات");
+                    }
+                } else {
+                    alert("لطفا یک فایل معتبر انتخاب کنید.");
+                }
+            });
+        });
+    </script>
+}

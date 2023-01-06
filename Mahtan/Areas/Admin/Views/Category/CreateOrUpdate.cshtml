@@ -38,12 +38,7 @@
             @Html.TextAreaFor(m => m.Category.OptionalComment, 3, 0, new { @class = "form-control" })
             <span asp-validation-for="Category.OptionalComment" class="invalid-feedback"></span>
         </div>
-        <div class="mb-3">
-            <label asp-for="Category.DisplayOrder" class="form-label"></label>
-            <input asp-for="Category.DisplayOrder" class="form-control" />
-            <span asp-validation-for="Category.DisplayOrder" class="invalid-feedback"></span>
-        </div>
-        <button class="btn btn-primary btn-shadow d-block w-100" type="submit">تایید</button>
+        <button class="btn btn-primary d-block w-100" type="submit">تایید</button>
     }
 </div>
 

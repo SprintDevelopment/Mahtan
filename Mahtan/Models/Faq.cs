@@ -10,20 +10,24 @@ namespace Mahtan.Models
     public class Faq : BaseModel
     {
         [Key]
-        public short Id { get; set; }
+        public short FaqId { get; set; }
 
         [Display(Name = "گروه پرسش")]
         public FaqGroups FaqGroup { get; set; }
 
         [Display(Name = "متن پرسش")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         [MaxLength(LengthConstants.VERY_LARGE_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         public string QuestionText { get; set; }
 
         [Display(Name = "متن پاسخ")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         [MaxLength(LengthConstants.VERY_LARGE_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         public string AnswerText { get; set; }
+
+        [Display(Name = "ردیف نمایش")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
+        public int DisplayOrder { get; set; }
 
         public Faq()
         {

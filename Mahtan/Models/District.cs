@@ -9,10 +9,10 @@ namespace Mahtan.Models
     public class District : BaseModel
     {
         [Key]
-        public int DistrictId { get; set; }
+        public short DistrictId { get; set; }
 
         [Display(Name = "نام محله")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         [MaxLength(LengthConstants.MEDIUM_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         public string DistrictName { get; set; }
 

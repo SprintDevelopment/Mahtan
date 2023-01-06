@@ -1,0 +1,55 @@
+﻿@model Banner
+@{
+    Layout = null;
+}
+<div class="modal-header bg-secondary py-1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    <p class="fw-bold my-2">@Model.CrudTitle()</p>
+</div>
+
+<div class="modal-body tab-content py-4">
+    @using (Html.BeginForm("CreateOrUpdate", "Banner", new { area = "Admin" }, FormMethod.Post, true, new { onsubmit = "return jQueryAjaxPost(this)", autocomplete = "off" }))
+    {
+        <input type="hidden" asp-for="BannerId" />
+        <input type="hidden" asp-for="BannerGuid" />
+        <div class="mb-3">
+            <label asp-for="BannerGuid" class="form-label"></label>
+            <input type="file" name="iconGuid" class="form-control" autofocus />
+        </div>
+        <div class="mb-3">
+            <label asp-for="PreText" class="form-label"></label>
+            <input asp-for="PreText" class="form-control" />
+            <span asp-validation-for="PreText" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="MainText" class="form-label"></label>
+            <input asp-for="MainText" class="form-control" />
+            <span asp-validation-for="MainText" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DescriptionText" class="form-label"></label>
+            @Html.TextAreaFor(m => m.DescriptionText, 3, 0, new { @class = "form-control" })
+            <span asp-validation-for="DescriptionText" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="LinkContent" class="form-label"></label>
+            <input asp-for="LinkContent" class="form-control" />
+            <span asp-validation-for="LinkContent" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="LinkAddress" class="form-label"></label>
+            <input asp-for="LinkAddress" class="form-control" />
+            <span asp-validation-for="LinkAddress" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="BackColor" class="form-label"></label>
+            <input asp-for="BackColor" class="form-control" />
+            <span asp-validation-for="BackColor" class="invalid-feedback"></span>
+        </div>
+        <button class="btn btn-primary d-block w-100" type="submit">تایید</button>
+    }
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

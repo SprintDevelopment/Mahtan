@@ -5,11 +5,11 @@ namespace Mahtan.ViewModels
     public class ConfirmPhoneViewModel
     {
         [Display(Name = "شماره همراه")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "کد فعالسازی")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         public string VerificationCode { get; set; }
     }
 }

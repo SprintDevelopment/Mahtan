@@ -16,18 +16,17 @@ namespace Mahtan.Models
         public short? ParentCategoryId { get; set; }
 
         [Display(Name = "عنوان دسته")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         [MaxLength(LengthConstants.MEDIUM_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         public string Title { get; set; }
 
         [Display(Name = "عنوان واحد شمارش")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} را وارد کنید")]
+        [Required(ErrorMessage = "{0} را وارد کنید")]
         [MaxLength(LengthConstants.MEDIUM_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         public string CountUnitTitle { get; set; } = "عدد";
 
         [Display(Name = "آیکن دسته")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
-        [Required(AllowEmptyStrings = true)]
         public string IconGuid { get; set; }
 
         [NotMapped]
