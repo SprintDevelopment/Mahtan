@@ -13,6 +13,8 @@ namespace Mahtan.Data.Repositories
         ICategoryRepository Categories { get; }
         IDistrictRepository Districts { get; }
         IFaqRepository Faqs { get; }
+        IProductRepository Products { get; }
+        IProductImageRepository ProductImages { get; }
         IProfileRepository Profiles { get; }
 
         Task<int> CompleteAsync();
@@ -30,6 +32,8 @@ namespace Mahtan.Data.Repositories
             Categories = new CategoryRepository(_context);
             Districts = new DistrictRepository(_context);
             Faqs = new FaqRepository(_context);
+            Products = new ProductRepository(_context);
+            ProductImages = new ProductImageRepository(_context);
             Profiles = new ProfileRepository(_context);
         }
 
@@ -38,6 +42,8 @@ namespace Mahtan.Data.Repositories
         public ICategoryRepository Categories { get; private set; }
         public IDistrictRepository Districts { get; private set; }
         public IFaqRepository Faqs { get; private set; }
+        public IProductRepository Products { get; private set; }
+        public IProductImageRepository ProductImages { get; private set; }
         public IProfileRepository Profiles { get; private set; }
 
         public async Task<int> CompleteAsync()

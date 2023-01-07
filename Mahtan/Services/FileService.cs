@@ -10,6 +10,7 @@ namespace Mahtan.Services
     public interface IFileService
     {
         Task<string> UploadAsync(IFormFile file, string pathToSave, string preFileToRemove = null);
+        void Delete(string pathToFile, string fileToRemove);
     }
 
     public class FileService : IFileService
@@ -34,12 +35,7 @@ namespace Mahtan.Services
                 }
 
                 if (!preFileToRemove.IsNullOrWhitespace())
-                    try
-                    {
-                        var fileToRemoveFullPath = Path.Combine(_webHostEnvironment.WebRootPath, pathToSave, preFileToRemove);
-                        File.Delete(fileToRemoveFullPath);
-                    }
-                    catch { }
+                    Delete(pathToSave, preFileToRemove);
 
                 return fileName;
             }
@@ -47,6 +43,16 @@ namespace Mahtan.Services
             {
                 return "";
             }
+        }
+
+        public void Delete(string pathToFile, string fileToRemove)
+        {
+            try
+            {
+                var fileToRemoveFullPath = Path.Combine(_webHostEnvironment.WebRootPath, pathToFile, fileToRemove);
+                File.Delete(fileToRemoveFullPath);
+            }
+            catch { }
         }
     }
 }
