@@ -1,12 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mahtan.Data.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mahtan.Controllers
 {
     public class ProductController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public ProductController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var product = _unitOfWork.Products.Find(p => p.ProductId == id).Include(p => p.Images).SingleOrDefault();
+            if (product != null)
+                return View(product);
+
+            return NotFound();
         }
     }
 }
