@@ -52,6 +52,9 @@ namespace Mahtan.Models
         [MaxLength(LengthConstants.VERY_LARGE_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         public string OptionalComment { get; set; }
 
+        [Display(Name = "محصول در حال حاضر فعال است.")]
+        public bool IsActive { get; set; } = true;
+
         [NotMapped]
         public string FarsiSlug => Regex.Replace(Name, @"\s", "-");
     }

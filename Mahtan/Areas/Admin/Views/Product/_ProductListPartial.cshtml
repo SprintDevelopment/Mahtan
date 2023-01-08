@@ -9,7 +9,7 @@
         <td>@item.Name</td>
         <td class="py-2">
             <div class="col-auto btn-group btn-group-sm w-100">
-                <a class="btn btn-outline-primary" onclick="showInPopup('@Url.Action("CreateOrUpdate", "Product", new { id = item.ProductId }, Context.Request.Scheme)', 'ویرایش محصول')">مشاهده</a>
+                <a class="btn btn-outline-primary" onclick="showInPopup('@Url.Action("CreateOrUpdate", "Product", new { id = item.ProductId }, Context.Request.Scheme)', 'ویرایش محصول', true, true)">مشاهده</a>
                 <button class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="visually-hidden">Toggle dropdown</span></button>
                 <div class="dropdown-menu my-1">
                     <a class="dropdown-item" href="#">آمار این محصول</a>

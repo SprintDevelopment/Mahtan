@@ -23,8 +23,6 @@ namespace Mahtan.Data.Repositories
         public IQueryable<Product> FindWithFirstImages(Expression<Func<Product, bool>> predicate = null) 
         {
             return DatabaseContext.Products.Where(predicate ?? (x => true)).Include(p => p.Images.Take(1));
-            1- Use this method for all
-                2- Add new field for active product.
         }
     }
 }

@@ -202,6 +202,9 @@ namespace Mahtan.Migrations
                     b.Property<int>("DiscountPercent")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)

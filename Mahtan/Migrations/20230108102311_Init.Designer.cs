@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mahtan.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230107150247_Init")]
+    [Migration("20230108102311_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -204,6 +204,9 @@ namespace Mahtan.Migrations
 
                     b.Property<int>("DiscountPercent")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

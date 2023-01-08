@@ -40,6 +40,10 @@
             @Html.TextAreaFor(m => m.Product.OptionalComment, 3, 0, new { @class = "form-control" })
             <span asp-validation-for="Product.OptionalComment" class="invalid-feedback"></span>
         </div>
+        <div class="form-check form-check-inline mb-3">
+            <input asp-for="Product.IsActive" class="form-check-input" />
+            <label asp-for="Product.IsActive" class="form-check-label"></label>
+        </div>
         <button class="btn btn-primary d-block w-100" type="submit">تایید</button>
     }
 </div>

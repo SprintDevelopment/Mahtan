@@ -254,7 +254,8 @@ namespace Mahtan.Migrations
                     CategoryId = table.Column<short>(type: "smallint", nullable: false),
                     Price = table.Column<long>(type: "bigint", nullable: false),
                     DiscountPercent = table.Column<int>(type: "int", nullable: false),
-                    OptionalComment = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true)
+                    OptionalComment = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

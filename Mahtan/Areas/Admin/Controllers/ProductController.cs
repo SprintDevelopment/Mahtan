@@ -100,7 +100,7 @@ namespace Mahtan.Areas.Admin.Controllers
                     await _unitOfWork.CompleteAsync();
                 }
 
-                return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_ProductListPartial", _unitOfWork.Products.Find().Include(p => p.Images.FirstOrDefault()).AsEnumerable()) });
+                return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_ProductListPartial", _unitOfWork.Products.FindWithFirstImages().AsEnumerable()) });
             }
 
             var viewModel = new ProductViewModel()
@@ -131,7 +131,7 @@ namespace Mahtan.Areas.Admin.Controllers
                 _unitOfWork.Products.Remove(entity);
                 await _unitOfWork.CompleteAsync();
 
-                return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_ProductListPartial", _unitOfWork.Products.Find().Include(p => p.Images.FirstOrDefault()).AsEnumerable()) });
+                return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_ProductListPartial", _unitOfWork.Products.FindWithFirstImages().AsEnumerable()) });
             }
             else
                 return Json(new { isValid = false, html = "آیتم مورد نظر پیدا نشد." });
