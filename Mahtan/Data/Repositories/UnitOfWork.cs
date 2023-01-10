@@ -15,6 +15,7 @@ namespace Mahtan.Data.Repositories
         IFaqRepository Faqs { get; }
         IProductRepository Products { get; }
         IProductImageRepository ProductImages { get; }
+        IProductReviewRepository ProductReviews { get; }
         IProfileRepository Profiles { get; }
 
         Task<int> CompleteAsync();
@@ -34,6 +35,7 @@ namespace Mahtan.Data.Repositories
             Faqs = new FaqRepository(_context);
             Products = new ProductRepository(_context);
             ProductImages = new ProductImageRepository(_context);
+            ProductReviews = new ProductReviewRepository(_context);
             Profiles = new ProfileRepository(_context);
         }
 
@@ -44,6 +46,7 @@ namespace Mahtan.Data.Repositories
         public IFaqRepository Faqs { get; private set; }
         public IProductRepository Products { get; private set; }
         public IProductImageRepository ProductImages { get; private set; }
+        public IProductReviewRepository ProductReviews { get; private set; }
         public IProfileRepository Profiles { get; private set; }
 
         public async Task<int> CompleteAsync()

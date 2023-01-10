@@ -20556,7 +20556,7 @@ a.nav-link:hover .media-tab-media {
     .widget-cart-item .btn-close {
         position: absolute;
         top: 50%;
-        right: 0;
+        left: 0;
         height: auto;
         padding: 0;
         transform: translateY(-50%);
@@ -20572,10 +20572,10 @@ a.nav-link:hover .media-tab-media {
         transition: all .25s ease-in-out
     }
 
-    .widget-cart-item:hover > .d-flex {
+/*    .widget-cart-item:hover > .d-flex {
         transform: translateX(1.125rem)
     }
-
+*/
     .widget-cart-item:hover .btn-close {
         visibility: visible;
         opacity: 1

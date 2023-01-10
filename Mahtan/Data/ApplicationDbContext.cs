@@ -32,6 +32,7 @@ namespace Mahtan.Data
         public DbSet<Faq> Faqs { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<User> SiteUsers { get; set; }
     }
