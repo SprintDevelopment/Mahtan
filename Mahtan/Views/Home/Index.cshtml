@@ -1,21 +1,30 @@
-﻿        <!-- Hero slider-->
-<section class="tns-carousel tns-controls-lg">
+﻿@model MainPageViewModel
+
+@if(!Model.Banners.IsNullOrEmpty())
+{
+    <section class="tns-carousel tns-controls-lg">
     <div class="tns-carousel-inner">
-        <!-- Item-->
-        <div class="px-lg-5" style="background-color: #3aafd2;">
-            <div class="d-lg-flex justify-content-between align-items-center ps-lg-4">
-                <img class="d-block order-lg-2 me-lg-n5 flex-shrink-0" src="~/resources/img/walls/01.jpg" alt="Summer Collection">
-                <div class="position-relative mx-auto me-lg-n5 py-5 px-4 mb-lg-5 order-lg-1" style="max-width: 42rem; z-index: 10;">
-                    <div class="pb-lg-5 mb-lg-5 text-center text-lg-start text-lg-nowrap">
-                        <h3 class="h2 text-light fw-light pb-1 from-start">Has just arrived!</h3>
-                        <h2 class="text-light display-5 from-start delay-1">Huge Summer Collection</h2>
-                        <p class="fs-lg text-light pb-3 from-start delay-2">Swimwear, Tops, Shorts, Sunglasses &amp; much more...</p>
-                        <div class="d-table scale-up delay-4 mx-auto mx-lg-0"><a class="btn btn-primary" href="shop-grid-ls.html">Shop Now<i class="ci-arrow-right ms-2 me-n1"></i></a></div>
+            @foreach (var banner in Model.Banners)
+            {
+                <!-- Item-->
+                <div class="px-lg-5" style="background-color: @banner.BackColor;">
+                    <div class="d-lg-flex justify-content-between align-items-center ps-lg-4">
+                        <img class="d-block order-lg-2 me-lg-n5 flex-shrink-0" src="@Url.Content(banner.BannerFullPath)" alt="@banner.MainText">
+                        <div class="position-relative mx-auto me-lg-n5 py-5 px-4 mb-lg-5 order-lg-1">
+                            <div class="pb-lg-5 mb-lg-5 text-center text-lg-start text-lg-nowrap">
+                                <h3 class="h2 text-light fw-light pb-1 from-start">@banner.PreText</h3>
+                                <h2 class="text-light display-5 from-start delay-1">@banner.MainText</h2>
+                                <p class="fs-lg text-light pb-3 from-start delay-2">@banner.DescriptionText</p>
+                                <div class="d-table scale-up delay-4 mx-auto mx-lg-0">
+                                    <a class="btn btn-primary" href="@banner.LinkAddress">@banner.LinkContent<i class="ci-arrow-right ms-2 me-n1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- Item-->
+            }
+@*        <!-- Item-->
         <div class="px-lg-5" style="background-color: #f5b1b0;">
             <div class="d-lg-flex justify-content-between align-items-center ps-lg-4">
                 <img class="d-block order-lg-2 me-lg-n5 flex-shrink-0" src="~/resources/img/walls/02.jpg" alt="Women Sportswear">
@@ -43,8 +52,9 @@
                 </div>
             </div>
         </div>
-    </div>
+*@    </div>
 </section>
+}
 <!-- Popular categories-->
 <section class="container position-relative pt-3 pt-lg-0 pb-5 mt-lg-n10" style="z-index: 10;">
     <div class="row">

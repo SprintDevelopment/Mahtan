@@ -18107,7 +18107,7 @@ a.nav-link:hover .media-tab-media {
         display: block;
         position: absolute;
         top: -0.5rem;
-        right: 50%;
+        left: 50%;
         transform: translateX(-50%);
         transition: opacity .2s ease-in-out, top .2s ease-in-out;
         padding: .0625rem .375rem;

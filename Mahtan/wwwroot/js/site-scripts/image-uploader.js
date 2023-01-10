@@ -129,7 +129,7 @@
                 $button = $('<button>', {class: 'delete-image'}).appendTo($container),
 
                 // Create the delete icon
-                $i = $('<i>', {class: 'material-icons', text: 'clear'}).appendTo($button);
+                $i = $('<i>', { class: 'ci-close fs-xs p-1'}).appendTo($button);
 
             // If the images are preloaded
             if (plugin.settings.preloaded.length) {

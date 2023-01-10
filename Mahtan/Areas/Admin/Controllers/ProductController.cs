@@ -58,10 +58,7 @@ namespace Mahtan.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 if (product.ProductId == 0)
-                {
-                    _unitOfWork.Products.Add(product);
-                    await _unitOfWork.CompleteAsync();
-                }
+                    _unitOfWork.Products.Add(product, true);
                 else
                 {
                     var oldEntity = await _unitOfWork.Products.GetAsync(product.ProductId);

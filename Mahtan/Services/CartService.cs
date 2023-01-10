@@ -1,10 +1,8 @@
 ﻿using Mahtan.Models;
-using Microsoft.AspNetCore.Identity;
-using Mahtan.Assets.Extensions;
 using Mahtan.Data.Repositories;
-using Mahtan.Models;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Mahtan.Assets.Extensions;
 
 namespace Mahtan.Services
 {
@@ -32,61 +30,42 @@ namespace Mahtan.Services
 
         public async Task<CartItem> AddToCartAsync(int productId)
         {
-            //var product = await _unitOfWork.Products.FindWithFirstImages(p => p.ProductId == productId).FirstOrDefaultAsync();
-
-            //if (product != null)
-            //{
-            //    var cartItems = GetCartItems();
-            //    var cartItem = cartItems.SingleOrDefault(ci => ci.ProductId == productId);
-            //    if (cartItem == null)
-            //    {
-            //        cartItem = new CartItem { ProductId = productId, Product = product, Price = product.Price, Qty = 1 };
-
-            //        if (_user.Identity.IsAuthenticated)
-            //        {
-            //            cartItem.Username = _user.Identity.Name;
-            //            _unitOfWork.CartItems.Add(cartItem);
-            //            await _unitOfWork.CompleteAsync();
-            //        }
-            //        else
-            //        {
-            //            cartItems.Add(cartItem);
-            //            _session.SetObjectAsJson("CartItems", cartItems);
-            //        }
-
-            //        return cartItem;
-            //    }
-
-            //    return await UpdateCartItemAsync(productId, true);
-            //}
-
-            //return null;
-
             return await UpdateCartItemAsync(productId, 1);
         }
 
-        public Task<CartItem> UpdateCartItemAsync(int productId, int incOrDecQty)
+        public async Task<CartItem> UpdateCartItemAsync(int productId, int incOrDecQty)
         {
-            var product = await _unitOfWork.Products.GetWithIncludeAsync(p => p.ProductId == productId);
+            var product = await _unitOfWork.Products.FindWithFirstImages(p => p.ProductId == productId).FirstOrDefaultAsync();
             if (product is null)
                 return null;
 
-            var cartItem = GetCartItems().FirstOrDefault(ci => ci.ProductId == productId) ?? new CartItem { ProductId = productId, Product = product, Price = product.Price };
-                cartItem.Qty += isIncrease;
+            CartItem cartItem = null;
 
-                    if (_isUserAuthenticated)
-                    {
-                        if (cartItem.Qty <= 0 && cartItem.CII)
-                        {
-                            cartItem = null;
-                        }
-                        _unitOfWork.CartItems.Update(cartItem, cartItem);
-                        await _unitOfWork.CompleteAsync();
-                    }
-                    else
-                    {
-                        _session.SetObjectAsJson("CartItems", cartItems);
-                    }
+            if (_isUserAuthenticated)
+            {
+                cartItem = _unitOfWork.CartItems.Find(ci => ci.Username == _user.Identity.Name).FirstOrDefault() ?? new CartItem { ProductId = productId, Product = product, Price = product.Price };
+                cartItem.Qty += incOrDecQty;
+
+                if (cartItem.Qty > 0 && cartItem.CartItemId == 0)
+                    _unitOfWork.CartItems.Add(cartItem);
+                else if(cartItem.Qty <= 0 && cartItem.CartItemId != 0)
+                    _unitOfWork.CartItems.Remove(cartItem);
+                
+                await _unitOfWork.CompleteAsync();
+            }
+            else
+            {
+                var cartItems = _session.GetObjectFromJson<List<CartItem>>("CartItems") ?? new List<CartItem>();
+                cartItem = cartItems.Find(ci => ci.Username == _user.Identity.Name) ?? new CartItem { ProductId = productId, Product = product, Price = product.Price };
+                cartItem.Qty += incOrDecQty;
+
+                if (cartItem.Qty > 0 && cartItem.CartItemId == 0)
+                    cartItems.Add(cartItem);
+                else if (cartItem.Qty <= 0 && cartItem.CartItemId != 0)
+                    cartItems.Remove(cartItem);
+
+                _session.SetObjectAsJson("CartItems", cartItems);
+            }
 
             return cartItem;
         }
@@ -98,7 +77,7 @@ namespace Mahtan.Services
 
         public List<CartItem> GetCartItems()
         {
-            if (_user.Identity.IsAuthenticated)
+            if (_isUserAuthenticated)
                 return _unitOfWork.CartItems.Find(ci => ci.Username == _user.Identity.Name).ToList();
             else
                 return _session.GetObjectFromJson<List<CartItem>>("CartItems") ?? new List<CartItem>();
