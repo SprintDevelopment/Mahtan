@@ -1,18 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mahtan.Models
 {
-    public class OrderItem : BaseModel
+    public class CartItem : BaseModel
     {
         [Key]
-        public long OrderItemId { get; set; }
+        public long CartItemId { get; set; }
 
         [Required]
-        public int OrderId { get; set; }
-
-        [ForeignKey(nameof(OrderId))]
-        public Order Order { get; set; }
+        public string Username { get; set; }
 
         [Required]
         public int ProductId { get; set; }
@@ -27,5 +24,8 @@ namespace Mahtan.Models
         [Required]
         [Range(0, long.MaxValue, ErrorMessage = "{0} باید عددی بین  {1} و {2} باشد")]
         public long Price { get; set; }
+
+        [NotMapped]
+        public long Total { get; set; }
     }
 }
