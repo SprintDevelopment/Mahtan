@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<Category>
 
-<h3 class="h5 pb-2">لیست دسته های محصولات</h3>
+<h3 class="h5 pb-2">لیست برند های محصولات</h3>
 
 <div>
     <table class="table fs-sm mb-0">
         <thead>
             <tr>
-                <th>آیکن</th>
-                <th>نام</th>
+                <th>لوگو</th>
+                <th>عنوان</th>
                 <th width="40px">
-                    <a class="btn btn-sm btn-outline-primary w-100" onclick="showInPopup('@Url.Action("CreateOrUpdate", "Category", null, Context.Request.Scheme)', 'افزودن دسته جدید', false)">
+                    <a class="btn btn-sm btn-outline-primary w-100" onclick="showInPopup('@Url.Action("CreateOrUpdate", "Brand", null, Context.Request.Scheme)', 'افزودن برند جدید', false)">
                         مورد جدید
                     </a>
                 </th>
             </tr>
         </thead>
         <tbody id="data-list">
-            @await Html.PartialAsync("_CategoryListPartial", Model)
+            @await Html.PartialAsync("_BrandListPartial", Model)
         </tbody>
     </table>
 </div>

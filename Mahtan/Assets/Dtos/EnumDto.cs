@@ -10,5 +10,9 @@
             Value = value;
             Description = description;
         }
+
+        public EnumDto()
+        {
+        }
     }
 }

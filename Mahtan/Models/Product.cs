@@ -1,6 +1,9 @@
 ﻿using Mahtan.Assets.Attributes;
+using Mahtan.Assets.Dtos;
+using Mahtan.Assets.Extensions;
 using Mahtan.Assets.Values;
 using Mahtan.Assets.Values.Constants;
+using Mahtan.Assets.Values.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
@@ -43,7 +46,7 @@ namespace Mahtan.Models
 
         [NotMapped]
         public string FirstThumbImageFullPath => (Images?.FirstOrDefault() ?? new ProductImage()).ImageThumbFullPath;
-        
+
         [NotMapped]
         public string FirstLargeImageFullPath => (Images?.FirstOrDefault() ?? new ProductImage()).ImageLargeFullPath;
 
@@ -51,6 +54,19 @@ namespace Mahtan.Models
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         [MaxLength(LengthConstants.VERY_LARGE_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         public string OptionalComment { get; set; }
+
+        [Display(Name = "رنگ های قابل عرضه")]
+        public ProductColors Colors { get; set; } = ProductColors.None;
+
+        [Display(Name = "اندازه های قابل عرضه")]
+        public ProductSizes Sizes { get; set; } = ProductSizes.None;
+
+        [NotMapped]
+        public FlaggedEnumDto[] SizeFlags 
+        { 
+            get => typeof(ProductSizes).ToFlaggedCollection(Sizes).Where(item => (ProductSizes)item.Value != ProductSizes.None).ToArray();
+            set => Sizes = (ProductSizes)value.Select((item, i) => item.IsSelected ? Math.Pow(2, i) : 0).Sum(); 
+        }
 
         [Display(Name = "محصول در حال حاضر فعال است.")]
         public bool IsActive { get; set; } = true;

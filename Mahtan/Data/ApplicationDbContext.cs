@@ -27,6 +27,7 @@ namespace Mahtan.Data
 
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Banner> Banners { get; set; }
+        public DbSet<Brand> Brands { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<District> Districts { get; set; }

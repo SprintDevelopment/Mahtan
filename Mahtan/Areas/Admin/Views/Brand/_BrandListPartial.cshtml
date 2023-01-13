@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Brand>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <img src="@Url.Content(item.LogoFullPath)" width="32">
+        </td>
+        <td>@item.Title</td>
+        <td class="py-2">
+            <div class="col-auto btn-group btn-group-sm w-100">
+                <a class="btn btn-outline-primary" onclick="showInPopup('@Url.Action("CreateOrUpdate", "Brand", new { id = item.BrandId }, Context.Request.Scheme)', 'ویرایش برند')">مشاهده</a>
+                <button class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="visually-hidden">Toggle dropdown</span></button>
+                <div class="dropdown-menu my-1">
+                    <a class="dropdown-item" href="#">محصولات این برند</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger delete" data-id="@item.BrandId" data-title="@item.Title" style="cursor:pointer">حذف</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+}

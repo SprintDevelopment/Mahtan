@@ -10,6 +10,7 @@ namespace Mahtan.Data.Repositories
 
         IAddressRepository Addresses { get; }
         IBannerRepository Banners { get; }
+        IBrandRepository Brands { get; }
         ICategoryRepository Categories { get; }
         ICartItemRepository CartItems { get; }
         IDistrictRepository Districts { get; }
@@ -31,6 +32,7 @@ namespace Mahtan.Data.Repositories
 
             Addresses = new AddressRepository(_context);
             Banners = new BannerRepository(_context);
+            Brands = new BrandRepository(_context);
             Categories = new CategoryRepository(_context);
             CartItems = new CartItemRepository(_context);
             Districts = new DistrictRepository(_context);
@@ -43,6 +45,7 @@ namespace Mahtan.Data.Repositories
 
         public IAddressRepository Addresses { get; private set; }
         public IBannerRepository Banners { get; private set; }
+        public IBrandRepository Brands { get; private set; }
         public ICategoryRepository Categories { get; private set; }
         public ICartItemRepository CartItems { get; private set; }
         public IDistrictRepository Districts { get; private set; }

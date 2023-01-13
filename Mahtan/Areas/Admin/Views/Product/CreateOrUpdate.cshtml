@@ -44,6 +44,16 @@
             <input asp-for="Product.IsActive" class="form-check-input" />
             <label asp-for="Product.IsActive" class="form-check-label"></label>
         </div>
+        <div class="mb-3">
+            <label asp-for="Product.Sizes" class="form-label me-2"></label>
+                @for (int i = 0; i < Model.Product.SizeFlags.Count(); i++)
+                {
+                    <div class="form-check form-option form-check-inline mb-2">
+                        <input asp-for="Product.SizeFlags[i].IsSelected" class="form-check-input" />
+                        <label asp-for="Product.SizeFlags[i].IsSelected" class="form-option-label">@Model.Product.SizeFlags[i].Description</label>
+                    </div>
+                }
+        </div>
         <button class="btn btn-primary d-block w-100" type="submit">تایید</button>
     }
 </div>

@@ -20,7 +20,8 @@ namespace Mahtan.Controllers
         {
             var viewModel = new MainPageViewModel
             {
-                Banners = _unitOfWork.Banners.Find(b => b.IsActive).AsEnumerable()
+                Banners = _unitOfWork.Banners.Find(b => b.IsActive).AsEnumerable(),
+                PopularProducts = _unitOfWork.Products.FindWithFirstImages().AsEnumerable()
             };
 
             return View(viewModel);
