@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@inject ICartService _cartService
+@{
+    var forCloneCartItem = new CartItem();
+    var cartItems = _cartService.GetCartItems();
+    var totalCartPrice = cartItems.Sum(ci => ci.Qty * ci.Price);
+    var isCartItemsEmpty = cartItems.IsNullOrEmpty();
+}
+
+<!DOCTYPE html>
 <html lang="en" dir="rtl">
 
 <head>
@@ -169,52 +177,24 @@
                                 <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html"><span class="navbar-tool-label">4</span><i class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text" href="shop-cart.html"><small>My Cart</small>$265.00</a>
                                 <!-- Cart dropdown-->
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <div style="width: 20rem;">
+                                    <div style="width: 20rem;" v-if="cartItems.length == 0">
 
                                         <div b-1t3xz0ahll="" class="text-center">
                                             <i class="ci-basket fs-1 my-2 navbar-tool-icon opacity-50 text-primary"></i>
                                             <p class="fs-sm">سبد خرید شما خالی است.</p>
                                         </div>
                                     </div>
-@*                                    <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
+                                    <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;" v-if="cartItems.length > 0">
                                         <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
-                                            <div class="widget-cart-item pb-2 border-bottom">
+                                            <div class="widget-cart-item pb-2 border-bottom" v-for="item in cartItems">
                                                 <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
                                                 <div class="d-flex align-items-center">
-                                                    <a class="flex-shrink-0" href="shop-single-v1.html"><img src="~/resources/img/temp-cart-item-images/01.jpg" width="64" alt="Product"></a>
+                                                    <a class="flex-shrink-0" href="shop-single-v1.html">
+                                                        <img :src="item.product.firstLargeImageFullPath" width="64" alt="Product">
+                                                    </a>
                                                     <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a href="shop-single-v1.html">Women Colorblock Sneakers</a></h6>
-                                                        <div class="widget-product-meta"><span class="text-accent me-2">$150.<small>00</small></span><span class="text-muted">x 1</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center">
-                                                    <a class="flex-shrink-0" href="shop-single-v1.html"><img src="~/resources/img/temp-cart-item-images/02.jpg" width="64" alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a href="shop-single-v1.html">TH Jeans City Backpack</a></h6>
-                                                        <div class="widget-product-meta"><span class="text-accent me-2">$79.<small>50</small></span><span class="text-muted">x 1</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center">
-                                                    <a class="flex-shrink-0" href="shop-single-v1.html"><img src="~/resources/img/temp-cart-item-images/03.jpg" width="64" alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a href="shop-single-v1.html">3-Color Sun Stash Hat</a></h6>
-                                                        <div class="widget-product-meta"><span class="text-accent me-2">$22.<small>50</small></span><span class="text-muted">x 1</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
-                                                <div class="d-flex align-items-center">
-                                                    <a class="flex-shrink-0" href="shop-single-v1.html"><img src="~/resources/img/temp-cart-item-images/04.jpg" width="64" alt="Product"></a>
-                                                    <div class="ps-2">
-                                                        <h6 class="widget-product-title"><a href="shop-single-v1.html">Cotton Polo Regular Fit</a></h6>
-                                                        <div class="widget-product-meta"><span class="text-accent me-2">$9.<small>00</small></span><span class="text-muted">x 1</span></div>
+                                                        <h6 class="widget-product-title"><a href="shop-single-v1.html">{{item.product.name}}</a></h6>
+                                                        <div class="widget-product-meta"><span class="text-accent me-2">{{item.price}}</span><span class="text-muted">x {{item.qty}}</span></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,7 +203,7 @@
                                             <div class="fs-sm me-2 py-2"><span class="text-muted">Subtotal:</span><span class="text-accent fs-base ms-1">$265.<small>00</small></span></div><a class="btn btn-outline-secondary btn-sm" href="shop-cart.html">Expand cart<i class="ci-arrow-right ms-1 me-n1"></i></a>
                                         </div><a class="btn btn-primary btn-sm d-block w-100" href="checkout-details.html"><i class="ci-card me-2 fs-base align-middle"></i>Checkout</a>
                                     </div>
-*@                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -589,7 +569,7 @@
         @RenderBody()
     </main>
     <!-- Footer-->
-    <partial name="_FooterPartial"/>
+    <partial name="_FooterPartial" />
     <!-- Toolbar for handheld devices (Default)-->
     <div class="handheld-toolbar">
         <div class="d-table table-layout-fixed w-100">
@@ -609,7 +589,10 @@
     <script src="~/js/drift-basic.js"></script>
     <!-- Main theme script-->
     <script src="~/js/theme.js"></script>
-        <!-- Sign in / sign up modal-->
+    <script src="~/js/vue.js"></script>
+    <script src="~/js/site-scripts/cart-vue/sidebar-cart.js"></script>
+
+    <!-- Sign in / sign up modal-->
     <partial name="_AccountPartial" model="@new AccountViewModel()" />
     @await RenderSectionAsync("Scripts", required: false)
 
