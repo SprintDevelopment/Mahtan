@@ -21,13 +21,18 @@ namespace Mahtan.Models
         [MaxLength(LengthConstants.MEDIUM_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
         public string Name { get; set; }
 
-
         [Display(Name = "دسته محصول")]
         [Required(ErrorMessage = "{0} را انتخاب کنید")]
         public short CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; }
+
+        [Display(Name = "برند محصول")]
+        public short? BrandId { get; set; }
+
+        [ForeignKey(nameof(BrandId))]
+        public Brand Brand { get; set; }
 
         [Display(Name = "قیمت")]
         [Required(ErrorMessage = "{0} را وارد کنید")]

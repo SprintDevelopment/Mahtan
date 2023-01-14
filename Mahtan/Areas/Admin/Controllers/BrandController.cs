@@ -45,25 +45,25 @@ namespace Mahtan.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrUpdate(Brand banner)
+        public async Task<IActionResult> CreateOrUpdate(Brand brand)
         {
             var files = HttpContext.Request.Form.Files;
             if (files.Count > 0)
-                banner.LogoGuid = await _fileService.UploadAsync(files[0], Addresses.BrandLogosPath, banner.LogoGuid);
+                brand.LogoGuid = await _fileService.UploadAsync(files[0], Addresses.BrandLogosPath, brand.LogoGuid);
 
-            if (ModelState.IsValid && !banner.LogoGuid.IsNullOrWhitespace())
+            if (ModelState.IsValid)
             {
-                if (banner.BrandId == 0)
+                if (brand.BrandId == 0)
                 {
-                    _unitOfWork.Brands.Add(banner);
+                    _unitOfWork.Brands.Add(brand);
                     await _unitOfWork.CompleteAsync();
                 }
                 else
                 {
-                    var oldEntity = await _unitOfWork.Brands.GetAsync(banner.BrandId);
+                    var oldEntity = await _unitOfWork.Brands.GetAsync(brand.BrandId);
                     if (oldEntity != null)
                     {
-                        _unitOfWork.Brands.Update(oldEntity, banner);
+                        _unitOfWork.Brands.Update(oldEntity, brand);
                         await _unitOfWork.CompleteAsync();
                     }
                     else
@@ -73,7 +73,7 @@ namespace Mahtan.Areas.Admin.Controllers
                 return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_BrandListPartial", _unitOfWork.Brands.Find().AsEnumerable()) });
             }
 
-            return Json(new { isValid = false, html = HtmlHelper.RenderRazorViewToString(this, "CreateOrUpdate", banner) });
+            return Json(new { isValid = false, html = HtmlHelper.RenderRazorViewToString(this, "CreateOrUpdate", brand) });
         }
 
         public async Task<IActionResult> Delete(short id)

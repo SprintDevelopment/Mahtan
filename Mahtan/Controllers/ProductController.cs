@@ -21,7 +21,7 @@ namespace Mahtan.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var product = _unitOfWork.Products.Find(p => p.ProductId == id).Include(p => p.Images).SingleOrDefault();
+            var product = _unitOfWork.Products.Find(p => p.ProductId == id).Include(p => p.Images).Include(p => p.Category).Include(p => p.Brand).SingleOrDefault();
             if (product != null)
                 return View(product);
 

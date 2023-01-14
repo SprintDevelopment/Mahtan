@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mahtan.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230112174618_AddSizeAndColorToProducts")]
-    partial class AddSizeAndColorToProducts
+    [Migration("20230114050654_Initialize")]
+    partial class Initialize
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,31 @@ namespace Mahtan.Migrations
                     b.HasKey("BannerId");
 
                     b.ToTable("Banners");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.Brand", b =>
+                {
+                    b.Property<short>("BrandId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("BrandId"));
+
+                    b.Property<string>("LogoGuid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OptionalComment")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("BrandId");
+
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("Mahtan.Models.CartItem", b =>

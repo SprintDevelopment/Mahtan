@@ -34,6 +34,7 @@ namespace Mahtan.Areas.Admin.Controllers
             {
                 Product = new Product(),
                 Categories = _unitOfWork.Categories.Find().AsEnumerable(),
+                Brands = _unitOfWork.Brands.Find().AsEnumerable()
             };
 
             if (id == 0)
@@ -104,6 +105,7 @@ namespace Mahtan.Areas.Admin.Controllers
             {
                 Product = product,
                 Categories = _unitOfWork.Categories.Find().AsEnumerable(),
+                Brands = _unitOfWork.Brands.Find().AsEnumerable()
             };
 
             return Json(new { isValid = false, html = HtmlHelper.RenderRazorViewToString(this, "CreateOrUpdate", viewModel) });

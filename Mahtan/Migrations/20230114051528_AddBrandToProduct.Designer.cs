@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mahtan.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230108102311_Init")]
-    partial class Init
+    [Migration("20230114051528_AddBrandToProduct")]
+    partial class AddBrandToProduct
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,6 +111,59 @@ namespace Mahtan.Migrations
                     b.ToTable("Banners");
                 });
 
+            modelBuilder.Entity("Mahtan.Models.Brand", b =>
+                {
+                    b.Property<short>("BrandId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("BrandId"));
+
+                    b.Property<string>("LogoGuid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OptionalComment")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("BrandId");
+
+                    b.ToTable("Brands");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.CartItem", b =>
+                {
+                    b.Property<long>("CartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CartItemId"));
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CartItemId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("Mahtan.Models.Category", b =>
                 {
                     b.Property<short>("CategoryId")
@@ -191,6 +244,48 @@ namespace Mahtan.Migrations
                     b.ToTable("Faqs");
                 });
 
+            modelBuilder.Entity("Mahtan.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.OrderItem", b =>
+                {
+                    b.Property<long>("OrderItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderItemId"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderItemId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItem");
+                });
+
             modelBuilder.Entity("Mahtan.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -199,8 +294,15 @@ namespace Mahtan.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
+                    b.Property<short?>("BrandId")
+                        .IsRequired()
+                        .HasColumnType("smallint");
+
                     b.Property<short>("CategoryId")
                         .HasColumnType("smallint");
+
+                    b.Property<int>("Colors")
+                        .HasColumnType("int");
 
                     b.Property<int>("DiscountPercent")
                         .HasColumnType("int");
@@ -220,7 +322,12 @@ namespace Mahtan.Migrations
                     b.Property<long>("Price")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("Sizes")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductId");
+
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
 
@@ -251,6 +358,35 @@ namespace Mahtan.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.ProductReview", b =>
+                {
+                    b.Property<long>("ProductReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ProductReviewId"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<long>("OrderItemId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ProductReviewId");
+
+                    b.HasIndex("OrderItemId");
+
+                    b.ToTable("ProductReviews");
                 });
 
             modelBuilder.Entity("Mahtan.Models.Profile", b =>
@@ -540,13 +676,51 @@ namespace Mahtan.Migrations
                     b.Navigation("District");
                 });
 
+            modelBuilder.Entity("Mahtan.Models.CartItem", b =>
+                {
+                    b.HasOne("Mahtan.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.OrderItem", b =>
+                {
+                    b.HasOne("Mahtan.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mahtan.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Mahtan.Models.Product", b =>
                 {
+                    b.HasOne("Mahtan.Models.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Mahtan.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Brand");
 
                     b.Navigation("Category");
                 });
@@ -560,6 +734,17 @@ namespace Mahtan.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Mahtan.Models.ProductReview", b =>
+                {
+                    b.HasOne("Mahtan.Models.OrderItem", "OrderItem")
+                        .WithMany()
+                        .HasForeignKey("OrderItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderItem");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

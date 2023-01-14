@@ -12,14 +12,21 @@
     {
         <input type="hidden" asp-for="Product.ProductId" />
         <div class="mb-3">
+            <label asp-for="Product.Name" class="form-label"></label>
+            <input asp-for="Product.Name" class="form-control" autofocus />
+            <span asp-validation-for="Product.Name" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
             <label asp-for="Product.CategoryId" class="form-label"></label>
-            <select asp-for="Product.CategoryId" class="form-control" asp-items="Model.Categories.ToSelectListItem(nameof(Category.CategoryId), nameof(Category.Title), Model.Product.CategoryId)" autofocus></select>
+            <select asp-for="Product.CategoryId" class="form-control" asp-items="Model.Categories.ToSelectListItem(nameof(Category.CategoryId), nameof(Category.Title), Model.Product.CategoryId)"></select>
             <span asp-validation-for="Product.CategoryId" class="invalid-feedback"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="Product.Name" class="form-label"></label>
-            <input asp-for="Product.Name" class="form-control" />
-            <span asp-validation-for="Product.Name" class="invalid-feedback"></span>
+            <label asp-for="Product.BrandId" class="form-label"></label>
+            <select asp-for="Product.BrandId" class="form-control" asp-items="Model.Brands.ToSelectListItem(nameof(Brand.BrandId), nameof(Brand.Title), Model.Product.BrandId)" autofocus>
+                <option value="">انتخاب کنید . . .</option>
+            </select>
+            <span asp-validation-for="Product.BrandId" class="invalid-feedback"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Product.Price" class="form-label"></label>

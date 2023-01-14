@@ -228,6 +228,13 @@
                                         </a>
                                     </li>
 
+                                    @{ if (controllerName == "Brand") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <li class="border-bottom mb-0 @activeClassName">
+                                        <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="Brand" asp-action="Index">
+                                            <i class="ci-bookmark opacity-75 fs-base me-2"></i>برندها
+                                        </a>
+                                    </li>
+
                                     @{ if (controllerName == "Category") { activeClassName = "active"; } else { activeClassName = ""; }; }
                                     <li class="border-bottom mb-0 @activeClassName">
                                         <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="Category" asp-action="Index">
