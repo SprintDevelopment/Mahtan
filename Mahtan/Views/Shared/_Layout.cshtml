@@ -173,8 +173,14 @@
                                 <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
                                 <div class="navbar-tool-text ms-n3"><small>Hello, Sign in</small>My Account</div>
                             </a>
-                            <div class="navbar-tool dropdown ms-3">
-                                <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html"><span class="navbar-tool-label">4</span><i class="navbar-tool-icon ci-cart"></i></a><a class="navbar-tool-text" href="shop-cart.html"><small>My Cart</small>$265.00</a>
+                            <div id="cart-nav" class="navbar-tool dropdown ms-3">
+                                <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html">
+                                    <span class="navbar-tool-label" v-if="cartItems.length > 0">{{ cartItems.length }}</span>
+                                    <i class="navbar-tool-icon ci-cart"></i>
+                                </a>
+                                <a class="navbar-tool-text" v-if="cartItems.length > 0" href="shop-cart.html">
+                                    <small>سبد خرید</small>{{ totalRequest }}
+                                </a>
                                 <!-- Cart dropdown-->
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div style="width: 20rem;" v-if="cartItems.length == 0">
@@ -187,7 +193,7 @@
                                     <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;" v-if="cartItems.length > 0">
                                         <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
                                             <div class="widget-cart-item pb-2 border-bottom" v-for="item in cartItems">
-                                                <button class="btn-close text-danger" type="button" aria-label="Remove"><span aria-hidden="true">&times;</span></button>
+                                                <button class="btn-close text-danger" type="button" @@click="removeFromCart(item.productId)"><span aria-hidden="true">&times;</span></button>
                                                 <div class="d-flex align-items-center">
                                                     <a class="flex-shrink-0" href="shop-single-v1.html">
                                                         <img :src="item.product.firstLargeImageFullPath" width="64" alt="Product">
@@ -589,6 +595,7 @@
     <script src="~/js/drift-basic.js"></script>
     <!-- Main theme script-->
     <script src="~/js/theme.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
     <script src="~/js/vue.js"></script>
     <script src="~/js/site-scripts/cart-vue/sidebar-cart.js"></script>
 

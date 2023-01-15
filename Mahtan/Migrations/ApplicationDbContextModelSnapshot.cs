@@ -721,13 +721,11 @@ namespace Mahtan.Migrations
 
             modelBuilder.Entity("Mahtan.Models.ProductImage", b =>
                 {
-                    b.HasOne("Mahtan.Models.Product", "Product")
+                    b.HasOne("Mahtan.Models.Product", null)
                         .WithMany("Images")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Mahtan.Models.ProductReview", b =>

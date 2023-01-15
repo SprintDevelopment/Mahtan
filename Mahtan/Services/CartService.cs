@@ -10,7 +10,7 @@ namespace Mahtan.Services
     {
         Task<CartItem> AddToCartAsync(int productId);
         Task<CartItem> UpdateCartItemAsync(int productId, int incOrDecQty);
-        Task RemoveFromCartAsync(int productId);
+        Task<CartItem> RemoveFromCartAsync(int productId);
         List<CartItem> GetCartItems();
     }
 
@@ -61,7 +61,7 @@ namespace Mahtan.Services
 
                 if (cartItem.Qty > 0 && cartItem.CartItemId == 0)
                     cartItems.Add(cartItem);
-                else if (cartItem.Qty <= 0 && cartItem.CartItemId != 0)
+                else if (cartItem.Qty <= 0)
                     cartItems.Remove(cartItem);
 
                 _session.SetObjectAsJson("CartItems", cartItems);
@@ -70,9 +70,9 @@ namespace Mahtan.Services
             return cartItem;
         }
 
-        public async Task RemoveFromCartAsync(int productId)
+        public async Task<CartItem> RemoveFromCartAsync(int productId)
         {
-            await UpdateCartItemAsync(productId, int.MinValue);
+            return await UpdateCartItemAsync(productId, int.MinValue);
         }
 
         public List<CartItem> GetCartItems()

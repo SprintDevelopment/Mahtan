@@ -1,5 +1,5 @@
 ﻿var vm = new Vue({
-    el: "#offcanvasNavbarEmptyShoppingCart",
+    el: "#cart-nav",
     data: {
         cartItems: [],
     },
@@ -10,25 +10,28 @@
         addToCart(productId) {
             axios.get('/User/Cart/AddToCart/?id=' + productId)
                 .then(response => {
-                    var cartItem = this.cartItems.find(ci => ci.productId === productId);
-                    if (cartItem === undefined)
-                        this.cartItems.push(response.data);
-                    else
-                        cartItem = response.data;
-                })
+                    if (response.status == 200) {
+                        this.addOrUpdate(response.data);
+                    }
+                });
         },
 
         updateCount(item, isIncrease) {
-            axios.get('/User/Cart/UpdateCartItem/?id=' + item.productId + '&isIncrease=' + isIncrease)
+            axios.get('/User/Cart/UpdateCartItem/?id=' + item.productId + '&incOrDecQty=' + isIncrease ? +1 : -1)
                 .then(response => {
-                    if (response.data === "")
-                        for (var i = this.cartItems.length - 1; i >= 0; i--) {
-                            if (this.cartItems[i].productId === item.productId) {
-                                this.cartItems.splice(i, 1);
-                            }
-                        }
+                    if (response.status == 200) {
+                        this.addOrUpdate(response.data);
+                    }
                     else
-                        item.qty = response.data.qty;
+                        this.remove(item.productId);
+                })
+        },
+
+        removeFromCart(productId) {
+            axios.get('/User/Cart/RemoveFromCart/?id=' + productId)
+                .then(response => {
+                    if (response.status == 200)
+                        this.remove(productId);
                 })
         },
 
@@ -38,6 +41,20 @@
                 .then((res) => {
                     this.cartItems = res.data;
                 })
+        },
+
+        addOrUpdate(cartItem) {
+            var preCartItem = this.cartItems.find(ci => ci.productId === cartItem.productId);
+            if (preCartItem === undefined)
+                this.cartItems.push(cartItem);
+            else
+                preCartItem.qty = cartItem.qty;
+        },
+
+        remove(productId) {
+            var index = this.cartItems.findIndex(ci => ci.productId === productId);
+            if(index >= 0)
+                this.$delete(this.cartItems, index);
         },
     },
     computed: {

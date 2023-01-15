@@ -12,9 +12,6 @@ namespace Mahtan.Models
         [Required]
         public int ProductId { get; set; }
 
-        [ForeignKey(nameof(ProductId))]
-        public Product Product { get; set; }
-
         [Display(Name = "فایل تصویر")]
         [Required(AllowEmptyStrings = true)]
         public string ImageGuid { get; set; }
