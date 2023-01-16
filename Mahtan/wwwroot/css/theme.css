@@ -20963,7 +20963,7 @@ html:not([dir=rtl]) .range-slider-ui.noUi-horizontal .noUi-handle {
         left: .25rem;
         height: 0;
         width: 0;
-        transform: rotate(-45deg);
+        transform: rotate(45deg);
         border: solid rgba(0, 0, 0, 0);
         content: " ";
         pointer-events: none;

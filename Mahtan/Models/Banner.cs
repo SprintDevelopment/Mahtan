@@ -17,7 +17,7 @@ namespace Mahtan.Models
         public string BannerGuid { get; set; }
 
         [NotMapped]
-        public string BannerFullPath => string.Format("~/{0}/{1}", Addresses.BannerImagesPath.Replace('\\', '/'), BannerGuid ?? "no-image.png");
+        public string BannerFullPath => string.Format("/{0}/{1}", Addresses.BannerImagesPath.Replace('\\', '/'), BannerGuid ?? "no-image.png");
 
         [Display(Name = "متن اولیه")]
         [Required(ErrorMessage = "{0} را وارد کنید")]

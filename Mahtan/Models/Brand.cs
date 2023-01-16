@@ -22,7 +22,7 @@ namespace Mahtan.Models
         public string LogoGuid { get; set; }
 
         [NotMapped]
-        public string LogoFullPath => string.Format("~/{0}/{1}", Addresses.BrandLogosPath.Replace('\\', '/'), LogoGuid ?? "no-image.png");
+        public string LogoFullPath => string.Format("/{0}/{1}", Addresses.BrandLogosPath.Replace('\\', '/'), LogoGuid ?? "no-image.png");
 
         [Display(Name = "توضیحات اختیاری")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]

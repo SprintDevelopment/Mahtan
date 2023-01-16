@@ -38,7 +38,7 @@ namespace Mahtan.Models
         public string OptionalAvatarGuid { get; set; }
 
         [NotMapped]
-        public string AvatarFullPath => string.Format("~/{0}/{1}", Addresses.UserAvatarImagesPath.Replace('\\', '/'), OptionalAvatarGuid ?? "no-image.png");
+        public string AvatarFullPath => string.Format("/{0}/{1}", Addresses.UserAvatarImagesPath.Replace('\\', '/'), OptionalAvatarGuid ?? "no-image.png");
 
         [Display(Name = "پیشنهادهای شگفت انگیز به ایمیل شما ارسال شود ؟")]
         public bool RecieveOffersByEmail { get; set; }

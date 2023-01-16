@@ -17,7 +17,7 @@
         },
 
         updateCount(item, isIncrease) {
-            axios.get('/User/Cart/UpdateCartItem/?id=' + item.productId + '&incOrDecQty=' + isIncrease ? +1 : -1)
+            axios.get('/User/Cart/UpdateCartItem/?id=' + item.productId + '&incOrDecQty=' + (isIncrease ? +1 : -1))
                 .then(response => {
                     if (response.status == 200) {
                         this.addOrUpdate(response.data);

@@ -30,7 +30,7 @@ namespace Mahtan.Models
         public string IconGuid { get; set; }
 
         [NotMapped]
-        public string IconFullPath => string.Format("~/{0}/{1}", Addresses.CategoryIconsPath.Replace('\\', '/'), IconGuid ?? "no-image.png");
+        public string IconFullPath => string.Format("/{0}/{1}", Addresses.CategoryIconsPath.Replace('\\', '/'), IconGuid ?? "no-image.png");
 
         [Display(Name = "توضیحات اختیاری")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]

@@ -43,7 +43,8 @@ namespace Mahtan.Services
 
             if (_isUserAuthenticated)
             {
-                cartItem = _unitOfWork.CartItems.Find(ci => ci.Username == _user.Identity.Name).FirstOrDefault() ?? new CartItem { ProductId = productId, Product = product, Price = product.Price };
+                cartItem = _unitOfWork.CartItems.Find(ci => ci.Username == _user.Identity.Name && ci.ProductId == productId).FirstOrDefault() 
+                    ?? new CartItem { Username = _user.Identity.Name, ProductId = productId, Product = product, Price = product.Price };
                 cartItem.Qty += incOrDecQty;
 
                 if (cartItem.Qty > 0 && cartItem.CartItemId == 0)
@@ -56,10 +57,10 @@ namespace Mahtan.Services
             else
             {
                 var cartItems = _session.GetObjectFromJson<List<CartItem>>("CartItems") ?? new List<CartItem>();
-                cartItem = cartItems.Find(ci => ci.Username == _user.Identity.Name) ?? new CartItem { ProductId = productId, Product = product, Price = product.Price };
+                cartItem = cartItems.Find(ci => ci.ProductId == productId) ?? new CartItem { ProductId = productId, Product = product, Price = product.Price };
                 cartItem.Qty += incOrDecQty;
 
-                if (cartItem.Qty > 0 && cartItem.CartItemId == 0)
+                if (cartItem.Qty > 0 && cartItem.Qty == incOrDecQty)
                     cartItems.Add(cartItem);
                 else if (cartItem.Qty <= 0)
                     cartItems.Remove(cartItem);

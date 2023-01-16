@@ -28,18 +28,8 @@
                 {
                     <div class="col-lg-7 pe-lg-0 pt-lg-4">
                         <div class="product-gallery">
-                            <div class="product-gallery-preview order-sm-2">
+                            <div class="product-gallery-thumblist">
                                 @{ int i = 0; }
-                                @foreach (var image in Model.Images.AsEnumerable())
-                                {
-                                    <div class="product-gallery-preview-item active" id="image-@i">
-                                        <img class="image-zoom" src="@Url.Content(image.ImageLargeFullPath)" data-zoom="@Url.Content(image.ImageLargeFullPath)" alt="image-@(i++)">
-                                        <div class="image-zoom-pane"></div>
-                                    </div>
-                                }
-                            </div>
-                            <div class="product-gallery-thumblist order-sm-1">
-                                                                @{ i = 0; }
                                 @foreach (var image in Model.Images.AsEnumerable())
                                 {
                                     <a class="product-gallery-thumblist-item active" href="#image-@i">
@@ -52,6 +42,16 @@
                                     </div>
                                 </a>
 *@                            </div>
+                            <div class="product-gallery-preview">
+                                @{ i = 0; }
+                                @foreach (var image in Model.Images.AsEnumerable())
+                                {
+                                    <div class="product-gallery-preview-item active" id="image-@i">
+                                        <img class="image-zoom" src="@Url.Content(image.ImageLargeFullPath)" data-zoom="@Url.Content(image.ImageLargeFullPath)" alt="image-@(i++)">
+                                        <div class="image-zoom-pane"></div>
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 }
@@ -64,13 +64,13 @@
                                     <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
                                 </div><span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1">74 Reviews</span>
                             </a>
-                            <button class="btn-wishlist me-0 me-lg-n3" type="button" data-bs-toggle="tooltip" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button>
+                            <button class="btn-wishlist me-0 me-lg-n3" type="button" data-bs-toggle="tooltip" aria-label="افزودن به علاقه مندی ها" data-bs-original-title="افزودن به علاقه مندی ها"><i class="ci-heart"></i></button>
                         </div>
                         <div class="mb-3">
-                            <span class="h3 fw-normal text-accent me-1">@Model.PriceAfterDiscount<small> تومان</small></span>
+                            <span class="h3 fw-normal text-accent me-1">@Model.PriceAfterDiscount.ToString("n0")<small> تومان</small></span>
                             @if (Model.DiscountPercent > 0)
                             {
-                                <del class="text-muted fs-lg me-3">@Model.Price<small> تومان</small></del>
+                                <del class="text-muted me-3">@Model.Price.ToString("n0") تومان</del>
                             }
                         </div>
                         <div class="fs-sm mb-4">
@@ -113,7 +113,9 @@
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                 </select>
-                                <button class="btn btn-primary btn-shadow d-block w-100" type="submit"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
+                                <button class="btn btn-primary btn-shadow d-block w-100" type="submit">
+                                    افزودن به سبد <i class="ci-cart fs-sm ms-2"></i>
+                                </button>
                             </div>
                         </form>
                         <!-- Product panels-->
@@ -172,7 +174,7 @@
                                                 <div class="fw-semibold text-dark">Local pickup from store</div>
                                                 <div class="fs-sm text-muted">—</div>
                                             </div>
-                                            <div>$0.00</div>
+                                            <div>.00</div>
                                         </div>
                                     </div>
                                 </div>
