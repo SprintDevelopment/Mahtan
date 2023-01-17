@@ -48,6 +48,7 @@ namespace Mahtan.Models
         public long PriceAfterDiscount { get => Price * (100 - DiscountPercent) / 100; }
 
         public virtual ICollection<ProductImage> Images { get; set; }
+        public virtual ICollection<ProductReview> Reviews { get; set; }
 
         [NotMapped]
         public string FirstThumbImageFullPath => (Images?.FirstOrDefault() ?? new ProductImage()).ImageThumbFullPath;

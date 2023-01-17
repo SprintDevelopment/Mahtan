@@ -10,10 +10,10 @@ namespace Mahtan.Models
         public long ProductReviewId { get; set; }
 
         [Required]
-        public long OrderItemId { get; set; }
+        public string WriterUsername { get; set; }
 
-        [ForeignKey(nameof(OrderItemId))]
-        public OrderItem OrderItem { get; set; }
+        [ForeignKey(nameof(WriterUsername))]
+        public Profile WriterProfile { get; set; }
 
         [Display(Name = "امتیاز")]
         [Required(ErrorMessage = "{0} را وارد کنید")]
