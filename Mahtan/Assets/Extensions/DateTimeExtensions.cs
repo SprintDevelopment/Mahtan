@@ -24,8 +24,8 @@
                 return $"{weeks} هفته پیش";
 
             var months = DateTime.Now.Subtract(date).Days / 30;
-            if (weeks < 12)
-                return $"{weeks} ماه پیش";
+            if (months < 12)
+                return $"{months} ماه پیش";
 
             var years = DateTime.Now.Subtract(date).Days / 365;
                 return $"{years} سال پیش";

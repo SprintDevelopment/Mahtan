@@ -4,6 +4,7 @@ using Mahtan.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mahtan.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230118045241_Change-Reviews")]
+    partial class ChangeReviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -322,19 +325,10 @@ namespace Mahtan.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ProductReviewId"));
 
-                    b.Property<int>("CheckStates")
-                        .HasColumnType("int");
-
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)");
-
-                    b.Property<int>("Dislikes")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");

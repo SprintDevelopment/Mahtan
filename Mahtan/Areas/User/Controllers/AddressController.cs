@@ -49,7 +49,6 @@ namespace Mahtan.Areas.User.Controllers
             return NotFound();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateOrUpdate(Address address)

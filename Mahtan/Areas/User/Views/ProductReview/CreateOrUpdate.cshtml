@@ -1,0 +1,47 @@
+﻿@model ProductReview
+@{
+    Layout = null;
+}
+<div class="modal-header bg-secondary py-1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    <p class="fw-bold my-2">@Model.CrudTitle()</p>
+</div>
+
+<div class="modal-body tab-content py-4">
+    @using (Html.BeginForm("CreateOrUpdate", "ProductReview", new { area = "User" }, FormMethod.Post, true, new { onsubmit = "return jQueryAjaxPost(this)", autocomplete = "off" }))
+    {
+        <div class="mb-3">
+            <label asp-for="Rate" class="form-label me-2"></label>
+            @for (int i = 0; i <= 5; i++)
+            {
+                <div class="form-check form-option form-check-inline mb-2">
+                    <input class="form-check-input" type="radio" name="Rate" id="@i" value="@i">
+                    <label class="form-option-label" for="@i">@i</label>
+                </div>
+            }
+        </div>
+        <div class="mb-3">
+            <label asp-for="Comment" class="form-label"></label>
+            @Html.TextAreaFor(m => m.Comment, 3, 0, new { @class = "form-control" })
+            <span asp-validation-for="Comment" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ReviewDate" class="form-label"></label>
+            <input asp-for="ReviewDate" class="form-control date-bind" type="text" />
+            <span asp-validation-for="ReviewDate" class="invalid-feedback"></span>
+        </div>
+
+        <button class="btn btn-primary d-block w-100" type="submit">ثبت نظر</button>
+    }
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <script src="~/js/site-scripts/date-picker.js"></script>
+    <script src="~/js/site-scripts/farsi-date-picker.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.date-bind').datepicker({ dateFormat: "yy-mm-dd", isRTL: true, showButtonPanel: true });
+        });
+    </script>
+}

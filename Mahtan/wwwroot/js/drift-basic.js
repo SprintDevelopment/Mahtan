@@ -317,6 +317,7 @@
         this.imgEl.style.height = b * this.settings.zoomFactor + "px"
     };
     A.prototype.setPosition = function (a, b, c) {
+        a = 1 - a;
         var e = this.imgEl.offsetWidth,
             f = this.imgEl.offsetHeight,
             q = this.el.offsetWidth,
@@ -334,8 +335,10 @@
         this.el.parentElement === this.settings.inlineContainer && (p = window.pageXOffset, n = window.pageYOffset, a = c.left + a * c.width - q / 2 + this.settings.inlineOffsetX + p, b = c.top + b * c.height - k / 2 + this.settings.inlineOffsetY + n, this.settings.containInline && (a < c.left + p ? a = c.left + p : a + q > c.left + c.width + p &&
             (a = c.left + c.width - q + p), b < c.top + n ? b = c.top + n : b + k > c.top + c.height + n && (b = c.top + c.height - k + n)), this.el.style.left = a + "px", this.el.style.top = b + "px");
         this.settings.showWhitespaceAtEdges || (v > f ? v = f : v < l && (v = l), w > e ? w = e : w < m && (w = m));
-        this.imgEl.style.transform = "translate(" + v + "px, " + w + "px)";
-        this.imgEl.style.webkitTransform = "translate(" + v + "px, " + w + "px)"
+        this.imgEl.style.transform = "translate(" + (-1 * v) + "px, " + w + "px)";
+        this.imgEl.style.webkitTransform = "translate(" + (-1 * v) + "px, " + w + "px)"
+
+        console.log("a = " + a + "q = " + q + "v = " + v)
     };
     A.prototype._removeListenersAndResetClasses = function () {
         this.el.removeEventListener("animationend", this._completeShow);
