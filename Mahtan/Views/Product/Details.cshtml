@@ -134,24 +134,23 @@
                         <!-- Product panels-->
                         <div class="accordion mb-4" id="productPanels">
                             <div class="accordion-item">
-                                <h3 class="accordion-header"><a class="accordion-button" href="#productInfo" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="productInfo"><i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Product info</a></h3>
+                                <h3 class="accordion-header">
+                                    <a class="accordion-button" href="#productInfo" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="productInfo">
+                                        <i class="ci-announcement lead me-2 text-muted"></i>اطلاعات محصول
+                                    </a>
+                                </h3>
                                 <div class="accordion-collapse collapse show" id="productInfo" data-bs-parent="#productPanels">
                                     <div class="accordion-body">
-                                        <h6 class="fs-sm mb-2">Composition</h6>
-                                        <ul class="fs-sm ps-4">
-                                            <li>Elastic rib: Cotton 95%, Elastane 5%</li>
-                                            <li>Lining: Cotton 100%</li>
-                                            <li>Cotton 80%, Polyester 20%</li>
-                                        </ul>
-                                        <h6 class="fs-sm mb-2">Art. No.</h6>
-                                        <ul class="fs-sm ps-4 mb-0">
-                                            <li>183260098</li>
-                                        </ul>
+                                        <p>@Model.OptionalComment</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="accordion-item">
-                                <h3 class="accordion-header"><a class="accordion-button collapsed" href="#shippingOptions" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="shippingOptions"><i class="ci-delivery text-muted lead align-middle mt-n1 me-2"></i>Shipping options</a></h3>
+                                <h3 class="accordion-header">
+                                    <a class="accordion-button collapsed" href="#shippingOptions" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="shippingOptions">
+                                        <i class="ci-delivery lead me-2 mt-1 text-muted"></i>روش های ارسال
+                                    </a>
+                                </h3>
                                 <div class="accordion-collapse collapse" id="shippingOptions" data-bs-parent="#productPanels">
                                     <div class="accordion-body fs-sm">
                                         <div class="d-flex justify-content-between border-bottom pb-2">
@@ -189,23 +188,6 @@
                                             </div>
                                             <div>.00</div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h3 class="accordion-header"><a class="accordion-button collapsed" href="#localStore" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="localStore"><i class="ci-location text-muted fs-lg align-middle mt-n1 me-2"></i>Find in local store</a></h3>
-                                <div class="accordion-collapse collapse" id="localStore" data-bs-parent="#productPanels">
-                                    <div class="accordion-body">
-                                        <select class="form-select">
-                                            <option value="">Select your country</option>
-                                            <option value="Argentina">Argentina</option>
-                                            <option value="Belgium">Belgium</option>
-                                            <option value="France">France</option>
-                                            <option value="Germany">Germany</option>
-                                            <option value="Spain">Spain</option>
-                                            <option value="UK">United Kingdom</option>
-                                            <option value="USA">USA</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
