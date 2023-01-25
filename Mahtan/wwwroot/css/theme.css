@@ -8200,6 +8200,10 @@ fieldset:disabled .btn {
     content: ""
 }
 
+.text-justify {
+    text-align: justify !important;
+}
+
 .text-truncate {
     overflow: hidden;
     text-overflow: ellipsis;

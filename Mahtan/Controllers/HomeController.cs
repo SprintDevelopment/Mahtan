@@ -27,6 +27,16 @@ namespace Mahtan.Controllers
             return View(viewModel);
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Faq()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
