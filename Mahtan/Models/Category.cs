@@ -1,4 +1,5 @@
 ﻿using Mahtan.Assets.Attributes;
+using Mahtan.Assets.Extensions;
 using Mahtan.Assets.Values;
 using Mahtan.Assets.Values.Constants;
 using System.ComponentModel.DataAnnotations;
@@ -30,7 +31,7 @@ namespace Mahtan.Models
         public string IconGuid { get; set; }
 
         [NotMapped]
-        public string IconFullPath => string.Format("/{0}/{1}", Addresses.CategoryIconsPath.Replace('\\', '/'), IconGuid ?? "no-image.png");
+        public string IconFullPath => string.Format("/{0}/{1}", Addresses.CategoryIconsPath.Replace('\\', '/'), !IconGuid.IsNullOrWhitespace() ? IconGuid : "no-image.png");
 
         [Display(Name = "توضیحات اختیاری")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]

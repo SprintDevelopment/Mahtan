@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label asp-for="Product.BrandId" class="form-label"></label>
-            <select asp-for="Product.BrandId" class="form-control" asp-items="Model.Brands.ToSelectListItem(nameof(Brand.BrandId), nameof(Brand.Title), Model.Product.BrandId)" autofocus>
+            <select asp-for="Product.BrandId" class="form-control" asp-items="Model.Brands.ToSelectListItem(nameof(Brand.BrandId), nameof(Brand.Title), Model.Product.BrandId)">
                 <option value="">انتخاب کنید . . .</option>
             </select>
             <span asp-validation-for="Product.BrandId" class="invalid-feedback"></span>
@@ -68,9 +68,11 @@
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
     <script src="~/js/site-scripts/image-uploader.js"></script>
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
     <script>
         $(function () {
             $('.input-images').imageUploader();
+            CKEDITOR.replace('Product_OptionalComment')
         });
     </script>
 }

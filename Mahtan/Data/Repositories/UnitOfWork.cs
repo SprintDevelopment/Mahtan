@@ -15,10 +15,13 @@ namespace Mahtan.Data.Repositories
         ICartItemRepository CartItems { get; }
         IDistrictRepository Districts { get; }
         IFaqRepository Faqs { get; }
+        IOrderItemRepository OrderItems { get; }
+        IOrderRepository Orders { get; }
         IProductRepository Products { get; }
         IProductImageRepository ProductImages { get; }
         IProductReviewRepository ProductReviews { get; }
         IProfileRepository Profiles { get; }
+        IShippingTypeRepository ShippingTypes { get; }
 
         Task<int> CompleteAsync();
     }
@@ -37,10 +40,13 @@ namespace Mahtan.Data.Repositories
             CartItems = new CartItemRepository(_context);
             Districts = new DistrictRepository(_context);
             Faqs = new FaqRepository(_context);
+            OrderItems = new OrderItemRepository(_context);
+            Orders = new OrderRepository(_context);
             Products = new ProductRepository(_context);
             ProductImages = new ProductImageRepository(_context);
             ProductReviews = new ProductReviewRepository(_context);
             Profiles = new ProfileRepository(_context);
+            ShippingTypes = new ShippingTypeRepository(_context);
         }
 
         public IAddressRepository Addresses { get; private set; }
@@ -50,10 +56,13 @@ namespace Mahtan.Data.Repositories
         public ICartItemRepository CartItems { get; private set; }
         public IDistrictRepository Districts { get; private set; }
         public IFaqRepository Faqs { get; private set; }
+        public IOrderItemRepository OrderItems { get; private set; }
+        public IOrderRepository Orders { get; private set; }
         public IProductRepository Products { get; private set; }
         public IProductImageRepository ProductImages { get; private set; }
         public IProductReviewRepository ProductReviews { get; private set; }
         public IProfileRepository Profiles { get; private set; }
+        public IShippingTypeRepository ShippingTypes { get; private set; }
 
         public async Task<int> CompleteAsync()
         {

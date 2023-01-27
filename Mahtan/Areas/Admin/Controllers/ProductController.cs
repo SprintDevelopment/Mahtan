@@ -5,12 +5,14 @@ using Mahtan.Data.Repositories;
 using Mahtan.Models;
 using Mahtan.Services;
 using Mahtan.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mahtan.Areas.Admin.Controllers
 {
     [Area(nameof(Admin))]
+    [Authorize(Roles = nameof(Admin))]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

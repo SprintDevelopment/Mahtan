@@ -34,7 +34,7 @@ namespace Mahtan.Controllers
 
         public IActionResult Faq()
         {
-            return View();
+            return View(_unitOfWork.Faqs.Find().AsEnumerable().GroupBy(f => f.FaqGroup));
         }
 
         public IActionResult Privacy()

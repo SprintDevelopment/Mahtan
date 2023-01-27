@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ShippingType>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <th>@item.DisplayOrder</th>
+        <th>@item.Title</th>
+        <th>@item.DeliveryRange</th>
+        <th>@item.Cost.ToString("n0")</th>
+        <td class="py-2">
+            <div class="col-auto btn-group btn-group-sm w-100">
+                <a class="btn btn-outline-primary" onclick="showInPopup('@Url.Action("CreateOrUpdate", "ShippingType", new { id = item.ShippingTypeId }, Context.Request.Scheme)', 'ویرایش روش', true)">مشاهده</a>
+                <button class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="visually-hidden">Toggle dropdown</span></button>
+                <div class="dropdown-menu my-1">
+                    <a class="dropdown-item text-danger delete" data-id="@item.ShippingTypeId" data-title="@item.Title" style="cursor:pointer">حذف</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+}

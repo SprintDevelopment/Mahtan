@@ -1,4 +1,5 @@
-﻿@{
+﻿@inject IOptions<SiteInfoDto> _siteInfoOptions
+@{
     var controllerName = Context.Request.RouteValues["controller"].ToString();
     var activeClassName = "";
 }
@@ -8,10 +9,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Cartzilla | Fashion Store v.1</title>
+    <title>@_siteInfoOptions.Value.Title</title>
     <!-- SEO Meta Tags-->
-    <meta name="description" content="مهتن - فروش انواع لباس زنانه">
-    <meta name="keywords" content="مهتن, لباس زیر, فروش لباس زنانه">
+    <meta name="description" content="@_siteInfoOptions.Value.Description">
+    <meta name="keywords" content="@_siteInfoOptions.Value.Keywords">
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
@@ -48,9 +49,6 @@
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button><a class="navbar-tool d-none d-lg-flex" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#searchBox" role="button" aria-expanded="false" aria-controls="searchBox">
                             <span class="navbar-tool-tooltip">Search</span>
                             <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-search"></i></div>
-                        </a><a class="navbar-tool d-none d-lg-flex" href="dashboard-favorites.html">
-                            <span class="navbar-tool-tooltip">Favorites</span>
-                            <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-heart"></i></div>
                         </a>
                         <div class="navbar-tool dropdown ms-2">
                             <a class="navbar-tool-icon-box border dropdown-toggle" href="dashboard-sales.html"><img src="~/resources/img/admin/avatar-sm.png" width="32" alt="Createx Studio"></a><a class="navbar-tool-text ms-n1" href="dashboard-sales.html"><small>Createx Std.</small>$1,375.00</a>
@@ -63,7 +61,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="navbar-tool ms-4"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="marketplace-cart.html"><span class="navbar-tool-label">3</span><i class="navbar-tool-icon ci-cart"></i></a></div>
                     </div>
                     <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
                         <!-- Search-->
@@ -71,101 +68,6 @@
                             <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
                             <input class="form-control rounded-start" type="text" placeholder="Search marketplace">
                         </div>
-                        <!-- Categories dropdown-->
-                        <ul class="navbar-nav navbar-mega-nav pe-lg-2 me-lg-2">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle ps-lg-0" href="#" data-bs-toggle="dropdown"><i class="ci-menu align-middle mt-n1 me-2"></i>Categories</a>
-                                <ul class="dropdown-menu py-1">
-                                    <li class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Photos</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item product-title fw-medium"><a href="marketplace-category.html">All Photos<i class="ci-arrow-right fs-xs ms-1"></i></a></li>
-                                            <li class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Abstract</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Animals</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Architecture</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Beauty &amp; Fashion</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Business</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Education</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Food &amp; Drink</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Holidays</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Industrial</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">People</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Sports</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Technology</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Graphics</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item product-title fw-medium"><a href="#">All Graphics<i class="ci-arrow-right fs-xs ms-1"></i></a></li>
-                                            <li class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Icons</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Illustartions</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Patterns</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Textures</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Web Elements</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">UI Design</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item product-title fw-medium"><a href="marketplace-category.html">All UI Design<i class="ci-arrow-right fs-xs ms-1"></i></a></li>
-                                            <li class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">PSD Templates</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Sketch Templates</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Adobe XD Templates</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Figma Templates</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Web Themes</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item product-title fw-medium"><a href="marketplace-category.html">All Web Themes<i class="ci-arrow-right fs-xs ms-1"></i></a></li>
-                                            <li class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">WordPress Themes</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Bootstrap Themes</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">eCommerce Templates</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Muse Templates</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Plugins</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Fonts</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item product-title fw-medium"><a href="marketplace-category.html">All Fonts<i class="ci-arrow-right fs-xs ms-1"></i></a></li>
-                                            <li class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Blackletter</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Display</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Non Western</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Sans Serif</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Script</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Serif</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Slab Serif</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Symbols</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Add-Ons</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="dropdown-item product-title fw-medium"><a href="marketplace-category.html">All Add-Ons<i class="ci-arrow-right fs-xs ms-1"></i></a></li>
-                                            <li class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Photoshop Add-Ons</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Illustrator Add-Ons</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Sketch Plugins</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Procreate Brushes</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">InDesign Palettes</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Lightroom Presets</a></li>
-                                            <li><a class="dropdown-item" href="marketplace-category.html">Other Software</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <!-- Primary menu-->
-                        <ul class="navbar-nav">
-                            <li class="nav-item"><a class="nav-link" href="index.html">Back to main demo</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -182,27 +84,6 @@
             </div>
         </header>
         <div class="page-title-overlap bg-accent pt-4">
-            <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
-                <div class="d-flex align-items-center pb-3">
-                    <div class="img-thumbnail rounded-circle position-relative flex-shrink-0" style="width: 6.375rem;"><img class="rounded-circle" src="~/resources/img/admin/avatar.png" alt="Createx Studio"></div>
-                    <div class="ps-3">
-                        <h3 class="text-light fs-lg mb-0">Createx Studio</h3><span class="d-block text-light fs-ms opacity-60 py-1">Member since November 2019</span>
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <div class="text-sm-end me-5">
-                        <div class="text-light fs-base">Total sales</div>
-                        <h3 class="text-light">426</h3>
-                    </div>
-                    <div class="text-sm-end">
-                        <div class="text-light fs-base">Seller rating</div>
-                        <div class="star-rating">
-                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                        </div>
-                        <div class="text-light opacity-60 fs-xs">Based on 98 reviews</div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="container mb-5 pb-3">
             <div class="bg-light shadow-lg rounded-3 overflow-hidden">
@@ -215,55 +96,83 @@
                         <div class="h-100 border-end mb-2">
                             <div class="d-lg-block collapse" id="account-menu">
                                 <div class="bg-secondary p-4">
-                                    <h3 class="fs-sm mb-0 text-muted">Account</h3>
+                                    <h3 class="fs-sm mb-0 text-muted">آمار</h3>
                                 </div>
                                 <ul class="list-unstyled mb-0">
-                                    <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="dashboard-settings.html"><i class="ci-settings opacity-75 fs-base me-2"></i>Settings</a></li>
-                                    <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="dashboard-purchases.html"><i class="ci-basket opacity-75 fs-base me-2"></i>Purchases</a></li>
-                                    <li class="mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" href="dashboard-favorites.html"><i class="ci-heart opacity-75 fs-base me-2"></i>Favorites<span class="fs-sm text-muted ms-auto">4</span></a></li>
+                                    @{ if (controllerName == "Order") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <li class="border-bottom mb-0 @activeClassName">
+                                        <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="Order" asp-action="Index">
+                                            <i class="ci-bag opacity-75 fs-6 me-2"></i>سفارشات
+                                        </a>
+                                    </li>
+                                    @{ if (controllerName == "Message") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <li class="border-bottom mb-0 @activeClassName">
+                                        <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="Message" asp-action="Index">
+                                            <i class="ci-message opacity-75 fs-6 me-2"></i>پیام ها
+                                        </a>
+                                    </li>
+                                    @{ if (controllerName == "ProductReview") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <li class="border-bottom mb-0 @activeClassName">
+                                        <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="ProductReview" asp-action="Index">
+                                            <i class="ci-announcement opacity-75 fs-6 me-2"></i>بررسی محصولات
+                                        </a>
+                                    </li>
+                                    @{ if (controllerName == "User") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <li class="border-bottom mb-0 @activeClassName">
+                                        <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="User" asp-action="Index">
+                                            <i class="ci-user opacity-75 fs-6 me-2"></i>کاربران
+                                        </a>
+                                    </li>
                                 </ul>
                                 <div class="bg-secondary p-4">
-                                    <h3 class="fs-sm mb-0 text-muted">Seller Dashboard</h3>
+                                    <h3 class="fs-sm mb-0 text-muted">داده ها</h3>
                                 </div>
                                 <ul class="list-unstyled mb-0">
                                     @{ if (controllerName == "Product") { activeClassName = "active"; } else { activeClassName = ""; }; }
                                     <li class="border-bottom mb-0 @activeClassName">
                                         <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="Product" asp-action="Index">
-                                            <i class="ci-package opacity-75 fs-base me-2"></i>محصولات
+                                            <i class="ci-package opacity-75 fs-6 me-2"></i>محصولات
                                         </a>
                                     </li>
 
                                     @{ if (controllerName == "Brand") { activeClassName = "active"; } else { activeClassName = ""; }; }
                                     <li class="border-bottom mb-0 @activeClassName">
                                         <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="Brand" asp-action="Index">
-                                            <i class="ci-bookmark opacity-75 fs-base me-2"></i>برندها
+                                            <i class="ci-bookmark opacity-75 fs-6 me-2"></i>برندها
                                         </a>
                                     </li>
 
                                     @{ if (controllerName == "Category") { activeClassName = "active"; } else { activeClassName = ""; }; }
                                     <li class="border-bottom mb-0 @activeClassName">
                                         <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="Category" asp-action="Index">
-                                            <i class="ci-bookmark opacity-75 fs-base me-2"></i>دسته بندی ها
+                                            <i class="ci-bookmark opacity-75 fs-6 me-2"></i>دسته بندی ها
                                         </a>
                                     </li>
 
                                     @{ if (controllerName == "Banner") { activeClassName = "active"; } else { activeClassName = ""; }; }
                                     <li class="border-bottom mb-0 @activeClassName">
                                         <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="Banner" asp-action="Index">
-                                            <i class="ci-image opacity-75 fs-base me-2"></i>تصاویر
+                                            <i class="ci-image opacity-75 fs-6 me-2"></i>تصاویر
                                         </a>
                                     </li>
 
                                     @{ if (controllerName == "District") { activeClassName = "active"; } else { activeClassName = ""; }; }
                                     <li class="border-bottom mb-0 @activeClassName">
                                         <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="District" asp-action="Index">
-                                            <i class="ci-location opacity-75 fs-base me-2"></i>مناطق
+                                            <i class="ci-location opacity-75 fs-6 me-2"></i>مناطق
+                                        </a>
+                                    </li>
+
+                                    @{ if (controllerName == "ShippingType") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <li class="border-bottom mb-0 @activeClassName">
+                                        <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="ShippingType" asp-action="Index">
+                                            <i class="ci-delivery opacity-75 fs-6 me-2 mt-1"></i>روش های ارسال
                                         </a>
                                     </li>
 
                                     <li class="mb-0">
                                         <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm text-danger" asp-area="Identity" asp-controller="Account" asp-action="Logout">
-                                            <i class="ci-arrow-right opacity-75 fs-base me-2"></i>خروج از حساب کاربری
+                                            <i class="ci-arrow-right opacity-75 fs-6 me-2"></i>خروج از حساب کاربری
                                         </a>
                                     </li>
                                 </ul>
@@ -312,6 +221,13 @@
     <script src="~/js/theme.js"></script>
     <script src="~/js/site-scripts/delete.js"></script>
     <script src="~/js/site-scripts/create-update.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".modal").on('shown.bs.modal', function () {
+                $(this).find("[autofocus]:first").focus();
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

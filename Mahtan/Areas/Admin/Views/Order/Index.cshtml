@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Order>
+
+<h3 class="h5 pb-2">لیست سفارشات</h3>
+
+<div>
+    <table class="table fs-sm mb-0">
+        <thead>
+            <tr>
+                <th>شماره سفارش</th>
+                <th>نام کاربر</th>
+                <th>قیمت کل</th>
+                <th>وضعیت</th>
+                <th>تاریخ</th>
+                <th width="40px">
+                </th>
+            </tr>
+        </thead>
+        <tbody id="data-list">
+            @await Html.PartialAsync("_OrderListPartial", Model)
+        </tbody>
+    </table>
+</div>
+
+<hr class="mb-grid-gutter">
+
+<nav class="d-md-flex justify-content-between align-items-center text-center text-md-start" aria-label="Page navigation">
+    <div class="d-md-flex align-items-center w-100">
+        <span class="fs-sm text-muted me-md-3">Showing 10 of 52 records</span>
+        <div class="progress w-100 my-3 mx-auto mx-md-0" style="max-width: 10rem; height: 4px;">
+            <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <button class="btn btn-outline-primary btn-sm" type="button">More records</button>
+</nav>
+
+<div class="modal fade" id="items-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+@*
+@section Scripts{
+    <script type="text/javascript">
+        showDetailsInPopup = (url, title) => {
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: url,
+                success: function (res) {
+                    $("#form-modal .modal-dialog").addClass('modal-lg modal-dialog-scrollable');
+                    //$("#form-modal .modal-dialog").addClass('modal-lg');
+                    //$("#form-modal .modal-dialog").addClass('modal-dialog-scrollable');
+
+                    $("#form-modal .modal-content").html(res);
+                    //$("#form-modal #modal-title").html(title);
+                    $("#form-modal").modal('show');
+                }
+            });
+        }
+    </script>
+}
+*@

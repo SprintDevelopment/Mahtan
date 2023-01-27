@@ -28,9 +28,5 @@ namespace Mahtan.Models
         [Display(Name = "ردیف نمایش")]
         [Required(ErrorMessage = "{0} را وارد کنید")]
         public int DisplayOrder { get; set; }
-
-        public Faq()
-        {
-        }
     }
 }

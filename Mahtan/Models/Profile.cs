@@ -1,4 +1,5 @@
-﻿using Mahtan.Assets.Values;
+﻿using Mahtan.Assets.Extensions;
+using Mahtan.Assets.Values;
 using Mahtan.Assets.Values.Constants;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -38,7 +39,7 @@ namespace Mahtan.Models
         public string OptionalAvatarGuid { get; set; }
 
         [NotMapped]
-        public string AvatarFullPath => string.Format("/{0}/{1}", Addresses.UserAvatarImagesPath.Replace('\\', '/'), OptionalAvatarGuid ?? "no-image.png");
+        public string AvatarFullPath => string.Format("/{0}/{1}", Addresses.UserAvatarImagesPath.Replace('\\', '/'), !OptionalAvatarGuid.IsNullOrWhitespace() ? OptionalAvatarGuid : "no-image.png");
 
         [Display(Name = "پیشنهادهای شگفت انگیز به ایمیل شما ارسال شود ؟")]
         public bool RecieveOffersByEmail { get; set; }

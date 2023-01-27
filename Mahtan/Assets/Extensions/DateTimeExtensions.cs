@@ -28,13 +28,9 @@
                 return $"{months} ماه پیش";
 
             var years = DateTime.Now.Subtract(date).Days / 365;
-                return $"{years} سال پیش";
+            return $"{years} سال پیش";
         }
 
-        public static string ToShortDate(this DateTime date)
-        {
-            var persianDate = PersianUtil.PersianDateTime(date);
-            return persianDate.Substring(5);
-        }
+        public static string ToShortPersianDate(this DateTime date) => PersianUtil.PersianDateTime(date);
     }
-    }
+}

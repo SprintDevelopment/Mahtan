@@ -24,6 +24,7 @@ builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.Configure<SmsDto>(opt => builder.Configuration.GetSection("SmsOptions").Bind(opt));
+builder.Services.Configure<SiteInfoDto>(opt => builder.Configuration.GetSection("SiteInfo").Bind(opt));
 builder.Services.AddSingleton<ISmsService, SmsService>();
 builder.Services.AddTransient<ICartService, CartService>();
 

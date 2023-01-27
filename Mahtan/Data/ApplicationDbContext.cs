@@ -32,10 +32,13 @@ namespace Mahtan.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Faq> Faqs { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<ShippingType> ShippingTypes { get; set; }
         public DbSet<User> SiteUsers { get; set; }
     }
 }

@@ -2,10 +2,12 @@
 using Mahtan.Models;
 using Mahtan.Assets;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Mahtan.Areas.Admin.Controllers
 {
     [Area(nameof(Admin))]
+    [Authorize(Roles = nameof(Admin))]
     public class DistrictController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

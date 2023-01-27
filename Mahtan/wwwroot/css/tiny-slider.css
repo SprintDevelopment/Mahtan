@@ -104,7 +104,7 @@
 
 .tns-visually-hidden {
     position: absolute;
-    left: -10000em
+    right: -10000em
 }
 
 .tns-transparent {

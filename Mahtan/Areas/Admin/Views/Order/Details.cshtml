@@ -1,0 +1,45 @@
+﻿@model OrderDetailsViewModel
+@{
+    Layout = null;
+}
+
+<div class="modal-header bg-secondary py-1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    <p class="fw-bold my-2">شماره سفارش - @Model.Order.OrderNumber</p>
+</div>
+
+<div class="modal-body pb-0">
+    @{ var borderTopClassForAllExceptFirst = ""; }
+    @foreach (var item in Model.Items)
+    {
+        <!-- Item-->
+        <div class="d-sm-flex justify-content-between @borderTopClassForAllExceptFirst">
+            <div class="d-sm-flex text-center text-sm-start">
+                <a class="d-inline-block flex-shrink-0 mx-auto" href="/Product/Details/@item.ProductId/@item.Product.FarsiSlug" style="width: 10rem;">
+                    <img src="@Url.Content(item.Product.FirstLargeImageFullPath)" alt="Product">
+                </a>
+                <div class="ps-sm-4 pt-2">
+                    <h3 class="product-title fs-base mb-2">
+                        <a href="/Product/Details/@item.ProductId/@item.Product.FarsiSlug">@item.Product.Name</a>
+                    </h3>
+                    <div class="fs-sm"><span class="text-muted me-2">برند : </span>@item.Product.Category.Title</div>
+                    <div class="fs-lg text-accent pt-2">@item.Price.ToString("n0") <small>تومان</small></div>
+                </div>
+            </div>
+            <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">تعداد : </div>@item.Qty
+            </div>
+            <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                <div class="text-muted mb-2">جمع : </div>@((item.Qty * item.Price).ToString("n0")) <small>تومان</small>
+            </div>
+        </div>
+
+        borderTopClassForAllExceptFirst = "pt-3 pt-sm-2 border-top";
+    }
+</div>
+<div class="modal-footer flex-wrap justify-content-between bg-secondary fs-md py-1">
+    <div class="px-2 py-1"><span class="text-muted">جمع اقلام : </span><span>@Model.Order.TotalPrice.ToString("n0") <small>تومان</small></span></div>
+    <div class="px-2 py-1"><span class="text-muted">هزینه ارسال : </span><span>0 <small>تومان</small></span></div>
+    <div class="px-2 py-1"><span class="text-muted">مالیات : </span><span>0 <small>تومان</small></span></div>
+    <div class="px-2 py-1"><span class="text-muted">جمع کل : </span><span class="fs-lg">@Model.Order.TotalPrice.ToString("n0") <small>تومان</small></span></div>
+</div>

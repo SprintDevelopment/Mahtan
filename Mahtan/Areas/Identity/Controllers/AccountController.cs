@@ -80,7 +80,7 @@ namespace Mahtan.Areas.Identity.Controllers
 
         private async Task<IActionResult> RedirectToUserRoleDefaultView(Models.User signedUser, string returnUrl = null)
         {
-            returnUrl ??= await _userManager.IsInRoleAsync(signedUser, Roles.User.ToString()) ? "/User/Profile" : "/Admin/Property";
+            returnUrl ??= await _userManager.IsInRoleAsync(signedUser, Roles.User.ToString()) ? "/User/Profile" : "/Admin/User";
             return LocalRedirect(returnUrl);
         }
 

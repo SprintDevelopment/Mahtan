@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductDetailsViewModel
 <!-- Page Title-->
 <div class="page-title-overlap bg-dark pt-4">
     <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
@@ -14,7 +14,7 @@
             </nav>
         </div>
         <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-            <h1 class="h3 text-light mb-0">@Model.Name</h1>
+            <h1 class="h3 text-light mb-0">@Model.Product.Name</h1>
         </div>
     </div>
 </div>
@@ -24,7 +24,7 @@
         <div class="px-lg-3">
             <div class="row">
                 <!-- Product gallery-->
-                @if (!Model.Images.IsNullOrEmpty())
+                @if (!Model.Product.Images.IsNullOrEmpty())
                 {
                     <div class="col-lg-7 pe-lg-0 pt-lg-4">
                         <div class="product-gallery">
@@ -32,7 +32,7 @@
                                 @{
                                     int i = 0;
                                 }
-                                @foreach (var image in Model.Images.AsEnumerable())
+                                @foreach (var image in Model.Product.Images.AsEnumerable())
                                 {
                                     <a class="product-gallery-thumblist-item @(i == 0 ? "active" : "")" href="#image-@i">
                                         <img src="@Url.Content(image.ImageLargeFullPath)" alt="image-@(i++)">
@@ -49,7 +49,7 @@
                                 @{
                                     i = 0;
                                 }
-                                @foreach (var image in Model.Images.AsEnumerable())
+                                @foreach (var image in Model.Product.Images.AsEnumerable())
                                 {
                                     <div class="product-gallery-preview-item @(i == 0 ? "active" : "")" id="image-@i">
                                         <img class="image-zoom" src="@Url.Content(image.ImageLargeFullPath)" data-zoom="@Url.Content(image.ImageLargeFullPath)" alt="image-@(i++)">
@@ -64,7 +64,7 @@
                 <div class="col-lg-5 pt-4 pt-lg-0">
                     <div class="product-details ms-auto pb-3">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            @if (!Model.Reviews.IsNullOrEmpty())
+                            @if (!Model.Product.Reviews.IsNullOrEmpty())
                             {
                                 <a href="#reviews" data-scroll="">
                                     <div class="star-rating">
@@ -74,16 +74,16 @@
                                         <i class="star-rating-icon ci-star-filled active"></i>
                                         <i class="star-rating-icon ci-star"></i>
                                     </div>
-                                    <span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1">@Model.Reviews.Count() نظر</span>
+                                    <span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1">@Model.Product.Reviews.Count() نظر</span>
                                 </a>
                             }
                             <button class="btn-wishlist me-0 me-lg-n3" type="button" data-bs-toggle="tooltip" aria-label="افزودن به علاقه مندی ها" data-bs-original-title="افزودن به علاقه مندی ها"><i class="ci-heart"></i></button>
                         </div>
                         <div class="mb-3">
-                            <span class="h3 fw-normal text-accent me-1">@Model.PriceAfterDiscount.ToString("n0")<small> تومان</small></span>
-                            @if (Model.DiscountPercent > 0)
+                            <span class="h3 fw-normal text-accent me-1">@Model.Product.PriceAfterDiscount.ToString("n0")<small> تومان</small></span>
+                            @if (Model.Product.DiscountPercent > 0)
                             {
-                                <del class="text-muted me-3">@Model.Price.ToString("n0") تومان</del>
+                                <del class="text-muted me-3">@Model.Product.Price.ToString("n0") تومان</del>
                             }
                         </div>
                         <div class="fs-sm mb-4">
@@ -141,7 +141,15 @@
                                 </h3>
                                 <div class="accordion-collapse collapse show" id="productInfo" data-bs-parent="#productPanels">
                                     <div class="accordion-body">
-                                        <p>@Model.OptionalComment</p>
+                                        <ul class="list-unstyled fs-sm">
+                                            @foreach (var line in Model.Product.OptionalComment.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
+                                            {
+                                                <li class="d-flex align-items-center mb-2">
+                                                    <i class="ci-check text-success me-2"></i>
+                                                    <span>@line</span>
+                                                </li>
+                                            }
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -153,47 +161,25 @@
                                 </h3>
                                 <div class="accordion-collapse collapse" id="shippingOptions" data-bs-parent="#productPanels">
                                     <div class="accordion-body fs-sm">
-                                        <div class="d-flex justify-content-between border-bottom pb-2">
-                                            <div>
-                                                <div class="fw-semibold text-dark">Courier</div>
-                                                <div class="fs-sm text-muted">2 - 4 days</div>
+                                        @{
+                                            var borderTopClassForAllExceptFirst = "";
+                                        }
+                                        @foreach (var shippingType in Model.ShippingTypes)
+                                        {
+                                            <div class="d-flex justify-content-between @borderTopClassForAllExceptFirst mb-2">
+                                                <div>
+                                                    <div class="fw-semibold text-dark">@shippingType.Title</div>
+                                                    <div class="fs-sm text-muted">@shippingType.DeliveryRange</div>
+                                                </div>
+                                                <div>@shippingType.Cost.ToString("n0")</div>
                                             </div>
-                                            <div>$26.50</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between border-bottom py-2">
-                                            <div>
-                                                <div class="fw-semibold text-dark">Local shipping</div>
-                                                <div class="fs-sm text-muted">up to one week</div>
-                                            </div>
-                                            <div>$10.00</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between border-bottom py-2">
-                                            <div>
-                                                <div class="fw-semibold text-dark">Flat rate</div>
-                                                <div class="fs-sm text-muted">5 - 7 days</div>
-                                            </div>
-                                            <div>$33.85</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between border-bottom py-2">
-                                            <div>
-                                                <div class="fw-semibold text-dark">UPS ground shipping</div>
-                                                <div class="fs-sm text-muted">4 - 6 days</div>
-                                            </div>
-                                            <div>$18.00</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between pt-2">
-                                            <div>
-                                                <div class="fw-semibold text-dark">Local pickup from store</div>
-                                                <div class="fs-sm text-muted">—</div>
-                                            </div>
-                                            <div>.00</div>
-                                        </div>
+
+                                            borderTopClassForAllExceptFirst = "border-top pt-2";
+                                        }
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Sharing-->
-                        <label class="form-label d-inline-block align-middle my-2 me-3">Share:</label><a class="btn-share btn-twitter me-2 my-2" href="#"><i class="ci-twitter"></i>Twitter</a><a class="btn-share btn-instagram me-2 my-2" href="#"><i class="ci-instagram"></i>Instagram</a><a class="btn-share btn-facebook my-2" href="#"><i class="ci-facebook"></i>Facebook</a>
                     </div>
                 </div>
             </div>
@@ -369,657 +355,73 @@
 }
 <!-- Product carousel (Style with)-->
 <div class="container pt-5">
-    <h2 class="h3 text-center pb-4">Style with</h2>
+    <h2 class="h3 text-center pb-4">همچنین ببینید</h2>
     <div class="tns-carousel tns-controls-static tns-controls-outside">
-        <div class="tns-outer" id="tns2-ow">
-            <div class="tns-controls" aria-label="Carousel Navigation" tabindex="0"><button type="button" data-controls="prev" tabindex="-1" aria-controls="tns2"><i class="ci-arrow-left"></i></button><button type="button" data-controls="next" tabindex="-1" aria-controls="tns2"><i class="ci-arrow-right"></i></button></div><div class="tns-liveregion tns-visually-hidden" aria-live="polite" aria-atomic="true">slide <span class="current">9 to 12</span>  of 5</div><div id="tns2-mw" class="tns-ovh">
-                <div class="tns-inner" id="tns2-iw">
-                    <div class="tns-carousel-inner  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal" data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}" id="tns2" style="transition-duration: 0s; transform: translate3d(-38.0952%, 0px, 0px);">
-                        <div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/18.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Shoes</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Men’s Leather Keds</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$64.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="tns-carousel-inner  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal" data-carousel-options='{"items": 2, "controls": true, "nav": false, "responsive": {"0":{"items":1},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":4, "gutter": 30}}}'>
+            @foreach (var product in Model.RelatedProducts)
+            {
+                <!-- Product-->
+                <div class="card product-card card-static" style="direction: rtl">
+                    <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی ها">
+                        <i class="ci-heart"></i>
+                    </button>
+                    <a class="card-img-top d-block overflow-hidden" href="/Product/Details/@product.ProductId/@product.FarsiSlug">
+                        <img src="@Url.Content(product.FirstLargeImageFullPath)" alt="Product">
+                    </a>
+                    <div class="card-body py-2">
+                        <a class="product-meta d-block fs-xs pb-1" href="#">@product.Category.Title</a>
+                        <h3 class="product-title fs-sm"><a href="shop-single-v1.html">@product.Name</a></h3>
+                        <div class="d-flex justify-content-between">
+                            <div class="product-price">
+                                <span class="text-accent">$154.<small>00</small></span>
                             </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/19.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">3 Color Collection of T-shirts</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$27.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/13.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Cotton Polo Regular Fit</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$13.<small>50</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/14.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Jeans</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Slim Taper Fit Jeans</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price"><span class="text-accent">$58.<small>99</small></span></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <span class="badge bg-danger badge-shadow">Sale</span>
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/17.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Cotton T-shirt Regular Fit</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price">
-                                            <span class="text-accent">$9.<small>50</small></span>
-                                            <del class="fs-sm text-muted">$11.<small>50</small></del>
-                                        </div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/18.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Shoes</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Men’s Leather Keds</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$64.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/19.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">3 Color Collection of T-shirts</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$27.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/13.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Cotton Polo Regular Fit</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$13.<small>50</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item tns-slide-active" id="tns2-item0">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/14.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Jeans</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Slim Taper Fit Jeans</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price"><span class="text-accent">$58.<small>99</small></span></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item tns-slide-active" id="tns2-item1">
-                            <div class="card product-card card-static">
-                                <span class="badge bg-danger badge-shadow">Sale</span>
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/17.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Cotton T-shirt Regular Fit</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price">
-                                            <span class="text-accent">$9.<small>50</small></span>
-                                            <del class="fs-sm text-muted">$11.<small>50</small></del>
-                                        </div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item tns-slide-active" id="tns2-item2">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/18.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Shoes</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Men’s Leather Keds</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$64.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item tns-slide-active" id="tns2-item3">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/19.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">3 Color Collection of T-shirts</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$27.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item" id="tns2-item4" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/13.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Cotton Polo Regular Fit</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$13.<small>50</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/14.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Jeans</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Slim Taper Fit Jeans</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price"><span class="text-accent">$58.<small>99</small></span></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <span class="badge bg-danger badge-shadow">Sale</span>
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/17.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Cotton T-shirt Regular Fit</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price">
-                                            <span class="text-accent">$9.<small>50</small></span>
-                                            <del class="fs-sm text-muted">$11.<small>50</small></del>
-                                        </div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/18.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Shoes</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Men’s Leather Keds</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$64.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/19.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">3 Color Collection of T-shirts</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$27.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/13.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Cotton Polo Regular Fit</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$13.<small>50</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/14.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Jeans</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Slim Taper Fit Jeans</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price"><span class="text-accent">$58.<small>99</small></span></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <span class="badge bg-danger badge-shadow">Sale</span>
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/17.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s T-shirts</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Cotton T-shirt Regular Fit</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price">
-                                            <span class="text-accent">$9.<small>50</small></span>
-                                            <del class="fs-sm text-muted">$11.<small>50</small></del>
-                                        </div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/18.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Shoes</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Men’s Leather Keds</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$64.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="star-rating">
+                                <i class="star-rating-icon ci-star-filled active"></i>
+                                <i class="star-rating-icon ci-star-filled active"></i>
+                                <i class="star-rating-icon ci-star-filled active"></i>
+                                <i class="star-rating-icon ci-star-half active"></i>
+                                <i class="star-rating-icon ci-star"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
 <!-- Product carousel (You may also like)-->
 <div class="container py-5 my-md-3">
-    <h2 class="h3 text-center pb-4">You may also like</h2>
+    <h2 class="h3 text-center pb-4">محصولات مشابه</h2>
     <div class="tns-carousel tns-controls-static tns-controls-outside">
-        <div class="tns-outer" id="tns3-ow">
-            <div class="tns-controls" aria-label="Carousel Navigation" tabindex="0"><button type="button" data-controls="prev" tabindex="-1" aria-controls="tns3"><i class="ci-arrow-left"></i></button><button type="button" data-controls="next" tabindex="-1" aria-controls="tns3"><i class="ci-arrow-right"></i></button></div><div class="tns-liveregion tns-visually-hidden" aria-live="polite" aria-atomic="true">slide <span class="current">9 to 12</span>  of 5</div><div id="tns3-mw" class="tns-ovh">
-                <div class="tns-inner" id="tns3-iw">
-                    <div class="tns-carousel-inner  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal" data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}" id="tns3" style="transition-duration: 0s; transform: translate3d(-38.0952%, 0px, 0px);">
-                        <div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/22.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$24.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="tns-carousel-inner  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal" data-carousel-options='{"items": 2, "controls": true, "nav": false, "responsive": {"0":{"items":1},"500":{"items":2, "gutter": 18},"768":{"items":3, "gutter": 20}, "1100":{"items":4, "gutter": 30}}}'>
+            @foreach (var product in Model.RelatedProducts)
+            {
+                <!-- Product-->
+                <div class="card product-card card-static" style="direction: rtl">
+                    <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی ها">
+                        <i class="ci-heart"></i>
+                    </button>
+                    <a class="card-img-top d-block overflow-hidden" href="/Product/Details/@product.ProductId/@product.FarsiSlug">
+                        <img src="@Url.Content(product.FirstLargeImageFullPath)" alt="Product">
+                    </a>
+                    <div class="card-body py-2">
+                        <a class="product-meta d-block fs-xs pb-1" href="#">@product.Category.Title</a>
+                        <h3 class="product-title fs-sm"><a href="shop-single-v1.html">@product.Name</a></h3>
+                        <div class="d-flex justify-content-between">
+                            <div class="product-price">
+                                <span class="text-accent">$154.<small>00</small></span>
                             </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/23.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$24.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/24.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$25.<small>00</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/20.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price"><span class="text-accent">$24.<small>99</small></span></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/21.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$26.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/22.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$24.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/23.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$24.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/24.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$25.<small>00</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item tns-slide-active" id="tns3-item0">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/20.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price"><span class="text-accent">$24.<small>99</small></span></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item tns-slide-active" id="tns3-item1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/21.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$26.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item tns-slide-active" id="tns3-item2">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/22.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$24.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item tns-slide-active" id="tns3-item3">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/23.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$24.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product-->
-                        <div class="tns-item" id="tns3-item4" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/24.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$25.<small>00</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/20.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price"><span class="text-accent">$24.<small>99</small></span></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/21.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$26.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/22.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$24.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/23.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$24.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/24.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$25.<small>00</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/20.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price"><span class="text-accent">$24.<small>99</small></span></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/21.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$26.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><div class="tns-item tns-slide-cloned" aria-hidden="true" tabindex="-1">
-                            <div class="card product-card card-static">
-                                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist"><i class="ci-heart"></i></button><a class="card-img-top d-block overflow-hidden" href="#"><img src="img/shop/catalog/22.jpg" alt="Product"></a>
-                                <div class="card-body py-2">
-                                    <a class="product-meta d-block fs-xs pb-1" href="#">Men’s Hoodie</a>
-                                    <h3 class="product-title fs-sm"><a href="#">Block-colored Hooded Top</a></h3>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-price text-accent">$24.<small>99</small></div>
-                                        <div class="star-rating">
-                                            <i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-half active"></i><i class="star-rating-icon ci-star"></i><i class="star-rating-icon ci-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="star-rating">
+                                <i class="star-rating-icon ci-star-filled active"></i>
+                                <i class="star-rating-icon ci-star-filled active"></i>
+                                <i class="star-rating-icon ci-star-filled active"></i>
+                                <i class="star-rating-icon ci-star-half active"></i>
+                                <i class="star-rating-icon ci-star"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>

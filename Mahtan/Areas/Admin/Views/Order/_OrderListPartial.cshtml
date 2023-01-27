@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Order>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <th>@item.OrderNumber</th>
+        <th>@item.UserProfile.FullName</th>
+        <th>@item.TotalPrice.ToString("n0")</th>
+        @{
+            var orderBadgeBgClass = "bg-info";
+            switch (item.OrderState)
+            {
+                case OrderStates.Registered:
+                case OrderStates.Confirmed:
+                    orderBadgeBgClass = "bg-info";
+                    break;
+                case OrderStates.InProgress:
+                    orderBadgeBgClass = "bg-accent";
+                    break;
+                case OrderStates.Sent:
+                    orderBadgeBgClass = "bg-primary";
+                    break;
+                case OrderStates.Delivered:
+                    orderBadgeBgClass = "bg-success";
+                    break;
+                case OrderStates.Rejected:
+                    orderBadgeBgClass = "bg-danger";
+                    break;
+            }
+        }
+        <th><span class="badge @orderBadgeBgClass">@item.OrderState.GetDescription()</span></th>
+        <th>@item.CreateDateTime.ToShortPersianDate()</th>
+        <td class="py-2">
+            <div class="col-auto btn-group btn-group-sm w-100">
+                <a class="btn btn-outline-primary" onclick="showInPopup('@Url.Action("Details", "Order", new { id = item.OrderId }, Context.Request.Scheme)', 'جزییات سفارش @item.OrderNumber', true)">مشاهده</a>
+                <button class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="visually-hidden">Toggle dropdown</span></button>
+                <div class="dropdown-menu my-1">
+                    <a class="dropdown-item text-danger delete" data-id="@item.OrderId" data-title="@item.OrderNumber" style="cursor:pointer">حذف</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+}

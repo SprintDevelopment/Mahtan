@@ -1,0 +1,45 @@
+﻿@model ShippingType
+@{
+    Layout = null;
+}
+<div class="modal-header bg-secondary py-1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    <p class="fw-bold my-2">@Model.CrudTitle()</p>
+</div>
+
+<div class="modal-body tab-content py-4">
+    @using (Html.BeginForm("CreateOrUpdate", "ShippingType", new { area = "Admin" }, FormMethod.Post, true, new { onsubmit = "return jQueryAjaxPost(this)", autocomplete = "off" }))
+    {
+        <input type="hidden" asp-for="ShippingTypeId" />
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" autofocus />
+            <span asp-validation-for="Title" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DeliveryRange" class="form-label"></label>
+            <input asp-for="DeliveryRange" class="form-control" />
+            <span asp-validation-for="DeliveryRange" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Cost" class="form-label"></label>
+            <input asp-for="Cost" class="form-control" />
+            <span asp-validation-for="Cost" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="OptionalComment" class="form-label"></label>
+            @Html.TextAreaFor(m => m.OptionalComment, 3, 0, new { @class = "form-control" })
+            <span asp-validation-for="OptionalComment" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DisplayOrder" class="form-label"></label>
+            <input asp-for="DisplayOrder" class="form-control" />
+            <span asp-validation-for="DisplayOrder" class="invalid-feedback"></span>
+        </div>
+        <button class="btn btn-primary d-block w-100" type="submit">تایید</button>
+    }
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}

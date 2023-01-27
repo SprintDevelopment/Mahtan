@@ -1,86 +1,84 @@
-﻿<section class="container py-3">
-    <h2 class="h3 text-center">Select a topic</h2>
-    <div class="row pt-4">
-        <div class="col-lg-4 col-sm-6 mb-grid-gutter">
-            <div class="card border-0 shadow">
-                <div class="card-body text-center">
-                    <i class="ci-user-circle h2 mt-2 mb-4 text-primary"></i>
-                    <h6>Managing account</h6>
-                    <p class="fs-sm text-muted pb-2">Proin nec turpis vel tortor venenatis tempus. Sed mollis vel arcu in tempor. Mauris enim purus, laoreet nec elit non euismod tempur accusantium.</p><a class="btn btn-outline-primary btn-sm stretched-link mb-2" href="help-single-topic.html">Learn more</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mb-grid-gutter">
-            <div class="card border-0 shadow">
-                <div class="card-body text-center">
-                    <i class="ci-laptop h2 mt-2 mb-4 text-primary"></i>
-                    <h6>Working with dashboard</h6>
-                    <p class="fs-sm text-muted pb-2">Proin nec turpis vel tortor venenatis tempus. Sed mollis vel arcu in tempor. Mauris enim purus, laoreet nec elit non euismod tempur accusantium.</p><a class="btn btn-outline-primary btn-sm stretched-link mb-2" href="help-single-topic.html">Learn more</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mb-grid-gutter">
-            <div class="card border-0 shadow">
-                <div class="card-body text-center">
-                    <i class="ci-card h2 mt-2 mb-4 text-primary"></i>
-                    <h6>Payment options</h6>
-                    <p class="fs-sm text-muted pb-2">Proin nec turpis vel tortor venenatis tempus. Sed mollis vel arcu in tempor. Mauris enim purus, laoreet nec elit non euismod tempur accusantium.</p><a class="btn btn-outline-primary btn-sm stretched-link mb-2" href="help-single-topic.html">Learn more</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mb-grid-gutter">
-            <div class="card border-0 shadow">
-                <div class="card-body text-center">
-                    <i class="ci-delivery h2 mt-2 mb-4 text-primary"></i>
-                    <h6>Delivery information</h6>
-                    <p class="fs-sm text-muted pb-2">Proin nec turpis vel tortor venenatis tempus. Sed mollis vel arcu in tempor. Mauris enim purus, laoreet nec elit non euismod tempur accusantium.</p><a class="btn btn-outline-primary btn-sm stretched-link mb-2" href="help-single-topic.html">Learn more</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mb-grid-gutter">
-            <div class="card border-0 shadow">
-                <div class="card-body text-center">
-                    <i class="ci-currency-exchange h2 mt-2 mb-4 text-primary"></i>
-                    <h6>Refund policy</h6>
-                    <p class="fs-sm text-muted pb-2">Proin nec turpis vel tortor venenatis tempus. Sed mollis vel arcu in tempor. Mauris enim purus, laoreet nec elit non euismod tempur accusantium.</p><a class="btn btn-outline-primary btn-sm stretched-link mb-2" href="help-single-topic.html">Learn more</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mb-grid-gutter">
-            <div class="card border-0 shadow">
-                <div class="card-body text-center">
-                    <i class="ci-loudspeaker h2 mt-2 mb-4 text-primary"></i>
-                    <h6>Affiliate program</h6>
-                    <p class="fs-sm text-muted pb-2">Proin nec turpis vel tortor venenatis tempus. Sed mollis vel arcu in tempor. Mauris enim purus, laoreet nec elit non euismod tempur accusantium.</p><a class="btn btn-outline-primary btn-sm stretched-link mb-2" href="help-single-topic.html">Learn more</a>
-                </div>
-            </div>
+﻿@model IEnumerable<IGrouping<FaqGroups, Faq>>
+
+<div class="bg-secondary py-4">
+    <div class="container py-2 py-lg-3">
+        <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+            <h1 class="h3 mb-0">سوالات متداول</h1>
         </div>
     </div>
-</section>
-<section class="container pt-4 pb-5">
-    <h2 class="h3 text-center">F.A.Q.</h2>
-    <div class="row pt-4">
-        <div class="col-sm-6">
-            <ul class="list-unstyled">
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>How long will delivery take?</span></a></li>
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>What payment methods do you accept?</span></a></li>
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>Do you ship internationally?</span></a></li>
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>Do I need an account to place an order?</span></a></li>
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>How can I track my order?</span></a></li>
-            </ul>
+</div>
+<div class="container py-5 mt-md-2 mb-2">
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- Related articles sidebar-->
+            <div class="offcanvas offcanvas-collapse" id="help-sidebar">
+                <div class="offcanvas-header align-items-center shadow-sm">
+                    <h2 class="h5 mb-0">Related articles</h2>
+                    <button class="btn-close ms-auto" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body py-grid-gutter py-lg-1" data-simplebar="init" data-simplebar-auto-hide="true">
+                    <div class="simplebar-wrapper" style="margin: -4px 0px;">
+                        <div class="simplebar-height-auto-observer-wrapper">
+                            <div class="simplebar-height-auto-observer"></div>
+                        </div>
+                        <div class="simplebar-mask">
+                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                    <div class="simplebar-content" style="padding: 4px 0px;">
+                                        <!-- Links-->
+                                        <div class="widget widget-links">
+                                            <h3 class="widget-title d-none d-lg-block">دسته بندی سوالات</h3>
+                                            <ul class="widget-list">
+                                                @foreach (var faqGroup in Model)
+                                                {
+                                                    <li class="widget-list-item mb-3">
+                                                        <a class="widget-list-link" href="#@faqGroup.Key.ToString()">
+                                                            <i class="ci-arrow-right opacity-60 align-middle mt-n1 me-2"></i>@faqGroup.Key.GetDescription()
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="simplebar-placeholder" style="width: auto; height: 386px;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                        <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                    </div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;">
+                        <div class="simplebar-scrollbar" style="height: 0px; display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-6">
-            <ul class="list-unstyled">
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>What are the product refund conditions?</span></a></li>
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>Do you have discounts for returning customers?</span></a></li>
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>How do your referral program work?</span></a></li>
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>Where I can view and download invoices for my orders?</span></a></li>
-                <li class="mb-0"><a class="nav-link-style d-flex align-items-center border-bottom pb-3 mb-3" href="#"><i class="ci-book opacity-60 me-2"></i><span>Do you provide technical support after the purchase?</span></a></li>
-            </ul>
+        <div class="col-lg-9 border-start">
+            @foreach (var faqGroup in Model)
+            {
+                <h2 class="h4 pb-2" id="@faqGroup.Key.ToString()">@faqGroup.Key.GetDescription()</h2>
+                <div class="accordion accordion-flush pb-3" id="accordion-@faqGroup.Key.ToString()">
+                    @foreach (var faq in faqGroup)
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-heading-@faq.FaqId">
+                                <button class="accordion-button collapsed fs-base fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@faq.FaqId" aria-expanded="false" aria-controls="flush-collapse-@faq.FaqId">@faq.QuestionText</button>
+                            </h2>
+                            <div class="accordion-collapse collapse" id="flush-collapse-@faq.FaqId" aria-labelledby="flush-heading-@faq.FaqId" data-bs-parent="#accordion-@faqGroup.Key.ToString()">
+                                <div class="accordion-body fs-md">@faq.AnswerText</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            <!-- Submit request-->
+            <section class="container text-center pt-5 mt-2">
+                <h2 class="h4 pb-3">جواب سوالت رو پیدا نکردی ؟</h2>
+                <i class="ci-help h3 text-primary d-block mb-4"></i>
+                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Contact">تماس با ما</a>
+                <p class="fs-sm pt-4">برای پرسیدن سوالت، با ما در تماس باش.</p>
+            </section>
         </div>
     </div>
-</section>
-<section class="container text-center pt-1 pb-5 mb-2">
-    <h2 class="h4 pb-3">Haven't found the answer? We can help.</h2><i class="ci-help h3 text-primary d-block mb-4"></i><a class="btn btn-primary" href="help-submit-request.html">Submit a request</a>
-    <p class="fs-sm pt-4">Contact us and we’ll get back to you as soon as possible.</p>
-</section>
+</div>

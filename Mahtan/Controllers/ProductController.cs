@@ -1,4 +1,5 @@
 ﻿using Mahtan.Data.Repositories;
+using Mahtan.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,17 @@ namespace Mahtan.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new ProductListViewModel()
+            {
+                Products = _unitOfWork.Products.FindWithFirstImages().AsEnumerable(),
+                SearchViewModel = new ProductSearchViewModel() 
+                {
+                    Categories = _unitOfWork.Categories.Find().AsEnumerable().GroupBy(c => c.ParentCategoryId).SelectMany(g => g),
+                    Brands = _unitOfWork.Brands.Find().Select(b => new SelectableBrand(b)).AsEnumerable()
+                }
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -26,8 +37,18 @@ namespace Mahtan.Controllers
                 .Include(p => p.Reviews.Where(pr => pr.CheckStates == Assets.Values.Enums.ReviewCheckStates.Accepted)).ThenInclude(pr => pr.WriterProfile)
                 .Include(p => p.Category)
                 .Include(p => p.Brand).SingleOrDefault();
+
             if (product != null)
-                return View(product);
+            {
+                return View(
+                    new ProductDetailsViewModel 
+                    {
+                        Product = product,
+                        ShippingTypes = _unitOfWork.ShippingTypes.Find().AsEnumerable(),
+                        RelatedProducts = _unitOfWork.Products.FindWithFirstImages().AsEnumerable(),
+                        SimilarProducts = _unitOfWork.Products.FindWithFirstImages().AsEnumerable(),
+                    });
+            }
 
             return NotFound();
         }
