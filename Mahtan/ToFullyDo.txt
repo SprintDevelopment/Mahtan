@@ -1,21 +1,10 @@
-﻿# Check correct TimeAgo date - 5m.
-# Persian date picker - 45m.
-~ List reviews in details - 15m.
-# Add likes and dislikes for reviews - 5m.
-~ Apply likes and dislikes - 45m.
-~ Add new review - 30m.
-~ Set confirm field for reviews and filter them by this field - 15m.
-# Fix zoom capability - 45m.
-# Select proper style for product list - 5m.
-# Product list simple - 30m.
-~ Create a viewModel for product list - 30m.
-~ Show real product lists - 30m.
-~ About page - 60m.
-~ Contact page - 30m.
-~ Fill brands in main page - 30m.
-~ Menu - 30m.
-~ Footer - 30m.
-~ Also like section - 30m.
-~ Add shipping types in model, repository and . . . or find a new way - 1h
-~ Display shipping types in details - 30m
-
+﻿admin : 2.5
+quil : 1
+product quilization : 1.5
+products : 1.5
+main : 3
+. . . . . . . . .
+main cart : 1
+cart : 3
+user : 2
+user det : 4.5
