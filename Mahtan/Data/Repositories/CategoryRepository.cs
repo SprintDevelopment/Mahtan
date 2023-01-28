@@ -6,6 +6,7 @@ namespace Mahtan.Data.Repositories
     public interface ICategoryRepository : IRepository<Category>
     {
         IEnumerable<Category> FindAllExceptItselfAndChildren(short categoryId);
+        IEnumerable<Category> FindChildrenOnly();
     }
 
     public class CategoryRepository : Repository<Category>, ICategoryRepository
@@ -36,6 +37,12 @@ namespace Mahtan.Data.Repositories
             }
 
             return DatabaseContext.Categories.Where(c => !toRemoveCategoryIds.Contains(c.CategoryId)).AsEnumerable();
+        }
+        
+        public IEnumerable<Category> FindChildrenOnly()
+        {
+            var allParentCategoryIds = DatabaseContext.Categories.Select(c => c.ParentCategoryId);
+            return DatabaseContext.Categories.Where(c => !allParentCategoryIds.Contains(c.CategoryId)).AsEnumerable();
         }
 
         public new void Remove(Category category)

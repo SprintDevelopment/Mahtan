@@ -35,7 +35,7 @@ namespace Mahtan.Areas.Admin.Controllers
             var viewModel = new ProductViewModel()
             {
                 Product = new Product(),
-                Categories = _unitOfWork.Categories.Find().AsEnumerable(),
+                Categories = _unitOfWork.Categories.FindChildrenOnly().AsEnumerable(),
                 Brands = _unitOfWork.Brands.Find().AsEnumerable()
             };
 
@@ -106,7 +106,7 @@ namespace Mahtan.Areas.Admin.Controllers
             var viewModel = new ProductViewModel()
             {
                 Product = product,
-                Categories = _unitOfWork.Categories.Find().AsEnumerable(),
+                Categories = _unitOfWork.Categories.FindChildrenOnly().AsEnumerable(),
                 Brands = _unitOfWork.Brands.Find().AsEnumerable()
             };
 
