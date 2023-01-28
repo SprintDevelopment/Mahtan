@@ -373,7 +373,11 @@
                         <h3 class="product-title fs-sm"><a href="shop-single-v1.html">@product.Name</a></h3>
                         <div class="d-flex justify-content-between">
                             <div class="product-price">
-                                <span class="text-accent">$154.<small>00</small></span>
+                                <span class="text-accent">@product.PriceAfterDiscount<small> تومان </small></span>
+                                @if (product.DiscountPercent > 0)
+                                {
+                                    <del class="fs-sm text-muted">@product.Price<small> ت </small></del>
+                                }
                             </div>
                             <div class="star-rating">
                                 <i class="star-rating-icon ci-star-filled active"></i>
@@ -409,7 +413,11 @@
                         <h3 class="product-title fs-sm"><a href="shop-single-v1.html">@product.Name</a></h3>
                         <div class="d-flex justify-content-between">
                             <div class="product-price">
-                                <span class="text-accent">$154.<small>00</small></span>
+                                <span class="text-accent">@product.PriceAfterDiscount<small> تومان </small></span>
+                                @if(product.DiscountPercent > 0)
+                                {
+                                    <del class="fs-sm text-muted">@product.Price ت </del>
+                                }
                             </div>
                             <div class="star-rating">
                                 <i class="star-rating-icon ci-star-filled active"></i>
