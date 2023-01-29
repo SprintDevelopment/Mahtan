@@ -8,5 +8,7 @@
         public static string BannerImagesPath = Path.Combine("resources", "img", "banner", "large");
         public static string UserAvatarImagesPath = Path.Combine("resources", "img", "user", "avatar");
         public static string BrandLogosPath = Path.Combine("resources", "img", "brand", "logo");
+
+        public static string ContentTemplatesPath = Path.Combine("resources", "html", "content-template");
     }
 }

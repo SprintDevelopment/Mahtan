@@ -13,6 +13,7 @@ namespace Mahtan.Data.Repositories
         IBrandRepository Brands { get; }
         ICategoryRepository Categories { get; }
         ICartItemRepository CartItems { get; }
+        IContentTemplateRepository ContentTemplates { get; }
         IDistrictRepository Districts { get; }
         IFaqRepository Faqs { get; }
         IOrderItemRepository OrderItems { get; }
@@ -38,6 +39,7 @@ namespace Mahtan.Data.Repositories
             Brands = new BrandRepository(_context);
             Categories = new CategoryRepository(_context);
             CartItems = new CartItemRepository(_context);
+            ContentTemplates = new ContentTemplateRepository(_context);
             Districts = new DistrictRepository(_context);
             Faqs = new FaqRepository(_context);
             OrderItems = new OrderItemRepository(_context);
@@ -54,6 +56,7 @@ namespace Mahtan.Data.Repositories
         public IBrandRepository Brands { get; private set; }
         public ICategoryRepository Categories { get; private set; }
         public ICartItemRepository CartItems { get; private set; }
+        public IContentTemplateRepository ContentTemplates { get; private set; }
         public IDistrictRepository Districts { get; private set; }
         public IFaqRepository Faqs { get; private set; }
         public IOrderItemRepository OrderItems { get; private set; }

@@ -1,12 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@inject IOptions<SiteInfoDto> _siteInfoOptions
+<!DOCTYPE html>
 <html lang="en" dir="rtl">
 
 <head>
     <meta charset="utf-8">
-    <title>Cartzilla | Fashion Store v.1</title>
+    <title>@_siteInfoOptions.Value.Title</title>
     <!-- SEO Meta Tags-->
-    <meta name="description" content="مهتن - فروش انواع لباس زنانه">
-    <meta name="keywords" content="مهتن, لباس زیر, فروش لباس زنانه">
+    <meta name="description" content="@_siteInfoOptions.Value.Description">
+    <meta name="keywords" content="@_siteInfoOptions.Value.Keywords">
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->

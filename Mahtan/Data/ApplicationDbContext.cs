@@ -30,6 +30,7 @@ namespace Mahtan.Data
         public DbSet<Brand> Brands { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ContentTemplate> ContentTemplates { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Faq> Faqs { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
