@@ -1,4 +1,5 @@
-﻿using Mahtan.Assets.Values.Enums;
+﻿using Mahtan.Assets.Values;
+using Mahtan.Assets.Values.Enums;
 using Mahtan.Data.Repositories;
 using Mahtan.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -19,9 +20,14 @@ namespace Mahtan.Areas.Admin.Controllers
             _fileService = fileService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<string> Read(short id)
         {
-            return View(_unitOfWork.ContentTemplates.Find().AsEnumerable());
+            var template = await _unitOfWork.ContentTemplates.GetAsync(id);
+            if(template is not null)
+                return await _fileService.ReadTextAsync(Addresses.ContentTemplatesPath, template.TemplateUrl);
+
+            return "";
         }
     }
 }

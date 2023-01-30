@@ -57,7 +57,7 @@ namespace Mahtan.Areas.User.Controllers
                     isValid = true,
                     html = HtmlHelper.RenderRazorViewToString(this, "_AlertPartial", new AlertDto { AlertType = AlertTypes.Success, Message = "پروفایل با موفقیت ذخیره شد." }),
                     userFullName = entity.FullName,
-                    userAvatar = entity.OptionalAvatarGuid
+                    userAvatar = entity.AvatarFullPath
                 });
             }
 

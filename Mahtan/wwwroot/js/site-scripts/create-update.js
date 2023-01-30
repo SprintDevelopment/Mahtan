@@ -71,7 +71,7 @@ jQueryAjaxPostProfile = form => {
                     $("#alert-div").html(res.html);
                     $("#submit-button").html('ویرایش پروفایل');
                     $("#submit-button").prop("disabled", false);
-                    $("#user-avatar").attr("src", "/resources/img/avatars/" + res.userAvatar);
+                    $("#user-avatar").attr("src", res.userAvatar);
                     $("#user-full-name").html(res.userFullName);
                 }
             })

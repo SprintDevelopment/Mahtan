@@ -56,6 +56,11 @@ namespace Mahtan.Models
         [NotMapped]
         public string FirstLargeImageFullPath => (Images?.FirstOrDefault() ?? new ProductImage()).ImageLargeFullPath;
 
+        [Display(Name = "کد اختیاری")]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [MaxLength(LengthConstants.SMALL_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]
+        public string OptionalCode { get; set; } = "";
+
         [Display(Name = "توضیحات اختیاری")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         [MaxLength(LengthConstants.VERY_LARGE_STRING, ErrorMessage = "حداکثر طول {0}، {1} کاراکتر است")]

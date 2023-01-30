@@ -113,6 +113,22 @@ namespace Mahtan.Areas.Admin.Controllers
             return Json(new { isValid = false, html = HtmlHelper.RenderRazorViewToString(this, "CreateOrUpdate", viewModel) });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MoreInfo(int id)
+        {
+            var entity = await _unitOfWork.Products.GetAsync(id);
+            if (entity != null)
+            {
+                return View(new ProductMoreInfoViewModel()
+                {
+                    Product = entity,
+                    ContentTemplates = _unitOfWork.ContentTemplates.Find().AsEnumerable()
+                });
+            }
+
+            return NotFound();
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             var entity = await _unitOfWork.Products.GetAsync(id);

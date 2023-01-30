@@ -51,13 +51,37 @@
                             <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-search"></i></div>
                         </a>
                         <div class="navbar-tool dropdown ms-2">
-                            <a class="navbar-tool-icon-box border dropdown-toggle" href="dashboard-sales.html"><img src="~/resources/img/admin/avatar-sm.png" width="32" alt="Createx Studio"></a><a class="navbar-tool-text ms-n1" href="dashboard-sales.html"><small>Createx Std.</small>$1,375.00</a>
+                            <a class="navbar-tool-icon-box border dropdown-toggle" href="#"><img src="~/resources/img/user/avatar/no-image.png" width="32" alt="admin avatar"></a><a class="navbar-tool-text ms-n1" href="#">منو</a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <div style="min-width: 14rem;">
-                                    <h6 class="dropdown-header">Account</h6><a class="dropdown-item d-flex align-items-center" href="dashboard-settings.html"><i class="ci-settings opacity-60 me-2"></i>Settings</a><a class="dropdown-item d-flex align-items-center" href="dashboard-purchases.html"><i class="ci-basket opacity-60 me-2"></i>Purchases</a><a class="dropdown-item d-flex align-items-center" href="dashboard-favorites.html"><i class="ci-heart opacity-60 me-2"></i>Favorites<span class="fs-xs text-muted ms-auto">4</span></a>
+                                    <h6 class="dropdown-header">آمار</h6>
+                                    @{ if (controllerName == "Order") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="Order" asp-action="Index"><i class="ci-bag opacity-60 me-2"></i>سفارشات</a>
+                                    
+                                    @{ if (controllerName == "Message") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="Message" asp-action="Index"><i class="ci-message opacity-60 me-2"></i>پیام ها</a>
+                                    
+                                    @{ if (controllerName == "ProductReview") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="ProductReview" asp-action="Index"><i class="ci-announcement opacity-60 me-2"></i>بررسی محصولات</a>
+                                    
+                                    @{ if (controllerName == "User") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="User" asp-action="Index"><i class="ci-user opacity-60 me-2"></i>کاربران</a>
                                     <div class="dropdown-divider"></div>
-                                    <h6 class="dropdown-header">Seller Dashboard</h6><a class="dropdown-item d-flex align-items-center" href="dashboard-sales.html"><i class="ci-dollar opacity-60 me-2"></i>Sales<span class="fs-xs text-muted ms-auto">$1,375.00</span></a><a class="dropdown-item d-flex align-items-center" href="dashboard-products.html"><i class="ci-package opacity-60 me-2"></i>Products<span class="fs-xs text-muted ms-auto">5</span></a><a class="dropdown-item d-flex align-items-center" href="dashboard-add-new-product.html"><i class="ci-cloud-upload opacity-60 me-2"></i>Add New Product</a><a class="dropdown-item d-flex align-items-center" href="dashboard-payouts.html"><i class="ci-currency-exchange opacity-60 me-2"></i>Payouts</a>
-                                    <div class="dropdown-divider"></div><a class="dropdown-item d-flex align-items-center" href="account-signin.html"><i class="ci-sign-out opacity-60 me-2"></i>Sign Out</a>
+                                    <h6 class="dropdown-header">داده ها</h6>
+                                    @{ if (controllerName == "Product") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="Product" asp-action="Index"><i class="ci-package opacity-60 me-2"></i>محصولات</a>
+                                    @{ if (controllerName == "Brand") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="Brand" asp-action="Index"><i class="ci-bookmark opacity-60 me-2"></i>برندها</a>
+                                    @{ if (controllerName == "Category") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="ci-bookmark opacity-60 me-2"></i>دسته بندی ها</a>
+                                    @{ if (controllerName == "Banner") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="Banner" asp-action="Index"><i class="ci-image opacity-60 me-2"></i>تصاویر</a>
+                                    @{ if (controllerName == "District") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="District" asp-action="Index"><i class="ci-location opacity-60 me-2"></i>مناطق</a>
+                                    @{ if (controllerName == "ShippingType") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="ShippingType" asp-action="Index"><i class="ci-delivery opacity-60 me-2"></i>روش های ارسال</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item d-flex align-items-center text-danger" asp-area="Identity" asp-controller="Account" asp-action="Logout"><i class="ci-arrow-right opacity-60 me-2"></i>خروج</a>
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,5 @@
-﻿using Mahtan.Assets.Values.Enums;
+﻿using Mahtan.Assets.Extensions;
+using Mahtan.Assets.Values.Enums;
 using Mahtan.Data.Repositories;
 using Mahtan.Services;
 using Mahtan.ViewModels;
@@ -101,6 +102,8 @@ namespace Mahtan.Areas.Identity.Controllers
                 {
                     var signedUser = await _signInManager.UserManager.FindByNameAsync(viewModel.PhoneNumber);
                     await _signInManager.RefreshSignInAsync(signedUser);
+                    
+                    HttpContext.Session.SetObjectAsJson("SignedUserProfile", await _unitOfWork.Profiles.GetAsync(viewModel.PhoneNumber) ?? new Models.Profile());
 
                     return await RedirectToUserRoleDefaultView(signedUser, returnUrl);
                 }

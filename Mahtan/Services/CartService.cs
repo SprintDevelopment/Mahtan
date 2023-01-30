@@ -11,7 +11,7 @@ namespace Mahtan.Services
         Task<CartItem> AddToCartAsync(int productId);
         Task<CartItem> UpdateCartItemAsync(int productId, int incOrDecQty);
         Task<CartItem> RemoveFromCartAsync(int productId);
-        List<CartItem> GetCartItems();
+        IEnumerable<CartItem> GetCartItems();
     }
 
     public class CartService : ICartService
@@ -76,12 +76,12 @@ namespace Mahtan.Services
             return await UpdateCartItemAsync(productId, int.MinValue);
         }
 
-        public List<CartItem> GetCartItems()
+        public IEnumerable<CartItem> GetCartItems()
         {
             if (_isUserAuthenticated)
-                return _unitOfWork.CartItems.Find(ci => ci.Username == _user.Identity.Name).ToList();
+                return _unitOfWork.CartItems.Find(ci => ci.Username == _user.Identity.Name).AsEnumerable();
             else
-                return _session.GetObjectFromJson<List<CartItem>>("CartItems") ?? new List<CartItem>();
+                return _session.GetObjectFromJson<IEnumerable<CartItem>>("CartItems") ?? Enumerable.Empty<CartItem>();
         }
     }
 }

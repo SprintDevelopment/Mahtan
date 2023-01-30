@@ -9,6 +9,7 @@ namespace Mahtan.Services
 {
     public interface IFileService
     {
+        Task<string> ReadTextAsync(string pathToFile, string fileToRead);
         Task<string> UploadAsync(IFormFile file, string pathToSave, string preFileToRemove = null);
         void Delete(string pathToFile, string fileToRemove);
     }
@@ -20,6 +21,15 @@ namespace Mahtan.Services
         public FileService(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
+        }
+
+        public async Task<string> ReadTextAsync(string pathToFile, string fileToRead)
+        {
+            var fileToReadFullPath = Path.Combine(_webHostEnvironment.WebRootPath, pathToFile, fileToRead);
+            if (File.Exists(fileToReadFullPath))
+                return await File.ReadAllTextAsync(fileToReadFullPath);
+
+            return "";
         }
 
         public async Task<string> UploadAsync(IFormFile file, string pathToSave, string preFileToRemove = null)

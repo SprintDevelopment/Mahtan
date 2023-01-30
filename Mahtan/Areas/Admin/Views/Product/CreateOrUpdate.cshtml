@@ -43,6 +43,11 @@
             <div class="input-images mb-4"></div>
         </div>
         <div class="mb-3">
+            <label asp-for="Product.OptionalCode" class="form-label"></label>
+            <input asp-for="Product.OptionalCode" class="form-control" />
+            <span asp-validation-for="Product.OptionalCode" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
             <label asp-for="Product.OptionalComment" class="form-label"></label>
             @Html.TextAreaFor(m => m.Product.OptionalComment, 3, 0, new { @class = "form-control" })
             <span asp-validation-for="Product.OptionalComment" class="invalid-feedback"></span>

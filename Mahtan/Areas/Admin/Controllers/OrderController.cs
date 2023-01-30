@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mahtan.Areas.Admin.Controllers
 {
-        [Area(nameof(Admin))]
-        [Authorize(Roles = nameof(Admin))]
+    [Area(nameof(Admin))]
+    [Authorize(Roles = nameof(Admin))]
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

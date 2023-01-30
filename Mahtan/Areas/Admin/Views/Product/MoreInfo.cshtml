@@ -1,5 +1,51 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ProductMoreInfoViewModel
 @{
+    Layout = null;
+}
+
+<div class="modal-header bg-secondary py-1">
+    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+    <p class="fw-bold my-2">ویرایش توضیحات بیشتر @Model.Product.Name</p>
+</div>
+
+<div class="modal-body tab-content py-4">
+    @using (Html.BeginForm("CreateOrUpdate", "Product", new { area = "Admin" }, FormMethod.Post, true, new { onsubmit = "return jQueryAjaxPost(this)", autocomplete = "off" }))
+    {
+        <input type="hidden" asp-for="Product.ProductId" />
+        <div class="mb-3">
+            <label asp-for="Product.CategoryId" class="form-label"></label>
+            <select asp-for="SelectedTemplateId" class="form-control" asp-items="Model.ContentTemplates.ToSelectListItem(nameof(ContentTemplate.ContentTemplateId), nameof(ContentTemplate.Title), Model.SelectedTemplateId)">
+                <option value="">انتخاب کنید . . .</option>
+            </select>
+
+            <span asp-validation-for="SelectedTemplateId" class="invalid-feedback"></span>
+        </div>
+        <div id="content-div">
+        </div>
+        <button class="btn btn-primary d-block w-100" type="submit">تایید</button>
+    }
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <script src="~/js/site-scripts/image-uploader.js"></script>
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script>
+        $('#SelectedTemplateId').change(function (event) {
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: "ContentTemplate/Read/",
+                data: { id: $(this).val() },
+                success: function (res) {
+                    $("#form-modal .modal-dialog").addClass('modal-xl'); 
+                    $("#content-div").html(res);
+                }
+            });
+        });
+        $(function () {
+            $('.input-images').imageUploader();
+            //CKEDITOR.replace('Product_OptionalComment');
+        });
+    </script>
 }
