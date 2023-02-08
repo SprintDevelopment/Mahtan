@@ -80,6 +80,8 @@
                                     <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="District" asp-action="Index"><i class="ci-location opacity-60 me-2"></i>مناطق</a>
                                     @{ if (controllerName == "ShippingType") { activeClassName = "active"; } else { activeClassName = ""; }; }
                                     <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="ShippingType" asp-action="Index"><i class="ci-delivery opacity-60 me-2"></i>روش های ارسال</a>
+                                    @{ if (controllerName == "Faq") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <a class="dropdown-item d-flex align-items-center @activeClassName" asp-area="Admin" asp-controller="Faq" asp-action="Index"><i class="ci-help opacity-60 me-2"></i>سوالات متداول</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item d-flex align-items-center text-danger" asp-area="Identity" asp-controller="Account" asp-action="Logout"><i class="ci-arrow-right opacity-60 me-2"></i>خروج</a>
                                 </div>
@@ -191,6 +193,13 @@
                                     <li class="border-bottom mb-0 @activeClassName">
                                         <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="ShippingType" asp-action="Index">
                                             <i class="ci-delivery opacity-75 fs-6 me-2 mt-1"></i>روش های ارسال
+                                        </a>
+                                    </li>
+
+                                    @{ if (controllerName == "Faq") { activeClassName = "active"; } else { activeClassName = ""; }; }
+                                    <li class="border-bottom mb-0 @activeClassName">
+                                        <a class="nav-link-style d-flex align-items-center px-4 py-3 fs-sm" asp-area="Admin" asp-controller="Faq" asp-action="Index">
+                                            <i class="ci-help opacity-75 fs-6 me-2 mt-1"></i>سوالات متداول
                                         </a>
                                     </li>
 
