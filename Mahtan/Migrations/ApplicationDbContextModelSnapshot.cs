@@ -58,7 +58,7 @@ namespace Mahtan.Migrations
 
                     b.HasIndex("DistrictId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.Banner", b =>
@@ -105,7 +105,7 @@ namespace Mahtan.Migrations
 
                     b.HasKey("BannerId");
 
-                    b.ToTable("Banners");
+                    b.ToTable("Banners", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.Brand", b =>
@@ -130,7 +130,7 @@ namespace Mahtan.Migrations
 
                     b.HasKey("BrandId");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.CartItem", b =>
@@ -158,7 +158,7 @@ namespace Mahtan.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.Category", b =>
@@ -191,7 +191,7 @@ namespace Mahtan.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.ContentTemplate", b =>
@@ -212,7 +212,7 @@ namespace Mahtan.Migrations
 
                     b.HasKey("ContentTemplateId");
 
-                    b.ToTable("ContentTemplates");
+                    b.ToTable("ContentTemplates", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.District", b =>
@@ -230,7 +230,7 @@ namespace Mahtan.Migrations
 
                     b.HasKey("DistrictId");
 
-                    b.ToTable("Districts");
+                    b.ToTable("Districts", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.Faq", b =>
@@ -259,7 +259,7 @@ namespace Mahtan.Migrations
 
                     b.HasKey("FaqId");
 
-                    b.ToTable("Faqs");
+                    b.ToTable("Faqs", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.Order", b =>
@@ -305,7 +305,7 @@ namespace Mahtan.Migrations
 
                     b.HasIndex("Username");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.OrderItem", b =>
@@ -334,7 +334,7 @@ namespace Mahtan.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.Product", b =>
@@ -385,7 +385,7 @@ namespace Mahtan.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.ProductImage", b =>
@@ -411,7 +411,7 @@ namespace Mahtan.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.ProductReview", b =>
@@ -455,7 +455,7 @@ namespace Mahtan.Migrations
 
                     b.HasIndex("WriterUsername");
 
-                    b.ToTable("ProductReviews");
+                    b.ToTable("ProductReviews", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.Profile", b =>
@@ -491,7 +491,7 @@ namespace Mahtan.Migrations
 
                     b.HasKey("Username");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("Mahtan.Models.ShippingType", b =>
@@ -524,7 +524,7 @@ namespace Mahtan.Migrations
 
                     b.HasKey("ShippingTypeId");
 
-                    b.ToTable("ShippingTypes");
+                    b.ToTable("ShippingTypes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -70,12 +70,12 @@ namespace Mahtan.Models
         public ProductColors Colors { get; set; } = ProductColors.None;
 
         [Display(Name = "اندازه های قابل عرضه")]
-        public ProductSizes Sizes { get; set; } = ProductSizes.None;
+        public long Sizes { get; set; } = 0;
 
         [NotMapped]
         public FlaggedEnumDto[] SizeFlags 
         { 
-            get => typeof(ProductSizes).ToFlaggedCollection(Sizes).Where(item => (ProductSizes)item.Value != ProductSizes.None).ToArray();
+            get => Category.ProductSize.ItemsString.Split('').ToFlaggedCollection(Sizes).Where(item => (ProductSizes)item.Value != ProductSizes.None).ToArray();
             set => Sizes = (ProductSizes)value.Select((item, i) => item.IsSelected ? Math.Pow(2, i) : 0).Sum(); 
         }
 
