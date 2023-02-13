@@ -35,7 +35,7 @@ namespace Mahtan.Controllers
             var product = _unitOfWork.Products.Find(p => p.ProductId == id)
                 .Include(p => p.Images)
                 .Include(p => p.Reviews.Where(pr => pr.CheckStates == Assets.Values.Enums.ReviewCheckStates.Accepted)).ThenInclude(pr => pr.WriterProfile)
-                .Include(p => p.Category)
+                .Include(p => p.Category).ThenInclude(c => c.ProductSize).ThenInclude(ps => ps.SizeItems)
                 .Include(p => p.Brand).SingleOrDefault();
 
             if (product != null)

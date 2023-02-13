@@ -21,6 +21,7 @@ namespace Mahtan.Data.Repositories
         IProductRepository Products { get; }
         IProductImageRepository ProductImages { get; }
         IProductReviewRepository ProductReviews { get; }
+        IProductSizeItemRepository ProductSizeItems { get; }
         IProductSizeRepository ProductSizes { get; }
         IProfileRepository Profiles { get; }
         IShippingTypeRepository ShippingTypes { get; }
@@ -48,6 +49,7 @@ namespace Mahtan.Data.Repositories
             Products = new ProductRepository(_context);
             ProductImages = new ProductImageRepository(_context);
             ProductReviews = new ProductReviewRepository(_context);
+            ProductSizeItems = new ProductSizeItemRepository(_context);
             ProductSizes = new ProductSizeRepository(_context);
             Profiles = new ProfileRepository(_context);
             ShippingTypes = new ShippingTypeRepository(_context);
@@ -66,6 +68,7 @@ namespace Mahtan.Data.Repositories
         public IProductRepository Products { get; private set; }
         public IProductImageRepository ProductImages { get; private set; }
         public IProductReviewRepository ProductReviews { get; private set; }
+        public IProductSizeItemRepository ProductSizeItems { get; private set; }
         public IProductSizeRepository ProductSizes { get; private set; }
         public IProfileRepository Profiles { get; private set; }
         public IShippingTypeRepository ShippingTypes { get; private set; }

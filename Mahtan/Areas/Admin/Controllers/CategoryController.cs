@@ -6,6 +6,7 @@ using Mahtan.Services;
 using Mahtan.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mahtan.Areas.Admin.Controllers
 {
@@ -24,7 +25,7 @@ namespace Mahtan.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View(_unitOfWork.Categories.Find().AsEnumerable());
+            return View(_unitOfWork.Categories.Find().Include(c => c.ProductSize).AsEnumerable());
         }
 
         [HttpGet]
@@ -34,6 +35,7 @@ namespace Mahtan.Areas.Admin.Controllers
             {
                 Category = new Category(),
                 ParentCategories = _unitOfWork.Categories.FindAllExceptItselfAndChildren(id),
+                ProductSizes = _unitOfWork.ProductSizes.Find().AsEnumerable()
             };
 
             if (id == 0)
@@ -78,13 +80,14 @@ namespace Mahtan.Areas.Admin.Controllers
                         return NotFound();
 
                 }
-                return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_CategoryListPartial", _unitOfWork.Categories.Find().AsEnumerable()) });
+                return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_CategoryListPartial", _unitOfWork.Categories.Find().Include(c => c.ProductSize).AsEnumerable()) });
             }
 
             var viewModel = new CategoryViewModel()
             {
                 Category = category,
                 ParentCategories = _unitOfWork.Categories.FindAllExceptItselfAndChildren(category.CategoryId),
+                ProductSizes = _unitOfWork.ProductSizes.Find().AsEnumerable()
             };
 
             return Json(new { isValid = false, html = HtmlHelper.RenderRazorViewToString(this, "CreateOrUpdate", viewModel) });

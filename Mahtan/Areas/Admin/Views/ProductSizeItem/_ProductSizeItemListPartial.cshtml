@@ -1,0 +1,18 @@
+﻿@model SizeItemsWrapperViewModel
+
+@if (Model.Product.SizeItems.Any())
+{
+    <label class="form-label me-2">اندازه های قابل عرضه</label>
+    <div class="mb-3">
+        @for (int i = 0; i < Model.Product.SizeItems.Count(); i++)
+        {
+            <div class="form-check form-option form-check-inline mb-2">
+                @*@Html.CheckBoxFor(m => m[i].IsSelected, new {@class="form-check-input"})*@
+                <input type="hidden" asp-for="Product.SizeItems[i].DisplayOrder" />
+                <input asp-for="Product.SizeItems[i].IsSelected" class="form-check-input" />
+                @*@Html.LabelFor(m => m[i].IsSelected, Model[i].Title, new { @class = "form-option-label"})*@
+                <label asp-for="Product.SizeItems[i].IsSelected" class="form-option-label">@Model.Product.SizeItems[i].Title</label>
+            </div>
+        }
+    </div>
+}

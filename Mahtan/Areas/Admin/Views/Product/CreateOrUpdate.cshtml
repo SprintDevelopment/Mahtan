@@ -18,7 +18,9 @@
         </div>
         <div class="mb-3">
             <label asp-for="Product.CategoryId" class="form-label"></label>
-            <select asp-for="Product.CategoryId" class="form-control" asp-items="Model.Categories.ToSelectListItem(nameof(Category.CategoryId), nameof(Category.Title), Model.Product.CategoryId)"></select>
+            <select asp-for="Product.CategoryId" class="form-control" asp-items="Model.Categories.ToSelectListItem(nameof(Category.CategoryId), nameof(Category.Title), Model.Product.CategoryId)">
+                <option value="">انتخاب کنید . . .</option>
+            </select>
             <span asp-validation-for="Product.CategoryId" class="invalid-feedback"></span>
         </div>
         <div class="mb-3">
@@ -52,19 +54,12 @@
             @Html.TextAreaFor(m => m.Product.OptionalComment, 3, 0, new { @class = "form-control" })
             <span asp-validation-for="Product.OptionalComment" class="invalid-feedback"></span>
         </div>
+        <div id="sizes-div">
+            @await Html.PartialAsync("../ProductSizeItem/_ProductSizeItemListPartial", new SizeItemsWrapperViewModel{ Product = new Mahtan.FakeNamespace.Product{ SizeItems = Model.Product.SizeItems } })
+        </div>
         <div class="form-check form-check-inline mb-3">
             <input asp-for="Product.IsActive" class="form-check-input" />
             <label asp-for="Product.IsActive" class="form-check-label"></label>
-        </div>
-        <div class="mb-3">
-            <label asp-for="Product.Sizes" class="form-label me-2"></label>
-                @for (int i = 0; i < Model.Product.SizeFlags.Count(); i++)
-                {
-                    <div class="form-check form-option form-check-inline mb-2">
-                        <input asp-for="Product.SizeFlags[i].IsSelected" class="form-check-input" />
-                        <label asp-for="Product.SizeFlags[i].IsSelected" class="form-option-label">@Model.Product.SizeFlags[i].Description</label>
-                    </div>
-                }
         </div>
         <button class="btn btn-primary d-block w-100" type="submit">تایید</button>
     }
@@ -75,6 +70,17 @@
     <script src="~/js/site-scripts/image-uploader.js"></script>
     <script src="~/lib/ckeditor/ckeditor.js"></script>
     <script>
+        $('#Product_CategoryId').change(function (event) {
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: "ProductSizeItem/SizeItems/",
+                data: { id: $(this).val() },
+                success: function (res) {
+                    $("#sizes-div").html(res.html);
+                }
+            });
+        });
         $(function () {
             $('.input-images').imageUploader();
             //CKEDITOR.replace('Product_OptionalComment');

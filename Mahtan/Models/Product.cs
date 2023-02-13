@@ -73,10 +73,10 @@ namespace Mahtan.Models
         public long Sizes { get; set; } = 0;
 
         [NotMapped]
-        public FlaggedEnumDto[] SizeFlags 
+        public ProductSizeItem[] SizeItems 
         { 
-            get => Category.ProductSize.ItemsString.Split('').ToFlaggedCollection(Sizes).Where(item => (ProductSizes)item.Value != ProductSizes.None).ToArray();
-            set => Sizes = (ProductSizes)value.Select((item, i) => item.IsSelected ? Math.Pow(2, i) : 0).Sum(); 
+            get => Category?.ProductSize?.SizeItems?.Select(item => { item.IsSelected = ((long)Math.Pow(2, item.DisplayOrder) & Sizes) == (long)Math.Pow(2, item.DisplayOrder); return item; }).ToArray() ?? new ProductSizeItem[] { };
+            set => Sizes = (long)(value ?? new ProductSizeItem[] { }).Select(item => item.IsSelected ? Math.Pow(2, item.DisplayOrder) : 0).Sum(); 
         }
 
         [Display(Name = "محصول در حال حاضر فعال است.")]

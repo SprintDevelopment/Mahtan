@@ -23,13 +23,6 @@ namespace Mahtan.Assets.Extensions
             return (from object enumValue in enumValues select new EnumDto(enumValue, ((Enum)enumValue).GetDescription()));
         }
 
-        public static IEnumerable<FlaggedEnumDto> ToFlaggedCollection(this Type enumType, Enum preValue)
-        {
-            var flaggedEnumValues = Enum.GetValues(enumType);
-
-            return (from object flaggedEnumValue in flaggedEnumValues select new FlaggedEnumDto(flaggedEnumValue, ((Enum)flaggedEnumValue).GetDescription(), preValue.HasFlag((Enum)flaggedEnumValue)));
-        }
-
         public static string GetDescription(this Enum enumValue)
         {
             return enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();

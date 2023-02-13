@@ -43,7 +43,10 @@ namespace Mahtan.Areas.Admin.Controllers
                 return View(viewModel);
             else
             {
-                var entity = await _unitOfWork.Products.GetAsync(id);
+                var entity = await _unitOfWork.Products.Find(p => p.ProductId == id)
+                    .Include(p => p.Category).ThenInclude(c => c.ProductSize).ThenInclude(ps => ps.SizeItems)
+                    .FirstOrDefaultAsync();
+
                 if (entity != null)
                 {
                     viewModel.Product = entity;
@@ -58,7 +61,7 @@ namespace Mahtan.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateOrUpdate(Product product)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid || ModelState.ErrorCount == 0)
             {
                 if (product.ProductId == 0)
                     _unitOfWork.Products.Add(product, true);

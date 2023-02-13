@@ -30,6 +30,13 @@
             <span asp-validation-for="Category.CountUnitTitle" class="invalid-feedback"></span>
         </div>
         <div class="mb-3">
+            <label asp-for="Category.ProductSizeId" class="form-label"></label>
+            <select asp-for="Category.ProductSizeId" class="form-control" asp-items="Model.ProductSizes.ToSelectListItem(nameof(ProductSize.ProductSizeId), nameof(ProductSize.Title), Model.Category.ProductSizeId)">
+                <option value="">انتخاب کنید . . .</option>
+            </select>
+            <span asp-validation-for="Category.ProductSizeId" class="invalid-feedback"></span>
+        </div>
+        <div class="mb-3">
             <label asp-for="Category.IconGuid" class="form-label"></label>
             <input type="file" name="iconGuid" class="form-control" />
         </div>

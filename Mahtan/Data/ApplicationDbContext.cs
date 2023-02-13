@@ -39,6 +39,7 @@ namespace Mahtan.Data
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<ProductSize> ProductSizes { get; set; }
+        public DbSet<ProductSizeItem> ProductSizeItems { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<ShippingType> ShippingTypes { get; set; }
         public DbSet<User> SiteUsers { get; set; }
