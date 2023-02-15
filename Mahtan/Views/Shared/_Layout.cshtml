@@ -1,5 +1,6 @@
 ﻿@inject IOptions<SiteInfoDto> _siteInfoOptions
 @inject ICartService _cartService
+@inject IUnitOfWork _unitOfWork
 @{
 }
 
@@ -150,7 +151,7 @@
             </div>
         </div>
         <!-- Navbar 3 Level (Light)-->
-        <partial name="_HeaderPartial" model="@_cartService.GetCartItems()" />
+        <partial name="_HeaderPartial" model="@new HeaderViewModel { CartItems = _cartService.GetCartItems(), Categories = _unitOfWork.Categories.Find().AsEnumerable() }" />
         @RenderBody()
     </main>
     <!-- Footer-->

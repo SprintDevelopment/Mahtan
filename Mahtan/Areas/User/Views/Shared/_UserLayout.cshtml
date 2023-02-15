@@ -1,5 +1,6 @@
 ﻿@inject IOptions<SiteInfoDto> _siteInfoOptions
 @inject ICartService _cartService
+@inject IUnitOfWork _unitOfWork
 @{
     var controllerName = Context.Request.RouteValues["controller"].ToString();
     var activeClassName = "";
@@ -38,7 +39,7 @@
 <body class="handheld-toolbar-enabled">
     <main class="page-wrapper">
         <!-- Navbar 3 Level (Light)-->
-        <partial name="_HeaderPartial" model="@_cartService.GetCartItems()" />
+        <partial name="_HeaderPartial" model="@new HeaderViewModel { CartItems = _cartService.GetCartItems(), Categories = _unitOfWork.Categories.Find().AsEnumerable() }" />
         <!-- Page Title-->
         <div class="page-title-overlap bg-dark pt-4">
         </div>

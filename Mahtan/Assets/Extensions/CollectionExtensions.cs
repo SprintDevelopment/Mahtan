@@ -14,13 +14,13 @@ namespace Mahtan.Assets.Extensions
             return list == null || !list.Any();
         }
 
-        public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> list, int chunkSize)
-        {
-            return list.IsNullOrEmpty() ? null :
-                list.Select((item, i) => new { item, i })
-                    .GroupBy(g => g.i / chunkSize)
-                    .Select(g => g.Select(i => i.item));
-        }
+        //public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> list, int chunkSize)
+        //{
+        //    return list.IsNullOrEmpty() ? null :
+        //        list.Select((item, i) => new { item, i })
+        //            .GroupBy(g => g.i / chunkSize)
+        //            .Select(g => g.Select(i => i.item));
+        //}
 
         public static IEnumerable<SelectListItem> ToSelectListItem<T>(this IEnumerable<T> items, string idPropertyName, string titlePropertyName, int? selectedValue)
         {
