@@ -73,10 +73,16 @@ namespace Mahtan.Models
         public long Sizes { get; set; } = 0;
 
         [NotMapped]
-        public ProductSizeItem[] SizeItems 
+        public ProductSizeItem[] CategorySizeItems 
         { 
             get => Category?.ProductSize?.SizeItems?.Select(item => { item.IsSelected = ((long)Math.Pow(2, item.DisplayOrder) & Sizes) == (long)Math.Pow(2, item.DisplayOrder); return item; }).ToArray() ?? new ProductSizeItem[] { };
             set => Sizes = (long)(value ?? new ProductSizeItem[] { }).Select(item => item.IsSelected ? Math.Pow(2, item.DisplayOrder) : 0).Sum(); 
+        }
+
+        [NotMapped]
+        public ProductSizeItem[] ProductSizeItems
+        {
+            get => CategorySizeItems.Where(item => item.IsSelected).Select(item => new ProductSizeItem() { Title = item.Title, ProductSizeItemId = item.ProductSizeItemId, DisplayOrder = item.DisplayOrder }).ToArray() ?? new ProductSizeItem[] { };
         }
 
         [Display(Name = "محصول در حال حاضر فعال است.")]

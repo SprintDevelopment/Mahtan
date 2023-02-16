@@ -25,7 +25,7 @@ namespace Mahtan.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult SizeItems(short id)
         {
-            return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_ProductSizeItemListPartial", new SizeItemsWrapperViewModel { Product = new FakeNamespace.Product { SizeItems = _unitOfWork.ProductSizeItems.Find(si => si.ProductSizeId == id).ToArray() } }) });
+            return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_ProductSizeItemListPartial", new SizeItemsWrapperViewModel { Product = new FakeNamespace.Product { CategorySizeItems = _unitOfWork.ProductSizeItems.Find(si => si.ProductSizeId == id).ToArray() } }) });
         }
     }
 }

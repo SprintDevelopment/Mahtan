@@ -55,7 +55,7 @@
             <span asp-validation-for="Product.OptionalComment" class="invalid-feedback"></span>
         </div>
         <div id="sizes-div">
-            @await Html.PartialAsync("../ProductSizeItem/_ProductSizeItemListPartial", new SizeItemsWrapperViewModel{ Product = new Mahtan.FakeNamespace.Product{ SizeItems = Model.Product.SizeItems } })
+            @await Html.PartialAsync("_ProductSizeItemListPartial", new SizeItemsWrapperViewModel{ Product = new Mahtan.FakeNamespace.Product{ CategorySizeItems = Model.Product.CategorySizeItems } })
         </div>
         <div class="form-check form-check-inline mb-3">
             <input asp-for="Product.IsActive" class="form-check-input" />

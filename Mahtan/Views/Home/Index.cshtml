@@ -69,24 +69,13 @@
                             </div>
                         </div>
                         <div class="card-body card-body-hidden">
-                            <div class="text-center pb-2">
-                                <div class="form-check form-option form-check-inline mb-2">
-                                    <input class="form-check-input" type="radio" name="size1" id="s-80" checked>
-                                    <label class="form-option-label" for="s-80">8</label>
-                                </div>
-                                <div class="form-check form-option form-check-inline mb-2">
-                                    <input class="form-check-input" type="radio" name="size1" id="s-85">
-                                    <label class="form-option-label" for="s-85">8.5</label>
-                                </div>
-                                <div class="form-check form-option form-check-inline mb-2">
-                                    <input class="form-check-input" type="radio" name="size1" id="s-90">
-                                    <label class="form-option-label" for="s-90">9</label>
-                                </div>
-                            </div>
+                            @await Html.PartialAsync("_ProductSizeItemListPartial", new SizeItemsWrapperViewModel{ UseForOneSizeSelection = true, Product = new Mahtan.FakeNamespace.Product{ ProductSizeItems = product.ProductSizeItems } })
                             <button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button" onClick="vm.addToCart(@product.ProductId)">
                                 افزودن به سبد <i class="ci-cart fs-sm ms-2"></i>
                             </button>
-                            <div class="text-center"><a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal"><i class="ci-eye align-middle me-1"></i>Quick view</a></div>
+                            <div class="text-center">
+                                <a class="nav-link-style fs-ms" style="cursor:pointer" onclick="showQuickView(@product.ProductId)"><i class="ci-eye align-middle me-1"></i>نمایش سریع</a>
+                            </div>
                         </div>
                     </div>
                     <hr class="d-sm-none">
@@ -395,3 +384,23 @@
         </div>
     </div>
 </section>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        showQuickView = (productId) => {
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: 'Product/QuickView/',
+                data: { id: productId },
+                success: function (res) {
+                    $("#quick-view .modal-content").html(res.html);
+                    $("#quick-view").modal('show');
+                }
+            });
+        }
+    </script>
+}
+
+

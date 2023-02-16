@@ -25,6 +25,7 @@ namespace Mahtan.Data.Repositories
         IProductSizeRepository ProductSizes { get; }
         IProfileRepository Profiles { get; }
         IShippingTypeRepository ShippingTypes { get; }
+        IWishItemRepository WishItems { get; }
 
         Task<int> CompleteAsync();
     }
@@ -53,6 +54,7 @@ namespace Mahtan.Data.Repositories
             ProductSizes = new ProductSizeRepository(_context);
             Profiles = new ProfileRepository(_context);
             ShippingTypes = new ShippingTypeRepository(_context);
+            WishItems = new WishItemRepository(_context);
         }
 
         public IAddressRepository Addresses { get; private set; }
@@ -72,6 +74,7 @@ namespace Mahtan.Data.Repositories
         public IProductSizeRepository ProductSizes { get; private set; }
         public IProfileRepository Profiles { get; private set; }
         public IShippingTypeRepository ShippingTypes { get; private set; }
+        public IWishItemRepository WishItems { get; private set; }
 
         public async Task<int> CompleteAsync()
         {

@@ -1,0 +1,28 @@
+﻿@model SizeItemsWrapperViewModel
+
+@if (Model.UseForOneSizeSelection && Model.Product.ProductSizeItems.Any())
+{
+    <div class="text-center pb-2">
+        @for (int i = 0; i < Model.Product.ProductSizeItems.Count(); i++)
+        {
+            <div class="form-check form-option form-check-inline mb-2">
+                <input type="radio" asp-for="Product.SelectedSize" id="i-@Model.Product.ProductSizeItems[i].ProductSizeItemId" value="@Model.Product.ProductSizeItems[i].ProductSizeItemId" class="form-check-input" />
+                <label for="i-@Model.Product.ProductSizeItems[i].ProductSizeItemId" class="form-option-label">@Model.Product.ProductSizeItems[i].Title</label>
+            </div>
+        }
+    </div>
+}
+else if (!Model.UseForOneSizeSelection && Model.Product.CategorySizeItems.Any())
+{
+    <label class="form-label me-2">اندازه های قابل عرضه</label>
+    <div class="mb-3">
+        @for (int i = 0; i < Model.Product.CategorySizeItems.Count(); i++)
+        {
+            <div class="form-check form-option form-check-inline mb-2">
+                <input type="hidden" asp-for="Product.CategorySizeItems[i].DisplayOrder" />
+                <input asp-for="Product.CategorySizeItems[i].IsSelected" class="form-check-input" />
+                <label asp-for="Product.CategorySizeItems[i].IsSelected" class="form-option-label">@Model.Product.CategorySizeItems[i].Title</label>
+            </div>
+        }
+    </div>
+}

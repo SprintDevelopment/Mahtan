@@ -31,6 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Areas\Admin\Views\ProductSizeItem\" />
 	  <Folder Include="wwwroot\resources\img\banners\large\" />
 	</ItemGroup>
 

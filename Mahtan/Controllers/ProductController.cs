@@ -1,4 +1,5 @@
-﻿using Mahtan.Data.Repositories;
+﻿using Mahtan.Assets;
+using Mahtan.Data.Repositories;
 using Mahtan.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ namespace Mahtan.Controllers
             var viewModel = new ProductListViewModel()
             {
                 Products = _unitOfWork.Products.FindWithFirstImages().AsEnumerable(),
-                SearchViewModel = new ProductSearchViewModel() 
+                SearchViewModel = new ProductSearchViewModel()
                 {
                     Categories = _unitOfWork.Categories.Find().AsEnumerable().GroupBy(c => c.ParentCategoryId).SelectMany(g => g),
                     Brands = _unitOfWork.Brands.Find().Select(b => new SelectableBrand(b)).AsEnumerable()
@@ -41,7 +42,7 @@ namespace Mahtan.Controllers
             if (product != null)
             {
                 return View(
-                    new ProductDetailsViewModel 
+                    new ProductDetailsViewModel
                     {
                         Product = product,
                         ShippingTypes = _unitOfWork.ShippingTypes.Find().AsEnumerable(),
@@ -51,6 +52,28 @@ namespace Mahtan.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpGet]
+        public IActionResult QuickView(int id)
+        {
+            var product = _unitOfWork.Products.Find(p => p.ProductId == id)
+                .Include(p => p.Images)
+                .Include(p => p.Category).ThenInclude(c => c.ProductSize).ThenInclude(ps => ps.SizeItems)
+                .Include(p => p.Brand).SingleOrDefault();
+
+            if (product != null)
+            {
+                var viewModel = new ProductDetailsViewModel
+                {
+                    Product = product,
+                    ShippingTypes = _unitOfWork.ShippingTypes.Find().AsEnumerable(),
+                };
+
+                return Json(new { isValid = true, html = HtmlHelper.RenderRazorViewToString(this, "_ProductQuickViewPartial", viewModel) });
+            }
+
+            return Json(new { isValid = false });
         }
     }
 }

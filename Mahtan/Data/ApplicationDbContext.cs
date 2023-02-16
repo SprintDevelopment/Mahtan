@@ -43,5 +43,6 @@ namespace Mahtan.Data
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<ShippingType> ShippingTypes { get; set; }
         public DbSet<User> SiteUsers { get; set; }
+        public DbSet<WishItem> WishItems { get; set; }
     }
 }
