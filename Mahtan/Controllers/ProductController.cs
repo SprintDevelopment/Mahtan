@@ -1,5 +1,7 @@
 ﻿using Mahtan.Assets;
+using Mahtan.Assets.Extensions;
 using Mahtan.Data.Repositories;
+using Mahtan.Models;
 using Mahtan.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,15 +17,26 @@ namespace Mahtan.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(ProductSearchViewModel searchViewModel)
         {
+            var query = _unitOfWork.Products.FindWithFirstImages();
+            if(searchViewModel.SelectedCategoryId > 0)
+                query = query.Where(p => p.CategoryId == searchViewModel.SelectedCategoryId);
+            
+            var selectedBrands = searchViewModel.Brands?.Where(b => b.IsSelected).Select(b => b.BrandId);
+            if(!selectedBrands.IsNullOrEmpty())
+                query = query.Where(p => p.BrandId.HasValue && selectedBrands.Contains(p.BrandId.Value));
+
+            if (searchViewModel.MaximumPrice > 0)
+                query = query.Where(p => p.Price - (p.Price * p.DiscountPercent) >= searchViewModel.MinimumPrice && p.Price - (p.Price * p.DiscountPercent) <= searchViewModel.MaximumPrice);
+            
             var viewModel = new ProductListViewModel()
             {
-                Products = _unitOfWork.Products.FindWithFirstImages().AsEnumerable(),
+                Products = query.ToList(),
                 SearchViewModel = new ProductSearchViewModel()
                 {
-                    Categories = _unitOfWork.Categories.Find().AsEnumerable().GroupBy(c => c.ParentCategoryId).SelectMany(g => g),
-                    Brands = _unitOfWork.Brands.Find().Select(b => new SelectableBrand(b)).AsEnumerable()
+                    Categories = _unitOfWork.Categories.Find().AsEnumerable().Prepend(new Category { CategoryId = 0, Title = "همه دسته ها" }),
+                    Brands = _unitOfWork.Brands.Find().ToArray()
                 }
             };
 

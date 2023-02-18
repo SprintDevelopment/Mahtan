@@ -28,74 +28,68 @@
                     <button class="btn-close ms-auto" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body py-grid-gutter px-lg-grid-gutter">
-                    <!--Categories-->
-                    <div class="widget widget-categories mb-4 pb-4 border-bottom">
-                        <h3 class="widget-title">دسته بندی ها</h3>
-                        <div class="accordion mt-n1" id="shop-categories">
-                            @foreach (var parentCategory in Model.SearchViewModel.Categories.Where(c => c.ParentCategoryId is null))
-                            {
-                                <div class="accordion-item">
-                                    <h3 class="accordion-header">
-                                        <a class="accordion-button collapsed" href="#parent-cat-@parentCategory.CategoryId" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="parent-cat-@parentCategory.CategoryId">@parentCategory.Title</a>
-                                    </h3>
-                                    <div class="accordion-collapse collapse" id="parent-cat-@parentCategory.CategoryId" data-bs-parent="#shop-categories" style="">
-                                        <div class="accordion-body">
-                                            <div class="widget widget-links">
-                                                <ul class="widget-list  pt-1" style="height: 12rem;" data-simplebar="init" data-simplebar-auto-hide="false">
-                                                    @foreach (var category in Model.SearchViewModel.Categories.Where(c => c.ParentCategoryId == parentCategory.CategoryId))
-                                                    {
-                                                        <li class="widget-list-item ">
-                                                            <a class="widget-list-link d-flex justify-content-between align-items-center" href="#">
-                                                                <span class="-text">@category.Title</span>
-                                                                <span class="fs-xs text-muted ms-3">@Model.Products.Count(p => p.CategoryId == category.CategoryId)</span>
-                                                            </a>
-                                                        </li>
-                                                    }
-                                                </ul>
-                                            </div>
+                    @using (Html.BeginForm("Index", "Product", new { area = "" }, FormMethod.Post, true, new { }))
+                    {
+                        <!--Categories-->
+                        <div class="widget widget-categories mb-4 pb-4 border-bottom">
+                            <h3 class="widget-title">دسته بندی ها</h3>
+                            <div class="widget widget-links">
+                                <ul class="widget-list  pt-1" style="height: 12rem;" data-simplebar="init" data-simplebar-auto-hide="false">
+                                    @foreach (var category in Model.SearchViewModel.Categories)
+                                    {
+                                        <li class="widget-list-item ">
+                                            <a class="widget-list-link d-flex justify-content-between align-items-center" href="#">
+                                                <div class="form-check mb-1">
+                                                    <input type="radio" asp-for="SearchViewModel.SelectedCategoryId" id="i-@category.CategoryId" value="@category.CategoryId" class="form-check-input" />
+                                                    <label for="i-@category.CategoryId" class="form-check-label">@category.Title</label>
+                                                </div>
+                                                <span class="fs-xs text-muted ms-3">@Model.Products.Count(p => p.CategoryId == category.CategoryId)</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Brands -->
+                        <div class="widget border-bottom mb-4 pb-4">
+                            <h3 class="widget-title">برند ها</h3>
+                            <ul class="widget-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar="init" data-simplebar-auto-hide="false">
+                                @for (int i = 0; i < Model.SearchViewModel.Brands.Count(); i++)
+                                {
+                                    <li class=" d-flex justify-content-between align-items-center mb-1">
+                                        <div class="form-check">
+                                            <input type="hidden" asp-for="SearchViewModel.Brands[i].BrandId"/>
+                                            <input asp-for="SearchViewModel.Brands[i].IsSelected" class="form-check-input" />
+                                            <label asp-for="SearchViewModel.Brands[i].IsSelected" class="form-check-label">@Model.SearchViewModel.Brands[i].Title</label>
+                                        </div>
+                                        <span class="fs-xs text-muted">@Model.Products.Count(p => p.BrandId == Model.SearchViewModel.Brands[i].BrandId)</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <!-- Price Range-->
+                        <div class="widget mb-4">
+                            <h3 class="widget-title">بازه قیمت</h3>
+                            <div class="range-slider" data-start-min="@Model.SearchViewModel.MinimumPrice" data-start-max="@Model.SearchViewModel.MaximumPrice" data-min="@Model.SearchViewModel.MinimumPrice" data-max="@Model.SearchViewModel.MaximumPrice" data-step="10000">
+                                <div class="range-slider-ui"></div>
+                                <div class="d-flex">
+                                    <div class="w-50 pe-2 me-2">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text">از</span>
+                                            <input asp-for="SearchViewModel.MinimumPrice" class="form-control range-slider-value-min" type="text">
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <!-- Brands -->
-                    <div class="widget border-bottom mb-4 pb-4">
-                        <h3 class="widget-title">برند ها</h3>
-                        <ul class="widget-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar="init" data-simplebar-auto-hide="false">
-                            @foreach (var brand in Model.SearchViewModel.Brands)
-                            {
-                                <li class=" d-flex justify-content-between align-items-center mb-1">
-                                    <div class="form-check">
-                                        <input asp-for="@brand.IsSelected" class="form-check-input" />
-                                        <label asp-for="@brand.IsSelected" class="form-check-label">@brand.Brand.Title</label>
-                                    </div>
-                                    <span class="fs-xs text-muted">@Model.Products.Count(p => p.BrandId == brand.Brand.BrandId)</span>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                    <!-- Price Range-->
-                    <div class="widget">
-                        <h3 class="widget-title">بازه قیمت</h3>
-                        <div class="range-slider" data-start-min="@Model.Products.Min(p => p.PriceAfterDiscount)" data-start-max="@Model.Products.Max(p => p.PriceAfterDiscount)" data-min="@Model.Products.Min(p => p.PriceAfterDiscount)" data-max="@Model.Products.Max(p => p.PriceAfterDiscount)" data-step="10000">
-                            <div class="range-slider-ui"></div>
-                            <div class="d-flex">
-                                <div class="w-50 pe-2 me-2">
-                                    <div class="input-group input-group-sm">
-                                        <span class="input-group-text">ت</span>
-                                        <input class="form-control range-slider-value-min" type="text">
-                                    </div>
-                                </div>
-                                <div class="w-50 ps-2">
-                                    <div class="input-group input-group-sm">
-                                        <span class="input-group-text">ت</span>
-                                        <input class="form-control range-slider-value-max" type="text">
+                                    <div class="w-50 ps-2">
+                                        <div class="input-group input-group-sm">
+                                            <span class="input-group-text">تا</span>
+                                            <input asp-for="SearchViewModel.MaximumPrice" class="form-control range-slider-value-max" type="text">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>                    
+                        <button class="btn btn-primary d-block w-100" type="submit">جستجو</button>
+                    }
                 </div>
             </div>
         </aside>
@@ -133,7 +127,7 @@
                                 <div class="d-flex justify-content-between">
                                     <div class="product-price">
                                         <span class="text-accent">@product.PriceAfterDiscount<small> تومان </small></span>
-                                        @if(product.DiscountPercent > 0)
+                                        @if (product.DiscountPercent > 0)
                                         {
                                             <del class="fs-sm text-muted">@product.Price<small> ت </small></del>
                                         }

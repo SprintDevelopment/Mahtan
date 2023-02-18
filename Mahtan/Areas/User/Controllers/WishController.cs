@@ -38,7 +38,7 @@ namespace Mahtan.Areas.User.Controllers
             if(wishItem != null)
             {
                 _unitOfWork.WishItems.Remove(wishItem);
-                _unitOfWork.CompleteAsync();
+                await _unitOfWork.CompleteAsync();
             }
         }
 
