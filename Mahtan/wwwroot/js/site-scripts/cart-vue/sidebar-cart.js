@@ -1,5 +1,5 @@
 ﻿var vm = new Vue({
-    el: "#cart-nav",
+    el: "cart-nav",
     data: {
         cartItems: [],
     },

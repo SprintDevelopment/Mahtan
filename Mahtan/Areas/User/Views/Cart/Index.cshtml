@@ -1,0 +1,44 @@
+﻿@model IEnumerable<CartItem>
+
+<div class="d-none d-lg-flex pt-lg-3 pb-4 pb-lg-5 mb-lg-3">
+    <h6 class="fs-base text-light mb-0">سبد خرید</h6>
+</div>
+
+<div v-if="cartItems.length == 0" class="text-center">
+    <div class="">
+        <i class="ci-basket my-5 navbar-tool-icon opacity-50 text-primary" style="font-size: 4rem;"></i>
+        <h4 class="">سبد خرید شما خالی است.</h4>
+    </div>
+</div>
+<p>{{vm.cartItems.length}}</p>
+@*@foreach (var item in Model)
+{
+    <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
+        <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
+            <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html">
+                <img src="@Url.Content(item.Product.FirstLargeImageFullPath)" width="160" alt="Product">
+            </a>
+            <div class="pt-2">
+                <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html">@item.Product.Name</a></h3>
+                <span class="fs-lg text-accent pt-2">@item.Price.ToString("n0") </span>
+                <span class="text-muted"> × </span>
+                <span class="fs-lg text-accent pt-2">@item.Qty.ToString("n0") </span>
+            </div>
+        </div>
+
+
+        <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
+            <div class="btn-group-vertical">
+                <button class="btn px-2 py-0" @@click="updateCount(item, true)" type="button"><i class="ci-arrow-up text-accent"></i></button>
+                <button class="btn px-2 py-0" @@click="removeFromCart(item.productId)" type="button"><i class="ci-close text-danger"></i></button>
+                <button class="btn px-2 py-0" @@click="updateCount(item, false)" type="button"><i class="ci-arrow-down text-accent"></i></button>
+            </div>
+        </div>
+    </div>
+}
+*@
+<div class="col-12">
+    <div class="text-end mt-3">
+        <button class="btn btn-primary mt-3 mt-sm-0" id="submit-button" type="submit">نهایی کردن خرید</button>
+    </div>
+</div>
